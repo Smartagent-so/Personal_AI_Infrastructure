@@ -1,0 +1,536 @@
+2025-12-03T10:36:22.107Z [DEBUG] Watching for changes in setting files /Users/pretor/.claude/settings.json, /Users/pretor/Documents/PAI - TPOS/.claude/settings.local.json...
+2025-12-03T10:36:22.164Z [DEBUG] [LSP MANAGER] initializeLspServerManager() called
+2025-12-03T10:36:22.164Z [DEBUG] [LSP MANAGER] Created manager instance, state=pending
+2025-12-03T10:36:22.164Z [DEBUG] [LSP MANAGER] Starting async initialization (generation 1)
+2025-12-03T10:36:22.165Z [DEBUG] [LSP SERVER MANAGER] initialize() called
+2025-12-03T10:36:22.165Z [DEBUG] [LSP SERVER MANAGER] Calling getAllLspServers()
+2025-12-03T10:36:22.167Z [DEBUG] Applying permission update: Adding 15 allow rule(s) to destination 'userSettings': ["Bash","Read","Write","Edit","MultiEdit","Glob","Grep","WebFetch(domain:*)","WebSearch","NotebookRead","NotebookEdit","TodoWrite","ExitPlanMode","Task","mcp__*"]
+2025-12-03T10:36:22.167Z [DEBUG] Applying permission update: Adding 32 deny rule(s) to destination 'userSettings': ["Bash(diskutil partitionDisk)","Bash(diskutil eraseDisk)","Bash(diskutil eraseVolume)","Bash(diskutil reformat)","Bash(diskutil zeroDisk)","Bash(diskutil appleRAID)","Bash(diskutil randomDisk)","Bash(diskutil coreStorage)","Bash(diskutil cs)","Bash(diskutil disableJournal)","Bash(diskutil resetFusion)","Bash(diskutil disableOwnership)","Bash(diskutil apfs deleteContainer)","Bash(diskutil apfs eraseVolume)","Bash(diskutil apfs decryptVolume)","Bash(diskutil apfs changePassphrase)","Bash(diskutil apfs deleteVolume)","Bash(diskutil apfs deleteVolumeGroup)","Bash(diskutil apfs deleteSnapshot)","Bash(rm -rf /)","Bash(rm -rf /*)","Bash(rm -rf ~)","Bash(rm -rf $HOME)","Bash(rm -rf $PAI_HOME)","Bash(rm -rf $PAI_DIR)","Bash(sudo rm -rf /)","Bash(sudo rm -rf /*)","Bash(fork bomb)","Bash(dd if=/dev/zero of=/dev/sda)","Bash(mkfs.ext4 /dev/sda)","Bash( /dev/sda)","Bash(> /dev/sda)"]
+2025-12-03T10:36:22.167Z [DEBUG] Applying permission update: Adding 14 allow rule(s) to destination 'localSettings': ["WebSearch","WebFetch(domain:github.com)","WebFetch(domain:platform.claude.com)","Bash(xargs -I {} sh -c 'echo \"\"\"\"=== {} ===\"\"\"\" && head -40 \"\"\"\"{}\"\"\"\"')","Bash(git --version:*)","Bash(git config:*)","Bash(claude --version)","Bash(bun --version:*)","Bash(node --version)","Bash(gh auth status:*)","Bash(gh repo fork:*)","Bash(bun install)","Bash(cat:*)","Bash(bun:*)"]
+2025-12-03T10:36:22.170Z [DEBUG] Found 0 plugins (0 enabled, 0 disabled)
+2025-12-03T10:36:22.170Z [DEBUG] Total LSP servers loaded: 0
+2025-12-03T10:36:22.170Z [DEBUG] Plugin not available for MCP: browser-automation@browser-tools - error type: plugin-not-found
+2025-12-03T10:36:22.172Z [DEBUG] [LSP SERVER MANAGER] getAllLspServers returned 0 server(s)
+2025-12-03T10:36:22.172Z [DEBUG] LSP manager initialized with 0 servers
+2025-12-03T10:36:22.173Z [DEBUG] LSP server manager initialized successfully
+2025-12-03T10:36:22.173Z [DEBUG] LSP notification handlers registered successfully for all 0 server(s)
+2025-12-03T10:36:22.179Z [DEBUG] Loading skills from directories: managed=/Library/Application Support/ClaudeCode/.claude/skills, user=/Users/pretor/.claude/skills, project=/Users/pretor/Documents/PAI - TPOS/.claude/skills
+2025-12-03T10:36:22.182Z [DEBUG] >>>>> getPluginSkills CALLED <<<<<
+2025-12-03T10:36:22.182Z [DEBUG] Passes: Cache stale, returning cached data and refreshing in background
+2025-12-03T10:36:22.186Z [DEBUG] installed_plugins.json doesn't exist yet at /Users/pretor/.claude/plugins/installed_plugins.json, returning empty object
+2025-12-03T10:36:22.208Z [DEBUG] Creating shell snapshot for zsh (/bin/zsh)
+2025-12-03T10:36:22.208Z [DEBUG] Looking for shell config file: /Users/pretor/.zshrc
+2025-12-03T10:36:22.208Z [DEBUG] Snapshots directory: /Users/pretor/.claude/shell-snapshots
+2025-12-03T10:36:22.208Z [DEBUG] Creating snapshot at: /Users/pretor/.claude/shell-snapshots/snapshot-zsh-1764758182208-uz0bbo.sh
+2025-12-03T10:36:22.208Z [DEBUG] Shell binary exists: true
+2025-12-03T10:36:22.208Z [DEBUG] Execution timeout: 10000ms
+2025-12-03T10:36:22.209Z [DEBUG] Writing to temp file: /Users/pretor/.claude/todos/9988d754-f11d-42d7-9270-24471b6ddb8f-agent-9988d754-f11d-42d7-9270-24471b6ddb8f.json.tmp.28420.1764758182209
+2025-12-03T10:36:22.220Z [DEBUG] Temp file written successfully, size: 2 bytes
+2025-12-03T10:36:22.220Z [DEBUG] Renaming /Users/pretor/.claude/todos/9988d754-f11d-42d7-9270-24471b6ddb8f-agent-9988d754-f11d-42d7-9270-24471b6ddb8f.json.tmp.28420.1764758182209 to /Users/pretor/.claude/todos/9988d754-f11d-42d7-9270-24471b6ddb8f-agent-9988d754-f11d-42d7-9270-24471b6ddb8f.json
+2025-12-03T10:36:22.220Z [DEBUG] File /Users/pretor/.claude/todos/9988d754-f11d-42d7-9270-24471b6ddb8f-agent-9988d754-f11d-42d7-9270-24471b6ddb8f.json written atomically
+2025-12-03T10:36:22.223Z [DEBUG] Writing to temp file: /Users/pretor/.claude.json.tmp.28420.1764758182223
+2025-12-03T10:36:22.223Z [DEBUG] Preserving file permissions: 100644
+2025-12-03T10:36:22.229Z [DEBUG] Temp file written successfully, size: 55023 bytes
+2025-12-03T10:36:22.229Z [DEBUG] Applied original permissions to temp file
+2025-12-03T10:36:22.229Z [DEBUG] Renaming /Users/pretor/.claude.json.tmp.28420.1764758182223 to /Users/pretor/.claude.json
+2025-12-03T10:36:22.229Z [DEBUG] File /Users/pretor/.claude.json written atomically
+2025-12-03T10:36:22.229Z [DEBUG] Plugin loading errors: Plugin browser-automation not found in marketplace browser-tools
+2025-12-03T10:36:22.229Z [DEBUG] getPluginSkills: Processing 0 enabled plugins
+2025-12-03T10:36:22.229Z [DEBUG] Total plugin skills loaded: 0
+2025-12-03T10:36:22.229Z [DEBUG] Plugin loading errors: Plugin browser-automation not found in marketplace browser-tools
+2025-12-03T10:36:22.229Z [DEBUG] Total plugin commands loaded: 0
+2025-12-03T10:36:22.229Z [DEBUG] Registered 0 hooks from 0 plugins
+2025-12-03T10:36:22.233Z [DEBUG] Loaded 10 unique skills (managed: 0, user: 10, project: 0, duplicates removed: 0)
+2025-12-03T10:36:22.234Z [DEBUG] getSkills returning: 10 skill dir commands, 0 plugin skills
+2025-12-03T10:36:22.241Z [DEBUG] Git remote URL: null
+2025-12-03T10:36:22.241Z [DEBUG] No git remote URL found
+2025-12-03T10:36:22.241Z [DEBUG] Not in a GitHub repository, skipping path mapping update
+2025-12-03T10:36:22.278Z [DEBUG] Writing to temp file: /Users/pretor/.claude.json.tmp.28420.1764758182278
+2025-12-03T10:36:22.278Z [DEBUG] Preserving file permissions: 100644
+2025-12-03T10:36:22.283Z [DEBUG] Temp file written successfully, size: 55203 bytes
+2025-12-03T10:36:22.283Z [DEBUG] Applied original permissions to temp file
+2025-12-03T10:36:22.283Z [DEBUG] Renaming /Users/pretor/.claude.json.tmp.28420.1764758182278 to /Users/pretor/.claude.json
+2025-12-03T10:36:22.284Z [DEBUG] File /Users/pretor/.claude.json written atomically
+2025-12-03T10:36:22.352Z [DEBUG] Writing to temp file: /Users/pretor/.claude.json.tmp.28420.1764758182352
+2025-12-03T10:36:22.352Z [DEBUG] Preserving file permissions: 100644
+2025-12-03T10:36:22.355Z [DEBUG] Temp file written successfully, size: 55203 bytes
+2025-12-03T10:36:22.355Z [DEBUG] Applied original permissions to temp file
+2025-12-03T10:36:22.355Z [DEBUG] Renaming /Users/pretor/.claude.json.tmp.28420.1764758182352 to /Users/pretor/.claude.json
+2025-12-03T10:36:22.356Z [DEBUG] File /Users/pretor/.claude.json written atomically
+2025-12-03T10:36:22.357Z [DEBUG] Writing to temp file: /Users/pretor/.claude.json.tmp.28420.1764758182357
+2025-12-03T10:36:22.357Z [DEBUG] Preserving file permissions: 100644
+2025-12-03T10:36:22.360Z [DEBUG] Temp file written successfully, size: 55203 bytes
+2025-12-03T10:36:22.361Z [DEBUG] Applied original permissions to temp file
+2025-12-03T10:36:22.361Z [DEBUG] Renaming /Users/pretor/.claude.json.tmp.28420.1764758182357 to /Users/pretor/.claude.json
+2025-12-03T10:36:22.361Z [DEBUG] File /Users/pretor/.claude.json written atomically
+2025-12-03T10:36:22.362Z [DEBUG] Writing to temp file: /Users/pretor/.claude.json.tmp.28420.1764758182362
+2025-12-03T10:36:22.362Z [DEBUG] Preserving file permissions: 100644
+2025-12-03T10:36:22.367Z [DEBUG] Temp file written successfully, size: 55203 bytes
+2025-12-03T10:36:22.367Z [DEBUG] Applied original permissions to temp file
+2025-12-03T10:36:22.367Z [DEBUG] Renaming /Users/pretor/.claude.json.tmp.28420.1764758182362 to /Users/pretor/.claude.json
+2025-12-03T10:36:22.367Z [DEBUG] File /Users/pretor/.claude.json written atomically
+2025-12-03T10:36:22.461Z [DEBUG] Ripgrep first use test: PASSED (mode=builtin, path=/Users/pretor/.nvm/versions/node/v22.17.0/lib/node_modules/@anthropic-ai/claude-code/vendor/ripgrep/arm64-darwin/rg)
+2025-12-03T10:36:22.464Z [DEBUG] Plugin loading errors: Plugin browser-automation not found in marketplace browser-tools
+2025-12-03T10:36:22.464Z [DEBUG] Total plugin agents loaded: 0
+2025-12-03T10:36:22.600Z [DEBUG] Shell snapshot created successfully (140192 bytes)
+2025-12-03T10:36:22.752Z [DEBUG] Writing to temp file: /Users/pretor/.claude.json.tmp.28420.1764758182752
+2025-12-03T10:36:22.752Z [DEBUG] Preserving file permissions: 100644
+2025-12-03T10:36:22.759Z [DEBUG] Temp file written successfully, size: 55203 bytes
+2025-12-03T10:36:22.759Z [DEBUG] Applied original permissions to temp file
+2025-12-03T10:36:22.759Z [DEBUG] Renaming /Users/pretor/.claude.json.tmp.28420.1764758182752 to /Users/pretor/.claude.json
+2025-12-03T10:36:22.759Z [DEBUG] File /Users/pretor/.claude.json written atomically
+2025-12-03T10:36:22.759Z [DEBUG] Passes eligibility cached for org 0e796c29-69c2-4476-b224-5deeda4e0c54: false
+2025-12-03T10:36:22.921Z [DEBUG] Passes: Using fresh cached eligibility data
+2025-12-03T10:36:22.947Z [DEBUG] MCP server "elevenlabs": Starting connection with timeout of 30000ms
+2025-12-03T10:36:22.954Z [DEBUG] MCP server "voice-mode": Starting connection with timeout of 30000ms
+2025-12-03T10:36:22.957Z [DEBUG] Schema version mismatch (current: 0, expected: 1), syncing installed_plugins.json
+2025-12-03T10:36:22.960Z [DEBUG] Plugin browser-automation@browser-tools not found in any marketplace, skipping
+2025-12-03T10:36:22.966Z [DEBUG] Saved 0 installed plugins to /Users/pretor/.claude/plugins/installed_plugins.json (schema version 1)
+2025-12-03T10:36:22.966Z [DEBUG] Updated installed_plugins.json to schema version 1 (0 plugins added, 1 skipped)
+2025-12-03T10:36:22.967Z [DEBUG] Writing to temp file: /Users/pretor/.claude.json.tmp.28420.1764758182967
+2025-12-03T10:36:22.967Z [DEBUG] Preserving file permissions: 100644
+2025-12-03T10:36:22.971Z [DEBUG] Temp file written successfully, size: 55248 bytes
+2025-12-03T10:36:22.971Z [DEBUG] Applied original permissions to temp file
+2025-12-03T10:36:22.971Z [DEBUG] Renaming /Users/pretor/.claude.json.tmp.28420.1764758182967 to /Users/pretor/.claude.json
+2025-12-03T10:36:22.971Z [DEBUG] File /Users/pretor/.claude.json written atomically
+2025-12-03T10:36:22.973Z [DEBUG] Writing to temp file: /Users/pretor/.claude.json.tmp.28420.1764758182973
+2025-12-03T10:36:22.974Z [DEBUG] Preserving file permissions: 100644
+2025-12-03T10:36:22.978Z [DEBUG] Temp file written successfully, size: 55248 bytes
+2025-12-03T10:36:22.978Z [DEBUG] Applied original permissions to temp file
+2025-12-03T10:36:22.978Z [DEBUG] Renaming /Users/pretor/.claude.json.tmp.28420.1764758182973 to /Users/pretor/.claude.json
+2025-12-03T10:36:22.979Z [DEBUG] File /Users/pretor/.claude.json written atomically
+2025-12-03T10:36:22.981Z [DEBUG] Getting matching hook commands for SessionStart with query: startup
+2025-12-03T10:36:22.981Z [DEBUG] Found 1 hook matchers in settings
+2025-12-03T10:36:22.981Z [DEBUG] Matched 3 unique hooks for query "startup" (3 before deduplication)
+2025-12-03T10:36:22.992Z [DEBUG] Getting matching hook commands for SubagentStart with query: Explore
+2025-12-03T10:36:22.992Z [DEBUG] Found 0 hook matchers in settings
+2025-12-03T10:36:22.992Z [DEBUG] Matched 0 unique hooks for query "Explore" (0 before deduplication)
+2025-12-03T10:36:22.999Z [DEBUG] Getting matching hook commands for SubagentStart with query: Plan
+2025-12-03T10:36:22.999Z [DEBUG] Found 0 hook matchers in settings
+2025-12-03T10:36:22.999Z [DEBUG] Matched 0 unique hooks for query "Plan" (0 before deduplication)
+2025-12-03T10:36:23.004Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:36:23.004Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:36:23.004Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:36:23.028Z [DEBUG] Writing to temp file: /Users/pretor/.claude.json.tmp.28420.1764758183028
+2025-12-03T10:36:23.028Z [DEBUG] Preserving file permissions: 100644
+2025-12-03T10:36:23.034Z [DEBUG] Temp file written successfully, size: 55248 bytes
+2025-12-03T10:36:23.034Z [DEBUG] Applied original permissions to temp file
+2025-12-03T10:36:23.034Z [DEBUG] Renaming /Users/pretor/.claude.json.tmp.28420.1764758183028 to /Users/pretor/.claude.json
+2025-12-03T10:36:23.035Z [DEBUG] File /Users/pretor/.claude.json written atomically
+2025-12-03T10:36:23.039Z [DEBUG] performStartupChecks called
+2025-12-03T10:36:23.039Z [DEBUG] Starting background plugin installations
+2025-12-03T10:36:23.039Z [DEBUG] performBackgroundPluginInstallations called
+2025-12-03T10:36:23.063Z [DEBUG] AutoUpdaterWrapper: Installation type: npm-global
+2025-12-03T10:36:23.063Z [DEBUG] Plugin not available for MCP: browser-automation@browser-tools - error type: plugin-not-found
+2025-12-03T10:36:23.063Z [DEBUG] Plugin not available for MCP: browser-automation@browser-tools - error type: plugin-not-found
+2025-12-03T10:36:23.067Z [DEBUG] Found 1 enabled plugins
+2025-12-03T10:36:23.067Z [DEBUG] Syncing installed_plugins.json with enabledPlugins from settings
+2025-12-03T10:36:23.067Z [DEBUG] Found 0 installed plugins
+2025-12-03T10:36:23.068Z [DEBUG] Loaded plugins - Enabled: 0, Disabled: 0, Commands: 0, Agents: 0, Errors: 1
+2025-12-03T10:36:23.068Z [DEBUG] Found 1 missing plugins (not installed): browser-automation@browser-tools
+2025-12-03T10:36:23.068Z [DEBUG] Cannot install 1 plugins because their marketplaces are not installed or configured: browser-tools
+2025-12-03T10:36:23.068Z [DEBUG] Uninstallable plugins: browser-automation@browser-tools
+2025-12-03T10:36:23.068Z [DEBUG] Setting installation status: 0 marketplaces, 0 installable plugins, 1 uninstallable plugins
+2025-12-03T10:36:23.070Z [DEBUG] Plugin installation status: 0 failed marketplaces, 1 failed plugins
+2025-12-03T10:36:23.070Z [DEBUG] Adding notification for 1 failed installations
+2025-12-03T10:36:23.071Z [DEBUG] Plugin browser-automation@browser-tools not found in any marketplace, skipping
+2025-12-03T10:36:23.071Z [DEBUG] Sync completed: All 1 plugins already in installed_plugins.json
+2025-12-03T10:36:23.084Z [DEBUG] Summarizing all 106 messages (~22001 tokens)
+2025-12-03T10:36:23.094Z [DEBUG] Writing to temp file: /Users/pretor/.claude.json.tmp.28420.1764758183094
+2025-12-03T10:36:23.094Z [DEBUG] Preserving file permissions: 100644
+2025-12-03T10:36:23.099Z [DEBUG] Temp file written successfully, size: 55248 bytes
+2025-12-03T10:36:23.099Z [DEBUG] Applied original permissions to temp file
+2025-12-03T10:36:23.099Z [DEBUG] Renaming /Users/pretor/.claude.json.tmp.28420.1764758183094 to /Users/pretor/.claude.json
+2025-12-03T10:36:23.099Z [DEBUG] File /Users/pretor/.claude.json written atomically
+2025-12-03T10:36:23.270Z [DEBUG] Writing to temp file: /Users/pretor/.claude.json.tmp.28420.1764758183270
+2025-12-03T10:36:23.270Z [DEBUG] Preserving file permissions: 100644
+2025-12-03T10:36:23.286Z [DEBUG] Temp file written successfully, size: 55248 bytes
+2025-12-03T10:36:23.286Z [DEBUG] Applied original permissions to temp file
+2025-12-03T10:36:23.286Z [DEBUG] Renaming /Users/pretor/.claude.json.tmp.28420.1764758183270 to /Users/pretor/.claude.json
+2025-12-03T10:36:23.287Z [DEBUG] File /Users/pretor/.claude.json written atomically
+2025-12-03T10:36:23.457Z [ERROR] MCP server "voice-mode" Server stderr: Downloading beartype (1.3MiB)
+2025-12-03T10:36:23.476Z [ERROR] MCP server "voice-mode" Server stderr: Downloading uv (17.6MiB)
+2025-12-03T10:36:23.581Z [ERROR] MCP server "voice-mode" Server stderr: Downloading beartype
+2025-12-03T10:36:23.853Z [DEBUG] MCP server "elevenlabs": Successfully connected to stdio server in 927ms
+2025-12-03T10:36:23.854Z [DEBUG] MCP server "elevenlabs": Connection established with capabilities: {"hasTools":true,"hasPrompts":true,"hasResources":true,"serverVersion":{"name":"ElevenLabs","version":"1.12.4"}}
+2025-12-03T10:36:23.855Z [ERROR] MCP server "elevenlabs" Server stderr: [12/03/25 11:36:23] INFO     Processing request of type            server.py:624
+                             ListToolsRequest
+2025-12-03T10:36:23.857Z [ERROR] MCP server "elevenlabs" Server stderr: INFO     Processing request of type            server.py:624
+                             ListPromptsRequest
+2025-12-03T10:36:23.862Z [ERROR] MCP server "elevenlabs" Server stderr: INFO     Processing request of type            server.py:624
+                             ListResourcesRequest
+2025-12-03T10:36:23.866Z [DEBUG] Stream started - received first chunk
+2025-12-03T10:36:23.903Z [DEBUG] Stream started - received first chunk
+2025-12-03T10:36:24.340Z [ERROR] MCP server "voice-mode" Server stderr: Downloading uv
+2025-12-03T10:36:24.550Z [DEBUG] Stream started - received first chunk
+2025-12-03T10:36:24.642Z [ERROR] MCP server "voice-mode" Server stderr: Installed 80 packages in 301ms
+2025-12-03T10:36:26.057Z [DEBUG] Getting matching hook commands for SubagentStop with query: undefined
+2025-12-03T10:36:26.057Z [DEBUG] Found 1 hook matchers in settings
+2025-12-03T10:36:26.057Z [DEBUG] Matched 2 unique hooks for query "no match query" (2 before deduplication)
+2025-12-03T10:36:26.064Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:36:26.064Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:36:26.995Z [DEBUG] Getting matching hook commands for SubagentStop with query: undefined
+2025-12-03T10:36:26.995Z [DEBUG] Found 1 hook matchers in settings
+2025-12-03T10:36:26.995Z [DEBUG] Matched 2 unique hooks for query "no match query" (2 before deduplication)
+2025-12-03T10:36:27.002Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:36:27.002Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:36:29.457Z [ERROR] MCP server "voice-mode" Server stderr: /Users/pretor/.cache/uv/archive-v0/AZSJmRv9WRYj12z09Kpci/lib/python3.11/site-packages/pydub/utils.py:300: DeprecationWarning: invalid escape sequence '\('
+  m = re.match('([su]([0-9]{1,2})p?) \(([0-9]{1,2}) bit\)$', token)
+/Users/pretor/.cache/uv/archive-v0/AZSJmRv9WRYj12z09Kpci/lib/python3.11/site-packages/pydub/utils.py:301: DeprecationWarning: invalid escape sequence '\('
+  m2 = re.match('([su]([0-9]{1,2})p?)( \(default\))?$', token)
+2025-12-03T10:36:29.457Z [ERROR] MCP server "voice-mode" Server stderr: /Users/pretor/.cache/uv/archive-v0/AZSJmRv9WRYj12z09Kpci/lib/python3.11/site-packages/pydub/utils.py:310: DeprecationWarning: invalid escape sequence '\('
+  elif re.match('(flt)p?( \(default\))?$', token):
+/Users/pretor/.cache/uv/archive-v0/AZSJmRv9WRYj12z09Kpci/lib/python3.11/site-packages/pydub/utils.py:314: DeprecationWarning: invalid escape sequence '\('
+  elif re.match('(dbl)p?( \(default\))?$', token):
+2025-12-03T10:36:29.458Z [ERROR] MCP server "voice-mode" Server stderr: /Users/pretor/.cache/uv/archive-v0/AZSJmRv9WRYj12z09Kpci/lib/python3.11/site-packages/pydub/utils.py:14: DeprecationWarning: 'audioop' is deprecated and slated for removal in Python 3.13
+  import audioop
+2025-12-03T10:36:30.207Z [ERROR] MCP server "voice-mode" Server stderr: ╭──────────────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│                         ▄▀▀ ▄▀█ █▀▀ ▀█▀ █▀▄▀█ █▀▀ █▀█                        │
+│                         █▀  █▀█ ▄▄█  █  █ ▀ █ █▄▄ █▀▀                        │
+│                                                                              │
+│                                FastMCP 2.13.2                                │
+│                                                                              │
+│                                                                              │
+│                    🖥  Server name: voicemode                                 │
+│                                                                              │
+│                    📦 Transport:   STDIO                                     │
+│                                                                              │
+│                    📚 Docs:        https://gofastmcp.com                     │
+│                    🚀 Hosting:     https://fastmcp.cloud                     │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+2025-12-03T10:36:30.207Z [ERROR] MCP server "voice-mode" Server stderr: [12/03/25 11:36:30] INFO     Starting MCP server 'voicemode' with server.py:1974
+                             transport 'stdio'
+2025-12-03T10:36:30.208Z [DEBUG] MCP server "voice-mode": Successfully connected to stdio server in 7257ms
+2025-12-03T10:36:30.209Z [DEBUG] MCP server "voice-mode": Connection established with capabilities: {"hasTools":true,"hasPrompts":true,"hasResources":true,"serverVersion":{"name":"voicemode","version":"2.13.2"}}
+2025-12-03T10:36:30.209Z [ERROR] MCP server "voice-mode" Server stderr: 2025-12-03 11:36:30,209 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-12-03T10:36:30.210Z [ERROR] MCP server "voice-mode" Server stderr: 2025-12-03 11:36:30,209 - mcp.server.lowlevel.server - INFO - Processing request of type ListPromptsRequest
+2025-12-03T10:36:30.210Z [ERROR] MCP server "voice-mode" Server stderr: 2025-12-03 11:36:30,210 - mcp.server.lowlevel.server - INFO - Processing request of type ListResourcesRequest
+2025-12-03T10:36:30.970Z [DEBUG] Skills and commands included in Skill tool: CORE, Createskill, art, brightdata, fabric, Observability, prompting, research, story-explanation, system-createcli
+2025-12-03T10:36:30.970Z [DEBUG] Slash commands included in SlashCommand tool:
+2025-12-03T10:36:40.547Z [DEBUG] Writing to temp file: /Users/pretor/.claude.json.tmp.28420.1764758200547
+2025-12-03T10:36:40.547Z [DEBUG] Preserving file permissions: 100644
+2025-12-03T10:36:40.552Z [DEBUG] Temp file written successfully, size: 55248 bytes
+2025-12-03T10:36:40.553Z [DEBUG] Applied original permissions to temp file
+2025-12-03T10:36:40.553Z [DEBUG] Renaming /Users/pretor/.claude.json.tmp.28420.1764758200547 to /Users/pretor/.claude.json
+2025-12-03T10:36:40.553Z [DEBUG] File /Users/pretor/.claude.json written atomically
+2025-12-03T10:36:42.948Z [DEBUG] AutoUpdaterWrapper: Installation type: npm-global
+2025-12-03T10:36:42.949Z [DEBUG] Metadata string for recover-from-checkpoint:
+2025-12-03T10:36:42.949Z [DEBUG] <command-message>recover-from-checkpoint is running…</command-message>
+<command-name>/recover-from-checkpoint</command-name>
+2025-12-03T10:36:42.949Z [DEBUG] command-message tags in metadata: 1
+2025-12-03T10:36:42.964Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-03T10:36:42.964Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-03T10:36:42.969Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-03T10:36:42.969Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-03T10:36:42.981Z [DEBUG] processPromptSlashCommand creating 3 messages for recover-from-checkpoint
+2025-12-03T10:36:42.981Z [DEBUG] Message 1: <command-message>recover-from-checkpoint is running…</command-message>
+<command-name>/recover-from-checkpoint</command-name>
+2025-12-03T10:36:42.981Z [DEBUG] Message 2 [META]: [{"type":"text","text":"# Von Checkpoint wiederherstellen\n\nStelle den Session-Kontext nach einem Crash wieder her.\n\n## Aufgaben\n\n1. **Session-Status lesen** - Lies `.claude/SESSION_STATUS.md` un
+2025-12-03T10:36:42.981Z [DEBUG] Message 3: [ATTACHMENT]
+2025-12-03T10:36:42.983Z [DEBUG] Getting matching hook commands for UserPromptSubmit with query: undefined
+2025-12-03T10:36:42.983Z [DEBUG] Found 1 hook matchers in settings
+2025-12-03T10:36:42.983Z [DEBUG] Matched 2 unique hooks for query "no match query" (2 before deduplication)
+2025-12-03T10:36:42.991Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:36:42.992Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:36:42.993Z [DEBUG] FileHistory: Added snapshot for 860d2d45-170c-4aed-8fe8-48900bf99f1d, tracking 0 files
+2025-12-03T10:36:42.998Z [DEBUG] UserCommandMessage rendering: "recover-from-checkpoint is running…" (args: "none")
+2025-12-03T10:36:42.998Z [DEBUG] isSkillFormat: false, prefix: "/"
+2025-12-03T10:36:43.007Z [DEBUG] Plugin loading errors: Plugin browser-automation not found in marketplace browser-tools
+2025-12-03T10:36:43.007Z [DEBUG] Total plugin output styles loaded: 0
+2025-12-03T10:36:44.950Z [DEBUG] Stream started - received first chunk
+2025-12-03T10:36:48.856Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-03T10:36:48.858Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-03T10:36:48.861Z [DEBUG] Getting matching hook commands for PreToolUse with query: Bash
+2025-12-03T10:36:48.861Z [DEBUG] Found 1 hook matchers in settings
+2025-12-03T10:36:48.861Z [DEBUG] Matched 1 unique hooks for query "Bash" (1 before deduplication)
+2025-12-03T10:36:48.861Z [DEBUG] Getting matching hook commands for PreToolUse with query: Bash
+2025-12-03T10:36:48.861Z [DEBUG] Found 1 hook matchers in settings
+2025-12-03T10:36:48.861Z [DEBUG] Matched 1 unique hooks for query "Bash" (1 before deduplication)
+2025-12-03T10:36:48.895Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:36:48.904Z [DEBUG] tree-sitter: WASM files not found
+2025-12-03T10:36:48.916Z [DEBUG] No session environment scripts found
+2025-12-03T10:36:48.917Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:36:48.969Z [DEBUG] Getting matching hook commands for PostToolUse with query: Bash
+2025-12-03T10:36:48.969Z [DEBUG] Found 1 hook matchers in settings
+2025-12-03T10:36:48.969Z [DEBUG] Matched 2 unique hooks for query "Bash" (2 before deduplication)
+2025-12-03T10:36:48.985Z [DEBUG] Getting matching hook commands for PostToolUse with query: Bash
+2025-12-03T10:36:48.985Z [DEBUG] Found 1 hook matchers in settings
+2025-12-03T10:36:48.985Z [DEBUG] Matched 2 unique hooks for query "Bash" (2 before deduplication)
+2025-12-03T10:36:48.992Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:36:48.992Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:36:49.032Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:36:49.032Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:36:49.069Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-03T10:36:49.069Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-03T10:36:49.071Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-03T10:36:49.071Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-03T10:36:49.533Z [DEBUG] Stream started - received first chunk
+2025-12-03T10:36:50.013Z [DEBUG] Stream started - received first chunk
+2025-12-03T10:36:50.890Z [DEBUG] Stream started - received first chunk
+2025-12-03T10:36:55.254Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-03T10:36:55.256Z [DEBUG] executePreToolHooks called for tool: Glob
+2025-12-03T10:36:55.257Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-03T10:36:55.259Z [DEBUG] Getting matching hook commands for PreToolUse with query: Bash
+2025-12-03T10:36:55.259Z [DEBUG] Found 1 hook matchers in settings
+2025-12-03T10:36:55.259Z [DEBUG] Matched 1 unique hooks for query "Bash" (1 before deduplication)
+2025-12-03T10:36:55.259Z [DEBUG] Getting matching hook commands for PreToolUse with query: Glob
+2025-12-03T10:36:55.259Z [DEBUG] Found 1 hook matchers in settings
+2025-12-03T10:36:55.259Z [DEBUG] Matched 1 unique hooks for query "Glob" (1 before deduplication)
+2025-12-03T10:36:55.259Z [DEBUG] Getting matching hook commands for PreToolUse with query: Bash
+2025-12-03T10:36:55.259Z [DEBUG] Found 1 hook matchers in settings
+2025-12-03T10:36:55.259Z [DEBUG] Matched 1 unique hooks for query "Bash" (1 before deduplication)
+2025-12-03T10:36:55.280Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:36:55.293Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:36:55.306Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:36:55.332Z [DEBUG] Getting matching hook commands for PostToolUse with query: Glob
+2025-12-03T10:36:55.332Z [DEBUG] Found 1 hook matchers in settings
+2025-12-03T10:36:55.332Z [DEBUG] Matched 2 unique hooks for query "Glob" (2 before deduplication)
+2025-12-03T10:36:55.345Z [DEBUG] Getting matching hook commands for PostToolUse with query: Bash
+2025-12-03T10:36:55.345Z [DEBUG] Found 1 hook matchers in settings
+2025-12-03T10:36:55.345Z [DEBUG] Matched 2 unique hooks for query "Bash" (2 before deduplication)
+2025-12-03T10:36:55.354Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:36:55.354Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:36:55.381Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:36:55.381Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:36:55.423Z [DEBUG] Getting matching hook commands for PostToolUse with query: Bash
+2025-12-03T10:36:55.423Z [DEBUG] Found 1 hook matchers in settings
+2025-12-03T10:36:55.423Z [DEBUG] Matched 2 unique hooks for query "Bash" (2 before deduplication)
+2025-12-03T10:36:55.430Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:36:55.430Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:36:55.461Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-03T10:36:55.461Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-03T10:36:55.463Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-03T10:36:55.463Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-03T10:36:56.057Z [DEBUG] Stream started - received first chunk
+2025-12-03T10:36:56.235Z [DEBUG] Stream started - received first chunk
+2025-12-03T10:36:57.087Z [DEBUG] Stream started - received first chunk
+2025-12-03T10:36:59.413Z [DEBUG] executePreToolHooks called for tool: Read
+2025-12-03T10:36:59.415Z [DEBUG] executePreToolHooks called for tool: Read
+2025-12-03T10:36:59.416Z [DEBUG] Getting matching hook commands for PreToolUse with query: Read
+2025-12-03T10:36:59.416Z [DEBUG] Found 1 hook matchers in settings
+2025-12-03T10:36:59.416Z [DEBUG] Matched 1 unique hooks for query "Read" (1 before deduplication)
+2025-12-03T10:36:59.416Z [DEBUG] Getting matching hook commands for PreToolUse with query: Read
+2025-12-03T10:36:59.416Z [DEBUG] Found 1 hook matchers in settings
+2025-12-03T10:36:59.416Z [DEBUG] Matched 1 unique hooks for query "Read" (1 before deduplication)
+2025-12-03T10:36:59.426Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:36:59.436Z [DEBUG] Getting matching hook commands for PostToolUse with query: Read
+2025-12-03T10:36:59.436Z [DEBUG] Found 1 hook matchers in settings
+2025-12-03T10:36:59.436Z [DEBUG] Matched 2 unique hooks for query "Read" (2 before deduplication)
+2025-12-03T10:36:59.437Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:36:59.447Z [DEBUG] Getting matching hook commands for PostToolUse with query: Read
+2025-12-03T10:36:59.447Z [DEBUG] Found 1 hook matchers in settings
+2025-12-03T10:36:59.447Z [DEBUG] Matched 2 unique hooks for query "Read" (2 before deduplication)
+2025-12-03T10:36:59.450Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:36:59.450Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:36:59.476Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:36:59.476Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:36:59.503Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-03T10:36:59.503Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-03T10:36:59.505Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-03T10:36:59.505Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-03T10:37:01.557Z [DEBUG] Stream started - received first chunk
+2025-12-03T10:37:06.710Z [DEBUG] executePreToolHooks called for tool: TodoWrite
+2025-12-03T10:37:06.712Z [DEBUG] Getting matching hook commands for PreToolUse with query: TodoWrite
+2025-12-03T10:37:06.712Z [DEBUG] Found 1 hook matchers in settings
+2025-12-03T10:37:06.712Z [DEBUG] Matched 1 unique hooks for query "TodoWrite" (1 before deduplication)
+2025-12-03T10:37:06.720Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:37:06.725Z [DEBUG] Writing to temp file: /Users/pretor/.claude/todos/9988d754-f11d-42d7-9270-24471b6ddb8f-agent-9988d754-f11d-42d7-9270-24471b6ddb8f.json.tmp.28420.1764758226725
+2025-12-03T10:37:06.725Z [DEBUG] Preserving file permissions: 100600
+2025-12-03T10:37:06.730Z [DEBUG] Temp file written successfully, size: 718 bytes
+2025-12-03T10:37:06.730Z [DEBUG] Applied original permissions to temp file
+2025-12-03T10:37:06.730Z [DEBUG] Renaming /Users/pretor/.claude/todos/9988d754-f11d-42d7-9270-24471b6ddb8f-agent-9988d754-f11d-42d7-9270-24471b6ddb8f.json.tmp.28420.1764758226725 to /Users/pretor/.claude/todos/9988d754-f11d-42d7-9270-24471b6ddb8f-agent-9988d754-f11d-42d7-9270-24471b6ddb8f.json
+2025-12-03T10:37:06.730Z [DEBUG] File /Users/pretor/.claude/todos/9988d754-f11d-42d7-9270-24471b6ddb8f-agent-9988d754-f11d-42d7-9270-24471b6ddb8f.json written atomically
+2025-12-03T10:37:06.736Z [DEBUG] Getting matching hook commands for PostToolUse with query: TodoWrite
+2025-12-03T10:37:06.736Z [DEBUG] Found 1 hook matchers in settings
+2025-12-03T10:37:06.736Z [DEBUG] Matched 2 unique hooks for query "TodoWrite" (2 before deduplication)
+2025-12-03T10:37:06.742Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:37:06.743Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:37:06.780Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-03T10:37:06.780Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-03T10:37:06.783Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-03T10:37:06.783Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-03T10:37:08.478Z [DEBUG] Stream started - received first chunk
+2025-12-03T10:37:21.558Z [DEBUG] Getting matching hook commands for Stop with query: undefined
+2025-12-03T10:37:21.558Z [DEBUG] Found 1 hook matchers in settings
+2025-12-03T10:37:21.558Z [DEBUG] Matched 2 unique hooks for query "no match query" (2 before deduplication)
+2025-12-03T10:37:21.573Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:37:21.577Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:37:21.608Z [DEBUG] Writing to temp file: /Users/pretor/.claude.json.tmp.28420.1764758241608
+2025-12-03T10:37:21.608Z [DEBUG] Preserving file permissions: 100644
+2025-12-03T10:37:21.615Z [DEBUG] Temp file written successfully, size: 55248 bytes
+2025-12-03T10:37:21.615Z [DEBUG] Applied original permissions to temp file
+2025-12-03T10:37:21.615Z [DEBUG] Renaming /Users/pretor/.claude.json.tmp.28420.1764758241608 to /Users/pretor/.claude.json
+2025-12-03T10:37:21.615Z [DEBUG] File /Users/pretor/.claude.json written atomically
+2025-12-03T10:37:21.619Z [DEBUG] Writing to temp file: /Users/pretor/.claude.json.tmp.28420.1764758241619
+2025-12-03T10:37:21.619Z [DEBUG] Preserving file permissions: 100644
+2025-12-03T10:37:21.623Z [DEBUG] Temp file written successfully, size: 55248 bytes
+2025-12-03T10:37:21.623Z [DEBUG] Applied original permissions to temp file
+2025-12-03T10:37:21.623Z [DEBUG] Renaming /Users/pretor/.claude.json.tmp.28420.1764758241619 to /Users/pretor/.claude.json
+2025-12-03T10:37:21.623Z [DEBUG] File /Users/pretor/.claude.json written atomically
+2025-12-03T10:38:21.602Z [DEBUG] Getting matching hook commands for Notification with query: idle_prompt
+2025-12-03T10:38:21.602Z [DEBUG] Found 0 hook matchers in settings
+2025-12-03T10:38:21.602Z [DEBUG] Matched 0 unique hooks for query "idle_prompt" (0 before deduplication)
+2025-12-03T10:39:35.404Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-03T10:39:35.404Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-03T10:39:35.415Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-03T10:39:35.415Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-03T10:39:35.435Z [DEBUG] Getting matching hook commands for UserPromptSubmit with query: undefined
+2025-12-03T10:39:35.435Z [DEBUG] Found 1 hook matchers in settings
+2025-12-03T10:39:35.435Z [DEBUG] Matched 2 unique hooks for query "no match query" (2 before deduplication)
+2025-12-03T10:39:35.442Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:39:35.442Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:39:35.443Z [DEBUG] FileHistory: Making snapshot for message 4b2513fa-fec4-4d8a-9894-601e467282c2
+2025-12-03T10:39:35.445Z [DEBUG] FileHistory: Added snapshot for 4b2513fa-fec4-4d8a-9894-601e467282c2, tracking 0 files
+2025-12-03T10:39:38.898Z [DEBUG] Stream started - received first chunk
+2025-12-03T10:39:48.293Z [DEBUG] executePreToolHooks called for tool: Glob
+2025-12-03T10:39:48.296Z [DEBUG] executePreToolHooks called for tool: Read
+2025-12-03T10:39:48.299Z [DEBUG] Getting matching hook commands for PreToolUse with query: Glob
+2025-12-03T10:39:48.299Z [DEBUG] Found 1 hook matchers in settings
+2025-12-03T10:39:48.299Z [DEBUG] Matched 1 unique hooks for query "Glob" (1 before deduplication)
+2025-12-03T10:39:48.299Z [DEBUG] Getting matching hook commands for PreToolUse with query: Read
+2025-12-03T10:39:48.299Z [DEBUG] Found 1 hook matchers in settings
+2025-12-03T10:39:48.299Z [DEBUG] Matched 1 unique hooks for query "Read" (1 before deduplication)
+2025-12-03T10:39:48.314Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:39:48.328Z [DEBUG] Getting matching hook commands for PostToolUse with query: Read
+2025-12-03T10:39:48.328Z [DEBUG] Found 1 hook matchers in settings
+2025-12-03T10:39:48.328Z [DEBUG] Matched 2 unique hooks for query "Read" (2 before deduplication)
+2025-12-03T10:39:48.330Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:39:48.342Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:39:48.342Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:39:48.382Z [DEBUG] Getting matching hook commands for PostToolUse with query: Glob
+2025-12-03T10:39:48.382Z [DEBUG] Found 1 hook matchers in settings
+2025-12-03T10:39:48.382Z [DEBUG] Matched 2 unique hooks for query "Glob" (2 before deduplication)
+2025-12-03T10:39:48.387Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:39:48.387Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:39:48.420Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-03T10:39:48.420Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-03T10:39:48.423Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-03T10:39:48.423Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-03T10:39:53.792Z [DEBUG] Stream started - received first chunk
+2025-12-03T10:40:00.331Z [DEBUG] executePreToolHooks called for tool: Edit
+2025-12-03T10:40:00.334Z [DEBUG] Getting matching hook commands for PreToolUse with query: Edit
+2025-12-03T10:40:00.334Z [DEBUG] Found 1 hook matchers in settings
+2025-12-03T10:40:00.334Z [DEBUG] Matched 1 unique hooks for query "Edit" (1 before deduplication)
+2025-12-03T10:40:00.344Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:40:00.352Z [DEBUG] Reading through symlink: /Users/pretor/.claude/settings.json -> /Users/pretor/Projects/PAI/.claude/settings.json
+2025-12-03T10:40:00.361Z [DEBUG] FileHistory: Tracked file modification for /Users/pretor/.claude/settings.json
+2025-12-03T10:40:00.363Z [DEBUG] Writing to temp file: /Users/pretor/.claude/settings.json.tmp.28420.1764758400363
+2025-12-03T10:40:00.363Z [DEBUG] Preserving file permissions: 100644
+2025-12-03T10:40:00.368Z [DEBUG] Temp file written successfully, size: 5249 bytes
+2025-12-03T10:40:00.368Z [DEBUG] Applied original permissions to temp file
+2025-12-03T10:40:00.368Z [DEBUG] Renaming /Users/pretor/.claude/settings.json.tmp.28420.1764758400363 to /Users/pretor/.claude/settings.json
+2025-12-03T10:40:00.368Z [DEBUG] File /Users/pretor/.claude/settings.json written atomically
+2025-12-03T10:40:00.376Z [DEBUG] Getting matching hook commands for PostToolUse with query: Edit
+2025-12-03T10:40:00.376Z [DEBUG] Found 1 hook matchers in settings
+2025-12-03T10:40:00.376Z [DEBUG] Matched 2 unique hooks for query "Edit" (2 before deduplication)
+2025-12-03T10:40:00.381Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:40:00.381Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:40:00.433Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-03T10:40:00.433Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-03T10:40:00.436Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-03T10:40:00.436Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-03T10:40:01.387Z [DEBUG] Detected change to /Users/pretor/.claude/settings.json
+2025-12-03T10:40:01.399Z [DEBUG] Settings changed from userSettings, updating AppState
+2025-12-03T10:40:01.401Z [DEBUG] Replacing all allow rules for destination 'userSettings' with 15 rule(s): ["Bash","Read","Write","Edit","MultiEdit","Glob","Grep","WebFetch(domain:*)","WebSearch","NotebookRead","NotebookEdit","TodoWrite","ExitPlanMode","Task","mcp__*"]
+2025-12-03T10:40:01.401Z [DEBUG] Replacing all deny rules for destination 'userSettings' with 32 rule(s): ["Bash(diskutil partitionDisk)","Bash(diskutil eraseDisk)","Bash(diskutil eraseVolume)","Bash(diskutil reformat)","Bash(diskutil zeroDisk)","Bash(diskutil appleRAID)","Bash(diskutil randomDisk)","Bash(diskutil coreStorage)","Bash(diskutil cs)","Bash(diskutil disableJournal)","Bash(diskutil resetFusion)","Bash(diskutil disableOwnership)","Bash(diskutil apfs deleteContainer)","Bash(diskutil apfs eraseVolume)","Bash(diskutil apfs decryptVolume)","Bash(diskutil apfs changePassphrase)","Bash(diskutil apfs deleteVolume)","Bash(diskutil apfs deleteVolumeGroup)","Bash(diskutil apfs deleteSnapshot)","Bash(rm -rf /)","Bash(rm -rf /*)","Bash(rm -rf ~)","Bash(rm -rf $HOME)","Bash(rm -rf $PAI_HOME)","Bash(rm -rf $PAI_DIR)","Bash(sudo rm -rf /)","Bash(sudo rm -rf /*)","Bash(fork bomb)","Bash(dd if=/dev/zero of=/dev/sda)","Bash(mkfs.ext4 /dev/sda)","Bash( /dev/sda)","Bash(> /dev/sda)"]
+2025-12-03T10:40:01.401Z [DEBUG] Replacing all allow rules for destination 'localSettings' with 14 rule(s): ["WebSearch","WebFetch(domain:github.com)","WebFetch(domain:platform.claude.com)","Bash(xargs -I {} sh -c 'echo \"\"\"\"=== {} ===\"\"\"\" && head -40 \"\"\"\"{}\"\"\"\"')","Bash(git --version:*)","Bash(git config:*)","Bash(claude --version)","Bash(bun --version:*)","Bash(node --version)","Bash(gh auth status:*)","Bash(gh repo fork:*)","Bash(bun install)","Bash(cat:*)","Bash(bun:*)"]
+2025-12-03T10:40:06.942Z [DEBUG] Stream started - received first chunk
+2025-12-03T10:40:10.637Z [DEBUG] executePreToolHooks called for tool: Bash
+2025-12-03T10:40:10.639Z [DEBUG] Getting matching hook commands for PreToolUse with query: Bash
+2025-12-03T10:40:10.639Z [DEBUG] Found 1 hook matchers in settings
+2025-12-03T10:40:10.639Z [DEBUG] Matched 1 unique hooks for query "Bash" (1 before deduplication)
+2025-12-03T10:40:10.649Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:40:10.718Z [DEBUG] Getting matching hook commands for PostToolUse with query: Bash
+2025-12-03T10:40:10.718Z [DEBUG] Found 1 hook matchers in settings
+2025-12-03T10:40:10.718Z [DEBUG] Matched 2 unique hooks for query "Bash" (2 before deduplication)
+2025-12-03T10:40:10.725Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:40:10.725Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:40:10.758Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-03T10:40:10.758Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-03T10:40:10.760Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-03T10:40:10.760Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-03T10:40:11.352Z [DEBUG] Stream started - received first chunk
+2025-12-03T10:40:13.543Z [DEBUG] Stream started - received first chunk
+2025-12-03T10:40:19.396Z [DEBUG] Getting matching hook commands for Stop with query: undefined
+2025-12-03T10:40:19.396Z [DEBUG] Found 1 hook matchers in settings
+2025-12-03T10:40:19.396Z [DEBUG] Matched 2 unique hooks for query "no match query" (2 before deduplication)
+2025-12-03T10:40:19.410Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:40:19.415Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:40:19.445Z [DEBUG] Writing to temp file: /Users/pretor/.claude.json.tmp.28420.1764758419445
+2025-12-03T10:40:19.445Z [DEBUG] Preserving file permissions: 100644
+2025-12-03T10:40:19.454Z [DEBUG] Temp file written successfully, size: 55248 bytes
+2025-12-03T10:40:19.454Z [DEBUG] Applied original permissions to temp file
+2025-12-03T10:40:19.454Z [DEBUG] Renaming /Users/pretor/.claude.json.tmp.28420.1764758419445 to /Users/pretor/.claude.json
+2025-12-03T10:40:19.454Z [DEBUG] File /Users/pretor/.claude.json written atomically
+2025-12-03T10:40:19.459Z [DEBUG] Writing to temp file: /Users/pretor/.claude.json.tmp.28420.1764758419459
+2025-12-03T10:40:19.459Z [DEBUG] Preserving file permissions: 100644
+2025-12-03T10:40:19.464Z [DEBUG] Temp file written successfully, size: 55248 bytes
+2025-12-03T10:40:19.464Z [DEBUG] Applied original permissions to temp file
+2025-12-03T10:40:19.464Z [DEBUG] Renaming /Users/pretor/.claude.json.tmp.28420.1764758419459 to /Users/pretor/.claude.json
+2025-12-03T10:40:19.464Z [DEBUG] File /Users/pretor/.claude.json written atomically
+2025-12-03T10:41:19.682Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-03T10:41:19.682Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-03T10:41:19.686Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-03T10:41:19.686Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-03T10:41:19.704Z [DEBUG] Getting matching hook commands for UserPromptSubmit with query: undefined
+2025-12-03T10:41:19.704Z [DEBUG] Found 1 hook matchers in settings
+2025-12-03T10:41:19.704Z [DEBUG] Matched 2 unique hooks for query "no match query" (2 before deduplication)
+2025-12-03T10:41:19.712Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:41:19.712Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:41:19.714Z [DEBUG] FileHistory: Making snapshot for message 84a58777-865f-4baf-9fc3-14968d0effa7
+2025-12-03T10:41:19.720Z [DEBUG] FileHistory: Added snapshot for 84a58777-865f-4baf-9fc3-14968d0effa7, tracking 1 files
+2025-12-03T10:41:21.307Z [DEBUG] Stream started - received first chunk
+2025-12-03T10:41:23.094Z [DEBUG] Stream started - received first chunk
+2025-12-03T10:41:38.432Z [DEBUG] executePreToolHooks called for tool: Edit
+2025-12-03T10:41:38.436Z [DEBUG] Getting matching hook commands for PreToolUse with query: Edit
+2025-12-03T10:41:38.436Z [DEBUG] Found 1 hook matchers in settings
+2025-12-03T10:41:38.436Z [DEBUG] Matched 1 unique hooks for query "Edit" (1 before deduplication)
+2025-12-03T10:41:38.444Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:41:38.459Z [DEBUG] FileHistory: Tracked file modification for /Users/pretor/Documents/PAI - TPOS/SESSION_STATUS.md
+2025-12-03T10:41:38.461Z [DEBUG] Writing to temp file: /Users/pretor/Documents/PAI - TPOS/SESSION_STATUS.md.tmp.28420.1764758498461
+2025-12-03T10:41:38.461Z [DEBUG] Preserving file permissions: 100600
+2025-12-03T10:41:38.466Z [DEBUG] Temp file written successfully, size: 2488 bytes
+2025-12-03T10:41:38.466Z [DEBUG] Applied original permissions to temp file
+2025-12-03T10:41:38.466Z [DEBUG] Renaming /Users/pretor/Documents/PAI - TPOS/SESSION_STATUS.md.tmp.28420.1764758498461 to /Users/pretor/Documents/PAI - TPOS/SESSION_STATUS.md
+2025-12-03T10:41:38.467Z [DEBUG] File /Users/pretor/Documents/PAI - TPOS/SESSION_STATUS.md written atomically
+2025-12-03T10:41:38.475Z [DEBUG] Getting matching hook commands for PostToolUse with query: Edit
+2025-12-03T10:41:38.475Z [DEBUG] Found 1 hook matchers in settings
+2025-12-03T10:41:38.475Z [DEBUG] Matched 2 unique hooks for query "Edit" (2 before deduplication)
+2025-12-03T10:41:38.482Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:41:38.482Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:41:38.533Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2025-12-03T10:41:38.533Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2025-12-03T10:41:38.535Z [DEBUG] Hooks: Found 0 total hooks in registry
+2025-12-03T10:41:38.535Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2025-12-03T10:41:39.911Z [DEBUG] Stream started - received first chunk
+2025-12-03T10:41:46.206Z [DEBUG] Language not supported while highlighting code, falling back to markdown:
+2025-12-03T10:41:46.253Z [DEBUG] Getting matching hook commands for Stop with query: undefined
+2025-12-03T10:41:46.253Z [DEBUG] Found 1 hook matchers in settings
+2025-12-03T10:41:46.253Z [DEBUG] Matched 2 unique hooks for query "no match query" (2 before deduplication)
+2025-12-03T10:41:46.265Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:41:46.268Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:41:46.295Z [DEBUG] Writing to temp file: /Users/pretor/.claude.json.tmp.28420.1764758506295
+2025-12-03T10:41:46.295Z [DEBUG] Preserving file permissions: 100644
+2025-12-03T10:41:46.300Z [DEBUG] Temp file written successfully, size: 55248 bytes
+2025-12-03T10:41:46.300Z [DEBUG] Applied original permissions to temp file
+2025-12-03T10:41:46.300Z [DEBUG] Renaming /Users/pretor/.claude.json.tmp.28420.1764758506295 to /Users/pretor/.claude.json
+2025-12-03T10:41:46.300Z [DEBUG] File /Users/pretor/.claude.json written atomically
+2025-12-03T10:41:46.304Z [DEBUG] Writing to temp file: /Users/pretor/.claude.json.tmp.28420.1764758506304
+2025-12-03T10:41:46.304Z [DEBUG] Preserving file permissions: 100644
+2025-12-03T10:41:46.310Z [DEBUG] Temp file written successfully, size: 55248 bytes
+2025-12-03T10:41:46.310Z [DEBUG] Applied original permissions to temp file
+2025-12-03T10:41:46.310Z [DEBUG] Renaming /Users/pretor/.claude.json.tmp.28420.1764758506304 to /Users/pretor/.claude.json
+2025-12-03T10:41:46.310Z [DEBUG] File /Users/pretor/.claude.json written atomically
+2025-12-03T10:42:08.802Z [DEBUG] Getting matching hook commands for SessionEnd with query: prompt_input_exit
+2025-12-03T10:42:08.802Z [DEBUG] Found 1 hook matchers in settings
+2025-12-03T10:42:08.802Z [DEBUG] Matched 2 unique hooks for query "prompt_input_exit" (2 before deduplication)
+2025-12-03T10:42:08.806Z [DEBUG] FileHistory: Making snapshot for message 7a328ab9-49f0-4de1-b558-792b5e87ab6b
+2025-12-03T10:42:08.813Z [DEBUG] FileHistory: Added snapshot for 7a328ab9-49f0-4de1-b558-792b5e87ab6b, tracking 2 files
+2025-12-03T10:42:08.815Z [DEBUG] UserCommandMessage rendering: "exit" (args: "none")
+2025-12-03T10:42:08.815Z [DEBUG] isSkillFormat: false, prefix: "/"
+2025-12-03T10:42:08.841Z [DEBUG] SessionEnd:prompt_input_exit [${PAI_DIR}/hooks/capture-session-summary.ts] completed with status 127
+2025-12-03T10:42:08.841Z [DEBUG] Hook output does not start with {, treating as plain text
+2025-12-03T10:42:08.841Z [DEBUG] SessionEnd:prompt_input_exit [${PAI_DIR}/hooks/capture-all-events.ts --event-type SessionEnd] completed with status 127
+2025-12-03T10:42:08.841Z [DEBUG] Hook output does not start with {, treating as plain text

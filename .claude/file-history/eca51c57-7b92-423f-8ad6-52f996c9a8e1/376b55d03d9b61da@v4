@@ -1,0 +1,314 @@
+# TPOS - Finale Konfiguration
+
+> Entscheidungen und Implementierungsstrategie - Stand: 2025-12-03
+
+---
+
+## 1. Executive Summary
+
+**TPOS** kombiniert PAI (Runtime) mit BMAD (Methodik) zu einem hybriden Personal AI Operating System.
+
+**Kernentscheidung:** Automatisierte Skill-Erstellung statt manueller Entwicklung
+
+**Generatoren:**
+- **PAI Createskill** - Einzelne Skills, schnell, template-basiert
+- **BMAD Builder** - Domain-Ökosysteme, komplex, questionnaire-gesteuert
+
+**Runtime-Stack:**
+- **Bun** ersetzt Node.js + NPM
+- **TypeScript** ersetzt Python für Tools/Scripts
+- **Bash** bleibt für Shell-Operationen
+
+```
+┌─────────────────────────────────────────────────┐
+│  PAI Runtime Stack                               │
+├─────────────────────────────────────────────────┤
+│  Bun          →  ersetzt Node.js + NPM          │
+│  TypeScript   →  ersetzt Python (für Tools)     │
+│  Bash         →  bleibt (Shell-Operationen)     │
+└─────────────────────────────────────────────────┘
+```
+
+---
+
+## 2. Finale Konfigurationen
+
+### 2.1 CIS (Creative Intelligence Suite)
+
+| Entscheidung | Wert |
+|--------------|------|
+| **Workflows** | Alle 5 gleichwertig |
+| **Voice** | Aktiviert (ElevenLabs) |
+| **Erstellung** | Via Createskill |
+
+**Workflows:**
+1. Brainstorming (Carson Agent)
+2. Design Thinking (Maya Agent)
+3. Innovation Strategy (Victor Agent)
+4. Problem Solving (Dr. Quinn Agent)
+5. Storytelling (Sophia Agent)
+
+**Voice-Konfiguration pro Agent:**
+
+| Agent | Prosody-Stil | Speed |
+|-------|-------------|-------|
+| Carson | Enthusiastisch, "YES AND" | 1.0-1.15 |
+| Maya | Rhythmisch, improvisativ | 0.95-1.0 |
+| Victor | Bold, strategische Pausen | 0.9-1.0 |
+| Quinn | Analytisch, präzise | 0.95-1.0 |
+| Sophia | Blumig, verzaubernd | 0.9-1.0 |
+
+### 2.2 Document-Skills
+
+| Entscheidung | Wert |
+|--------------|------|
+| **Formate** | Alle 4 |
+| **Erstellung** | Plug & Play (keine) |
+
+**Aktivierte Plugins:**
+- `document-skills:xlsx` - Excel
+- `document-skills:docx` - Word
+- `document-skills:pptx` - PowerPoint
+- `document-skills:pdf` - PDF
+
+### 2.3 Skill-Erstellung
+
+| Entscheidung | Wert |
+|--------------|------|
+| **Methode** | Automatisiert |
+| **Primär** | BMAD Builder für Domains |
+| **Sekundär** | Createskill für Einzelskills |
+| **Manuell** | Nein |
+
+**Dual-Generator Strategie:**
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    Skill-Generierung                         │
+│                                                              │
+│  Einzelne Skills          Domain-Ökosysteme                 │
+│  ───────────────          ─────────────────                 │
+│       │                          │                          │
+│       ▼                          ▼                          │
+│  ┌─────────────┐          ┌─────────────┐                  │
+│  │ Createskill │          │ BMAD Builder│                  │
+│  │             │          │             │                  │
+│  │ • Templates │          │ • Questions │                  │
+│  │ • 5-10 Min  │          │ • 30+ Min   │                  │
+│  │ • Voice-    │          │ • Multi-    │                  │
+│  │   ready     │          │   Agent     │                  │
+│  └─────────────┘          └─────────────┘                  │
+│       │                          │                          │
+│       └──────────┬───────────────┘                          │
+│                  ▼                                          │
+│         ~/.claude/skills/                                   │
+│         (Konsistente Ergebnisse)                           │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### 2.4 Domain-Priorität
+
+| Priorität | Domain | Generator | Phase |
+|-----------|--------|-----------|-------|
+| 1 | Strategy & Consulting | BMAD Builder | Phase 4a |
+| 2 | CIS (Creative) | Createskill | Phase 4b |
+| 3 | Marketing | BMAD Builder | Phase 4c |
+| 4 | Finance | Createskill | Phase 4d |
+| 5 | PKM/PRM/Tasks | Createskill | Phase 5 |
+
+---
+
+## 3. Implementierungs-Phasen (Final)
+
+### Phase 1: Core Installation
+- [ ] PAI Repository forken
+- [ ] Symlink erstellen
+- [ ] API Keys konfigurieren
+- [ ] Unwanted Skills entfernen
+- [ ] Voice Integration verifizieren
+
+### Phase 2: Training
+- [ ] UOCS verstehen
+- [ ] **Createskill lernen** (wichtig!)
+- [ ] Voice-Feedback testen
+- [ ] Agents ausprobieren
+
+### Phase 3: Integration
+- [ ] BMAD Builder Skill installieren
+- [ ] C.O.R.E. Framework als Reflexions-Tool
+- [ ] Document-Skills aktivieren (Plug & Play)
+- [ ] Eigenes Branding erstellen
+
+### Phase 4a: Strategy & Consulting (Priorität 1)
+- [ ] BMAD Builder starten: "Erstelle Strategy & Consulting Modul"
+- [ ] Questionnaire beantworten
+- [ ] Generierte Agents/Workflows prüfen
+- [ ] Knowledge-Base erweitern
+
+**Erwartete Outputs:**
+```
+~/.claude/skills/StrategyConsulting/
+├── SKILL.md
+├── agents/
+│   ├── strategist.md
+│   └── consultant.md
+├── workflows/
+│   ├── StrategyAnalysis.md
+│   ├── CompetitorResearch.md
+│   ├── ClientProposal.md
+│   └── WorkshopFacilitation.md
+├── knowledge-base/
+│   ├── frameworks.csv (Porter, SWOT, McKinsey, etc.)
+│   └── methodologies.md
+└── templates/
+    ├── strategy-deck.md
+    └── proposal-template.md
+```
+
+### Phase 4b: CIS Integration
+- [ ] Createskill: "Erstelle CIS Brainstorming Skill mit Voice"
+- [ ] Createskill: "Erstelle CIS Design Thinking Skill"
+- [ ] Createskill: "Erstelle CIS Innovation Strategy Skill"
+- [ ] Createskill: "Erstelle CIS Problem Solving Skill"
+- [ ] Createskill: "Erstelle CIS Storytelling Skill"
+
+**Pro Skill generiert:**
+```
+~/.claude/skills/CIS-[Workflow]/
+├── SKILL.md (mit USE WHEN)
+├── workflows/
+│   └── [Workflow].md
+├── agents/
+│   └── [agent].md (mit Voice ID + Prosody)
+└── frameworks/
+    └── [methods].csv
+```
+
+### Phase 4c-d: Weitere Domains
+- Marketing (BMAD Builder)
+- Finance (Createskill)
+
+### Phase 5: Obsidian System
+- PKM Skill (Createskill)
+- PRM Skill (Createskill)
+- TaskManager Skill (Createskill)
+
+---
+
+## 4. Generator-Entscheidungsbaum
+
+```
+Neuen Skill benötigt?
+        │
+        ▼
+┌───────────────────────┐
+│ Wie komplex?          │
+└───────────────────────┘
+        │
+        ├── Einzelner Workflow ──────────► Createskill
+        │   (Newsletter, Report, etc.)
+        │
+        ├── Domain mit Agent-Team ───────► BMAD Builder
+        │   (Strategy, Marketing, etc.)
+        │
+        ├── Voice-Integration ───────────► Createskill
+        │   (Prosody-Marker nötig)
+        │
+        └── Anthropic Plugin ────────────► Plug & Play
+            (document-skills)
+```
+
+---
+
+## 5. Qualitätssicherung
+
+### Createskill Output-Checkliste
+
+- [ ] SKILL.md hat korrektes Frontmatter
+- [ ] USE WHEN Trigger sind spezifisch
+- [ ] TitleCase Naming (PAI-Konvention)
+- [ ] Voice-Prosody definiert (falls Voice)
+- [ ] Workflow-Dateien vollständig
+
+### BMAD Builder Output-Checkliste
+
+- [ ] Alle Agents definiert
+- [ ] Workflows referenzieren Agents
+- [ ] Knowledge-Base gefüllt
+- [ ] Templates vorhanden
+- [ ] USE WHEN für Routing
+
+---
+
+## 6. Erwartetes Endergebnis
+
+```
+~/.claude/skills/
+├── CORE/                    # PAI Core (unverändert)
+├── Createskill/             # Meta-Skill für Einzelskills
+├── BMAD-Builder/            # Meta-Skill für Domains
+├── StrategyConsulting/      # BMAD Builder generiert
+├── CIS-Brainstorming/       # Createskill generiert
+├── CIS-DesignThinking/      # Createskill generiert
+├── CIS-Innovation/          # Createskill generiert
+├── CIS-ProblemSolving/      # Createskill generiert
+├── CIS-Storytelling/        # Createskill generiert
+├── Marketing/               # BMAD Builder generiert
+├── Finance/                 # Createskill generiert
+├── PKM/                     # Createskill generiert
+├── PRM/                     # Createskill generiert
+└── TaskManager/             # Createskill generiert
+```
+
+---
+
+## 7. Risiko-Mitigation
+
+| Risiko | Mitigation |
+|--------|------------|
+| Generator-Output nicht konsistent | Templates standardisieren |
+| Zu viele Skills | Domain-Konsolidierung |
+| Voice-Integration fehlerhaft | Prosody-Testing vor Deployment |
+| BMAD Builder zu komplex | Mit kleiner Domain starten |
+
+---
+
+## 8. Quick Reference
+
+### Createskill Prompt-Template
+
+```
+"Erstelle einen [Name] Skill für [Zweck].
+Aktiviere Voice mit [Prosody-Stil].
+Inkludiere [Workflows/Templates]."
+```
+
+### BMAD Builder Prompt-Template
+
+```
+"Erstelle ein [Domain] Modul mit folgenden Anforderungen:
+- Agents: [Liste]
+- Workflows: [Liste]
+- Frameworks: [Liste]
+- Deliverables: [Liste]"
+```
+
+---
+
+## 9. Nächste Aktion
+
+Nach Genehmigung dieser Konfiguration:
+
+1. **Heute:** PAI Repository forken
+2. **Heute:** Backup erstellen
+3. **Diese Woche:** Phase 1 Installation
+4. **Nächste Woche:** Phase 2 Training (Createskill lernen!)
+
+---
+
+## Referenzen
+
+- [PAI-Analysis.md](./PAI-Analysis.md)
+- [BMAD-Analysis.md](./BMAD-Analysis.md)
+- [PAI-vs-BMAD-Comparison.md](./PAI-vs-BMAD-Comparison.md)
+- [Research-CIS-PublicSkills-BMADBuilder.md](./Research-CIS-PublicSkills-BMADBuilder.md)

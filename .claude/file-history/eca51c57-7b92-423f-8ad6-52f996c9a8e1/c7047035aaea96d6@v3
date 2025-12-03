@@ -1,0 +1,430 @@
+# Claude Code Best Practices - Referenzguide
+
+> Offizielle Empfehlungen für Skills, Hooks, Commands, MCP und Agents
+
+---
+
+## 1. Skills
+
+### 1.1 Übersicht
+
+Agent Skills sind modulare, wiederverwendbare Fähigkeiten, die Claude's autonome Funktionalität erweitern. Im Gegensatz zu Slash Commands (user-invoked) sind Skills **model-invoked** - Claude entscheidet automatisch wann sie verwendet werden.
+
+### 1.2 Struktur
+
+**Erforderlich:** `SKILL.md` Datei mit YAML Frontmatter
+
+```yaml
+---
+name: your-skill-name
+description: Comprehensive description of what this Skill does and when Claude should use it
+---
+```
+
+**Vollständige Verzeichnisstruktur:**
+```
+my-skill/
+├── SKILL.md                          # Required
+├── supporting-docs/
+│   └── reference.md
+├── examples/
+│   └── example-usage.md
+├── templates/
+│   └── template.txt
+└── scripts/
+    └── helper.sh
+```
+
+### 1.3 Speicherorte
+
+| Scope | Location | Verfügbarkeit |
+|-------|----------|---------------|
+| Personal | `~/.claude/skills/` | Alle Projekte auf deinem Rechner |
+| Project | `.claude/skills/` | Nur aktuelles Projekt (via git geteilt) |
+| Plugin | Bundled with plugin | Abhängig von Plugin-Installation |
+
+### 1.4 Best Practices
+
+1. **Fokussierte Skills**
+   - Jeder Skill adressiert EINE primäre Fähigkeit
+   - Vermeide zu breite Beschreibungen
+   - ❌ "Helps with documents"
+   - ✅ "Extract text and tables from PDFs, fill form fields, merge PDF documents"
+
+2. **Spezifische, Trigger-aware Descriptions**
+   - Konkrete Beispiele in der Description
+   - Spezifische Use Cases und Keywords
+   - Erkläre wann dieser Skill vs. Alternativen
+
+3. **Umfassende Supporting Files**
+   - Referenz-Dokumentation
+   - Funktionierende Beispiele
+   - Templates die User brauchen könnten
+
+4. **Tool Restrictions für Security**
+   - `allowed-tools` Frontmatter für Einschränkungen
+   - Nützlich für read-only Workflows
+   ```yaml
+   ---
+   name: document-analyzer
+   allowed-tools: ["Read"]
+   ---
+   ```
+
+### 1.5 Anti-Patterns
+
+- ❌ Zu generische Skills
+- ❌ Vage Beschreibungen
+- ❌ Fehlende Dokumentation
+- ❌ Excessive Tool-Berechtigungen
+- ❌ Unmaintained Skills
+
+---
+
+## 2. Hooks
+
+### 2.1 Übersicht
+
+Hooks sind Extension Points für Automatisierung und Anpassung. Sie führen Shell-Commands oder LLM-basierte Entscheidungen an spezifischen Punkten im Claude Code Lifecycle aus.
+
+**WICHTIG:** "Claude Code hooks execute arbitrary shell commands on your system automatically." User tragen volle Verantwortung.
+
+### 2.2 Struktur
+
+```json
+{
+  "hooks": {
+    "EventName": [
+      {
+        "matcher": "ToolPattern",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "your-shell-command"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+### 2.3 Hook Types
+
+| Type | Zweck | Output |
+|------|-------|--------|
+| `command` | Bash Scripts ausführen | Exit Codes (0=success, 2=block) |
+| `prompt` | LLM-basierte Evaluation | JSON Response (limited support) |
+
+### 2.4 Unterstützte Events
+
+| Event | Trigger | Use Cases |
+|-------|---------|-----------|
+| `PreToolUse` | Vor Tool-Ausführung | Input Validation |
+| `PostToolUse` | Nach Tool-Completion | Logging, Cleanup |
+| `PermissionRequest` | Vor Permission Grant | Auto-approve/deny |
+| `UserPromptSubmit` | Vor User Input Processing | Input Enhancement |
+| `Stop` / `SubagentStop` | Agent Halt Decision | Checkpoint Logic |
+| `SessionStart` | Conversation Init | Context Loading |
+| `SessionEnd` | Conversation Cleanup | Resource Cleanup |
+
+### 2.5 Exit Code Behavior
+
+- `0`: Success; JSON output parsed
+- `2`: Blocking error; stderr als Reason
+- Other: Non-blocking error; logs to stderr
+
+### 2.6 Best Practices
+
+1. **Principle of Least Privilege**
+   - Nur notwendige Events
+   - Spezifische Tool Matcher statt Wildcards
+
+2. **Input Validation**
+   - Alle Inputs validieren
+   - Pfade prüfen bevor operiert wird
+   - User-Daten sanitizen
+
+3. **Error Handling**
+   - Klare Reasons bei Blocking
+   - Appropriate Exit Codes
+   - Errors loggen für Debugging
+
+4. **Security Hardening**
+   - Nie untrusted User Input direkt ausführen
+   - Absolute Pfade statt relative
+   - Shell Variables escapen
+
+5. **Keep Hooks Simple**
+   - Schnelle Commands (keine Slowdowns)
+   - Separate Scripts für komplexe Logik
+   - Gründlich testen
+
+### 2.7 Anti-Patterns
+
+- ❌ Unsafe Shell Commands
+- ❌ Zu viele Hooks
+- ❌ Übermäßig komplexe Logik
+- ❌ Fehlende Error Handling
+- ❌ Blocking auf langsame Operations
+
+---
+
+## 3. Slash Commands
+
+### 3.1 Typen
+
+| Type | Location | Scope |
+|------|----------|-------|
+| Project | `.claude/commands/` | Team (via git) |
+| Personal | `~/.claude/commands/` | Alle Projekte auf Rechner |
+| Plugin | Via Plugin System | Plugin-abhängig |
+| MCP | `/mcp__<server>__<prompt>` | MCP Server Connection |
+
+### 3.2 Grundstruktur
+
+```markdown
+---
+description: Optimize code for performance
+allowed-tools: ["Tool1", "Tool2"]
+---
+
+Analyze this code for performance issues:
+1. Identify bottlenecks
+2. Suggest optimizations
+```
+
+Command Name = Filename ohne Extension (`optimize.md` → `/optimize`)
+
+### 3.3 Features
+
+**Arguments:**
+```markdown
+# $ARGUMENTS (alle als String)
+Find and fix issue #$ARGUMENTS
+
+# Positional ($1, $2, ...)
+Find user $1 and display $2
+```
+
+**Bash Execution (! Prefix):**
+```markdown
+---
+allowed-tools: ["Bash"]
+---
+
+! git status
+
+Show the above and suggest next steps.
+```
+
+**File References (@ Prefix):**
+```markdown
+@ .claude/settings.json
+
+Review this configuration.
+```
+
+### 3.4 Skills vs. Commands
+
+| Factor | Skills | Commands |
+|--------|--------|----------|
+| Invocation | Model-invoked | User-invoked |
+| Frequenz | Reguläre Use Cases | Spezifische Needs |
+| Struktur | Directory + Files | Single Markdown |
+| Komplexität | Complex Workflows | Quick Prompts |
+
+### 3.5 Best Practices
+
+1. **Klare Descriptions**
+2. **Subdirectories für Organisation**
+3. **Argument Requirements dokumentieren**
+4. **Minimal Tool Access**
+5. **Konsistente Benennung** (Hyphens: `/code-review`)
+6. **Version Control für Project Commands**
+
+### 3.6 Anti-Patterns
+
+- ❌ Zu breite Descriptions
+- ❌ Undeclared Tool Access
+- ❌ Fehlende Beispiele
+- ❌ Unsafe Bash Execution
+- ❌ Command Proliferation
+
+---
+
+## 4. MCP (Model Context Protocol)
+
+### 4.1 Übersicht
+
+MCP ist ein Open-Source-Standard für Integration mit externen Tools:
+- Issue Trackers (JIRA)
+- Monitoring (Sentry)
+- Datenbanken, APIs
+- Design Tools
+- Email, Communication
+
+### 4.2 Installation Methods
+
+**HTTP Servers (Recommended for Remote):**
+```bash
+claude mcp add --transport http notion https://mcp.notion.com/mcp
+```
+
+**Local Stdio Servers:**
+```bash
+claude mcp add --transport stdio airtable \
+  --env AIRTABLE_API_KEY=YOUR_KEY \
+  -- npx -y airtable-mcp-server
+```
+
+### 4.3 Configuration Scopes
+
+| Scope | Location | Audience |
+|-------|----------|----------|
+| Local | `.mcp.json` (project) | Nur aktuelles Projekt |
+| Project | `.mcp.json` (shared) | Team via git |
+| User | `~/.mcp.json` | Alle Projekte |
+
+### 4.4 Configuration Example
+
+```json
+{
+  "mcpServers": {
+    "notion": {
+      "transport": "http",
+      "url": "https://mcp.notion.com/mcp"
+    },
+    "local-db": {
+      "transport": "stdio",
+      "command": "npx",
+      "args": ["-y", "sqlite-mcp-server"],
+      "env": {
+        "DATABASE_URL": "sqlite:///data.db"
+      }
+    }
+  }
+}
+```
+
+### 4.5 Best Practices
+
+1. **Scope Configuration Appropriately**
+2. **Environment Variables für Secrets**
+3. **HTTP für Cloud, Stdio für Local**
+4. **Access Control - nur nötige Permissions**
+5. **Dokumentation für Team**
+6. **Version Control** (`.mcp.json.example`)
+
+### 4.6 Anti-Patterns
+
+- ❌ Hardcoded Credentials
+- ❌ Over-Permissioning
+- ❌ Unused Servers behalten
+- ❌ Missing Documentation
+- ❌ SSE Transport verwenden (deprecated)
+
+---
+
+## 5. Agents und Subagents
+
+### 5.1 Übersicht
+
+Agents ermöglichen Delegation spezialisierter Tasks mit:
+- **Context Isolation**: Separate Conversation History
+- **Specialized Expertise**: Fine-tuned Instructions
+- **Tool Restriction**: Kontrolle über Tool Access
+- **Reusability**: Sharing across Projects
+
+### 5.2 Agent Types
+
+| Type | Beschreibung |
+|------|--------------|
+| Main Agent | Primary agent für general-purpose Tasks |
+| General-purpose | Komplexe multi-step Tasks |
+| Plan | Research vor Plan-Präsentation |
+| Explore | Fast, read-only mit Haiku Model |
+
+### 5.3 Wann Subagents verwenden?
+
+- Task-spezifische Workflows
+- Context Management
+- Tool Isolation
+- Read-only Operations
+- Spezialisierte Instructions
+- Team Sharing
+
+### 5.4 Configuration
+
+```yaml
+---
+name: Code Reviewer
+description: Specialized code review agent
+model: claude-opus-4-1
+tools:
+  - Read
+  - Grep
+  - GitLog
+---
+
+You are an expert code reviewer...
+```
+
+### 5.5 Best Practices
+
+1. **Single Responsibility**
+2. **Detailed System Instructions**
+3. **Minimal Tool Access**
+4. **Appropriate Model Selection**
+   - Fast tasks → Haiku
+   - Complex reasoning → Sonnet/Opus
+5. **Version Control**
+6. **Testing**
+
+### 5.6 Anti-Patterns
+
+- ❌ Over-Specification
+- ❌ Identical Agents
+- ❌ Excessive Tool Access
+- ❌ No Documentation
+- ❌ Static Instructions
+- ❌ Model Mismatch
+
+---
+
+## 6. Quick Reference
+
+### 6.1 Feature Decision Matrix
+
+| Need | Use Feature | Reason |
+|------|-------------|--------|
+| One-time Action | Slash Command | User invokes |
+| Reusable Capability | Skill | Claude decides |
+| Event Automation | Hook | Lifecycle Points |
+| External Integration | MCP | APIs/Services |
+| Focused Subtask | Subagent | Isolation |
+
+### 6.2 Configuration Files
+
+| File | Location | Scope |
+|------|----------|-------|
+| `.claude/commands/` | Project | Team Commands |
+| `~/.claude/commands/` | User | Personal Commands |
+| `.claude/skills/` | Project | Team Skills |
+| `~/.claude/skills/` | User | Personal Skills |
+| `.claude/agents/` | Project | Team Agents |
+| `~/.claude/agents/` | User | Personal Agents |
+| `.claude/hooks.json` | Project | Event Automation |
+| `.mcp.json` | Project | MCP Servers |
+
+---
+
+## 7. Key Takeaways
+
+1. **Skills**: Model-invoked, autonomous capabilities
+2. **Hooks**: Event-driven automation mit Security-Fokus
+3. **Commands**: Quick, user-invoked prompts
+4. **MCP**: External service integration
+5. **Subagents**: Focused task delegation
+
+**Mantra:** Start simple, test thoroughly, progressively add complexity.

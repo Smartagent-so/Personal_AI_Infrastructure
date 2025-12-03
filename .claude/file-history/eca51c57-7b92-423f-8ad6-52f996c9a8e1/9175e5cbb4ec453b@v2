@@ -1,0 +1,37 @@
+# PAI Environment Configuration
+# TPOS Installation - 2025-12-03
+
+# ============================================================================
+# VOICE SERVER CONFIGURATION
+# ============================================================================
+PORT=***REMOVED***
+
+# ============================================================================
+# ELEVENLABS - Voice Synthesis
+# ============================================================================
+ELEVENLABS_API_KEY=***REMOVED***
+ELEVENLABS_VOICE_ID=pxQ5J1NTCCuhK7jrRa1d
+ELEVENLABS_MODEL=***REMOVED***
+
+# ============================================================================
+# RESEARCH AGENTS
+# ============================================================================
+
+# Perplexity API (perplexity-researcher agent)
+PERPLEXITY_API_KEY=***REMOVED***
+
+# Google Gemini API (gemini-researcher agent)
+GOOGLE_API_KEY=***REMOVED***
+
+# ============================================================================
+# OPTIONAL SERVICES (nicht konfiguriert)
+# ============================================================================
+
+# Replicate API (for Flux, Sora, etc.)
+# REPLICATE_API_TOKEN=
+
+# OpenAI API (for GPT-Image-1, Sora)
+# OPENAI_API_KEY=
+
+# BrightData (for web scraping)
+# BRIGHTDATA_API_KEY=

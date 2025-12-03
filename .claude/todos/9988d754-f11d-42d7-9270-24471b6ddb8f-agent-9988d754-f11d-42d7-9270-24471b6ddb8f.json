@@ -1,0 +1,27 @@
+[
+  {
+    "content": "Neue Claude Code Session starten (PAI Hooks aktiv)",
+    "status": "completed",
+    "activeForm": "Session gestartet mit PAI Hooks"
+  },
+  {
+    "content": "UOCS testen - Aufgabe durchführen, history/ prüfen",
+    "status": "pending",
+    "activeForm": "Teste UOCS System"
+  },
+  {
+    "content": "Createskill lernen - Test-Skill erstellen",
+    "status": "pending",
+    "activeForm": "Lerne Createskill Meta-Skill"
+  },
+  {
+    "content": "Voice testen - Jarvis-Stimme prüfen",
+    "status": "pending",
+    "activeForm": "Teste Voice Integration"
+  },
+  {
+    "content": "Agents ausprobieren (Architect, Engineer, Researcher)",
+    "status": "pending",
+    "activeForm": "Teste PAI Agents"
+  }
+]

@@ -1,0 +1,22 @@
+[
+  {
+    "content": "Phase 1: Core Installation",
+    "status": "completed",
+    "activeForm": "Installiere PAI Core"
+  },
+  {
+    "content": "Checkpoint Commands nach PAI kopieren",
+    "status": "completed",
+    "activeForm": "Kopiere Checkpoint Commands"
+  },
+  {
+    "content": "Session-Status Checkpoint erstellen",
+    "status": "completed",
+    "activeForm": "Erstelle Checkpoint"
+  },
+  {
+    "content": "Phase 2: Training starten (neue Session)",
+    "status": "pending",
+    "activeForm": "Starte Training"
+  }
+]

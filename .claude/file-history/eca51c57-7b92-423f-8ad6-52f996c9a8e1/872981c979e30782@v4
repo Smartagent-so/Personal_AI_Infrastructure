@@ -1,0 +1,373 @@
+# Research-Ergebnisse: CIS, Public Skills & BMAD Builder
+
+> Analyse zur TPOS-Integration - Stand: 2025-12-03
+
+---
+
+## Executive Summary
+
+Drei Research-Bereiche wurden analysiert:
+
+1. **CIS (Creative Intelligence Suite)** - Kann als PAI-Skill integriert werden mit Voice-Support
+2. **Public Skills** - Kompatibel mit PAI, aber Transformation nötig (USE WHEN, TitleCase)
+3. **BMAD Builder** - Nicht nur ein Skill, sondern Skill-Generator für PAI
+
+**Kernempfehlung:** Alle drei Ansätze ergänzen PAI sinnvoll - sie sind komplementär, nicht konkurrierend.
+
+---
+
+## 1. CIS - Creative Intelligence Suite
+
+### 1.1 Übersicht
+
+CIS in BMAD v6 ist ein modulares System für kreative Intelligenz mit:
+- **5 spezialisierte Agents** (Carson, Maya, Dr. Quinn, Victor, Sophia)
+- **5 Workflows** (Brainstorming, Design Thinking, Innovation Strategy, Problem Solving, Storytelling)
+- **150+ kreative Techniken** in CSV-basierten Bibliotheken
+
+### 1.2 CIS Agents & Personas
+
+| Agent | Name | Rolle | Kommunikationsstil |
+|-------|------|-------|-------------------|
+| **Carson** | Brainstorming Specialist | Master Facilitator | Enthusiastisch, "YES AND" |
+| **Maya** | Design Thinking Maestro | Human-Centered Expert | Jazz-Rhythmus, improvisativ |
+| **Dr. Quinn** | Problem Solver | Systematic Expert | Sherlock Holmes + Scientist |
+| **Victor** | Innovation Oracle | Business Model Innovator | Bold, strategische Stille |
+| **Sophia** | Storyteller | Narrative Expert | Blumig, verzaubernd |
+
+### 1.3 CIS Workflows & Frameworks
+
+| Workflow | Frameworks | Methoden |
+|----------|------------|----------|
+| **Brainstorming** | 36 Techniken | SCAMPER, Six Hats, Mind Mapping, etc. |
+| **Design Thinking** | 34 Methoden | 5 Phasen (Empathize→Test) |
+| **Innovation Strategy** | 31 Frameworks | Porter, Blue Ocean, Jobs-to-be-Done |
+| **Problem Solving** | 30 Methoden | TRIZ, Five Whys, Fishbone |
+| **Storytelling** | 25+ Frameworks | Hero's Journey, Pixar Spine |
+
+### 1.4 CIS Integration in PAI
+
+**Als PAI Skill:**
+```yaml
+---
+name: CreativeIntelligenceSuite
+description: Multi-agent creative facilitation. USE WHEN user needs brainstorming,
+  design thinking, innovation strategy, problem solving, or storytelling.
+---
+```
+
+**Struktur:**
+```
+~/.claude/skills/CIS/
+├── SKILL.md
+├── workflows/
+│   ├── Brainstorming.md
+│   ├── DesignThinking.md
+│   ├── InnovationStrategy.md
+│   ├── ProblemSolving.md
+│   └── Storytelling.md
+├── frameworks/
+│   ├── brain-methods.csv (36 Techniken)
+│   ├── design-methods.csv (34 Methoden)
+│   ├── innovation-frameworks.csv (31 Frameworks)
+│   └── solving-methods.csv (30 Methoden)
+└── agents/
+    ├── carson.md
+    ├── maya.md
+    ├── quinn.md
+    ├── victor.md
+    └── sophia.md
+```
+
+### 1.5 Voice Mode Integration
+
+**Prosody-Marker für CIS Agents:**
+
+```yaml
+Carson (Brainstorming):
+  - EXCITED: "This is brilliant! Building on that..."
+  - ENCOURAGING: "Yes, yes! And what if we also...?"
+  speed: 1.0-1.15 (enthusiastisch)
+
+Maya (Design Thinking):
+  - EXPLORATORY: "What are we hearing from users?"
+  - EMPATHETIC: "The real human need here is..."
+  speed: 0.95-1.0 (rhythmisch)
+
+Victor (Innovation):
+  - DECLARING: "Here's the hard truth about your market..."
+  - CHALLENGING: "That assumption might be killing your strategy."
+  speed: 0.9-1.0 (strategische Pausen)
+```
+
+### 1.6 CIS Erweiterungsmöglichkeiten
+
+**Fehlende Business-Frameworks (hinzuzufügen):**
+
+| Kategorie | Framework |
+|-----------|-----------|
+| **Strategy** | Porter's Generic Strategies, Ansoff Matrix, McKinsey 7S |
+| **Consulting** | MECE, Hypothesis Pyramid, 2x2 Matrix |
+| **Marketing** | StoryBrand, Growth Loops, AARRR (Pirate Metrics) |
+| **Organization** | OKR Framework, Change Curve, Stakeholder Matrix |
+
+---
+
+## 2. Public Skills Kompatibilität
+
+### 2.1 Standard vs PAI Format
+
+| Aspekt | Anthropic Standard | PAI | Kompatibel? |
+|--------|-------------------|-----|-------------|
+| **name** | lowercase-hyphens | TitleCase | Nein |
+| **description** | Frei | "USE WHEN" mandatory | Nein |
+| **Skill-Tools** | bash/python | TypeScript/Bun (+ Bash für Shell) | Teilweise |
+| **Structure** | scripts/, references/ | workflows/, tools/ | Teilweise |
+
+> **Hinweis:** PAI nutzt Bun + TypeScript + Bash zusammen. Bun ersetzt Node.js/NPM, TypeScript ersetzt Python für Tools, Bash bleibt für Shell-Operationen.
+
+### 2.2 Document-Skills Integration
+
+**Anthropic's document-skills:**
+- `document-skills:xlsx` - Excel
+- `document-skills:docx` - Word
+- `document-skills:pptx` - PowerPoint
+- `document-skills:pdf` - PDF
+
+**Integration in PAI:** Direkt nutzbar (sind Plugins, nicht Skills)
+
+**Wrapper-Skill empfohlen:**
+```yaml
+---
+name: DocumentProcessor
+description: Process documents (Excel, PDF, PowerPoint, Word).
+  USE WHEN user wants to create, edit, or extract from business documents.
+---
+```
+
+### 2.3 Lock-in Analyse
+
+| Dimension | Risk Level | Details |
+|-----------|-----------|---------|
+| **USE WHEN** | MITTEL | PAI-proprietary, funktioniert nur in PAI |
+| **TitleCase** | MITTEL | Kosmetisch, erfordert Umbenennung |
+| **Bun/TypeScript** | MITTEL | Ersetzt Node.js/Python, Bash bleibt |
+| **YAML Extras** | NIEDRIG | Werden ignoriert in Standard |
+
+**Migrations-Aufwand bei PAI-Exit:** 2-4 Wochen
+
+### 2.4 Transformations-Checkliste
+
+```
+[ ] Naming: skill-name → SkillName
+[ ] Frontmatter: + USE WHEN Clause
+[ ] Tools: python/node → TypeScript/Bun (Bash bleibt)
+[ ] Structure: scripts/ → tools/
+[ ] Testing: USE WHEN Triggers validieren
+```
+
+---
+
+## 3. BMAD Builder Analyse
+
+### 3.1 Was ist BMAD Builder?
+
+**BMAD Builder** = Toolkit zur Erstellung von Domain-spezifischen Agent-Teams:
+
+```
+BMAD Builder erzeugt:
+├── Simple Agents (einzelne YAML-Datei)
+├── Expert Agents (mit Sidecar-Dateien)
+├── Module Agents (Workflow-integriert)
+└── Complete Modules (komplette Domain-Ökosysteme)
+```
+
+### 3.2 Ist BMAD Core "nur" ein Skill?
+
+**Nein, aber es KANN einer werden.**
+
+| Aspekt | BMAD Core Komplexität | Als PAI Skill |
+|--------|----------------------|---------------|
+| **Foundation** | C.O.R.E. Framework | Dokumentierbar |
+| **Agent-System** | YAML→XML Compilation | Vereinfacht möglich |
+| **Workflow-Engine** | Execution Engine | Verlust von Features |
+| **Module-System** | Namespace Isolation | Skill-Level Isolation |
+| **IDE Integration** | 7 IDEs | Nur Claude Code |
+
+### 3.3 BMAD Builder + PAI: Schichten-Architektur
+
+```
+┌─────────────────────────────────────┐
+│  PAI (Infrastructure Layer)         │  ← Runtime, Voice, Dashboard
+├─────────────────────────────────────┤
+│  BMAD Builder (Domain Layer)        │  ← Agent-Teams, Workflows
+├─────────────────────────────────────┤
+│  BMAD Core (Framework Layer)        │  ← C.O.R.E. Principles
+└─────────────────────────────────────┘
+```
+
+**Nicht konkurrierend, sondern komplementär!**
+
+### 3.4 Empfohlene Integration
+
+**Option: BMAD Builder als PAI Skill-Generator**
+
+```
+Workflow:
+1. User: "Erstelle Marketing-Modul"
+2. PAI BMAD-Skill lädt Questionnaire
+3. User antwortet → Domain-Definition
+4. BMAD Builder generiert:
+   - agents/ für Marketing
+   - workflows/ für Kampagnen
+   - knowledge-base/ für Strategien
+5. Neuer Skill wird in .claude/skills/Marketing/ erstellt
+6. PAI lädt Skill → User kann arbeiten
+```
+
+**Struktur:**
+```
+~/.claude/skills/BMAD-Builder/
+├── SKILL.md
+├── workflows/
+│   ├── domain-discovery/
+│   ├── simple-agent-creation/
+│   ├── expert-agent-creation/
+│   └── module-creation/
+├── tools/
+│   ├── validate-agent.js
+│   └── yaml-to-markdown.js
+├── knowledge-base/
+│   ├── bmad-core-principles.md
+│   ├── agent-patterns.md
+│   └── domain-templates/
+└── reference-modules/
+    ├── business-strategy/
+    ├── marketing/
+    └── product-development/
+```
+
+---
+
+## 4. Gesamtempfehlung für TPOS
+
+### 4.1 Architektur-Vision
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                      TPOS (Komplett)                         │
+│                                                              │
+│  ┌───────────────────────────────────────────────────────┐  │
+│  │  CIS Layer (Creative Intelligence)                     │  │
+│  │  Brainstorming, Design Thinking, Innovation, Stories   │  │
+│  └───────────────────────────────────────────────────────┘  │
+│                           ↓                                  │
+│  ┌───────────────────────────────────────────────────────┐  │
+│  │  BMAD Builder Layer (Domain Creation)                  │  │
+│  │  Agent-Teams generieren, Domain-Skills erstellen       │  │
+│  └───────────────────────────────────────────────────────┘  │
+│                           ↓                                  │
+│  ┌───────────────────────────────────────────────────────┐  │
+│  │  PAI Runtime Layer                                     │  │
+│  │  UOCS, Voice, Hooks, Dashboard, Skills                 │  │
+│  └───────────────────────────────────────────────────────┘  │
+│                           ↓                                  │
+│  ┌───────────────────────────────────────────────────────┐  │
+│  │  Document Skills (Anthropic)                           │  │
+│  │  Excel, PDF, PowerPoint, Word                          │  │
+│  └───────────────────────────────────────────────────────┘  │
+│                           ↓                                  │
+│  ┌───────────────────────────────────────────────────────┐  │
+│  │  Claude Code (Foundation)                              │  │
+│  │  Skills, Commands, MCP                                 │  │
+│  └───────────────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### 4.2 Implementierungs-Phasen (Aktualisiert)
+
+| Phase | Inhalt | Quelle |
+|-------|--------|--------|
+| **Phase 1** | PAI Core Installation | PAI |
+| **Phase 2** | KI-Training mit PAI | PAI |
+| **Phase 3** | Branding + BMAD-Core + CIS | PAI + BMAD |
+| **Phase 3b** | Document-Skills Integration | Anthropic |
+| **Phase 4** | Business Skills (via BMAD Builder) | Custom |
+| **Phase 5** | Obsidian System | Custom |
+
+### 4.3 Was sofort nutzbar ist
+
+| Feature | Aufwand | Nutzen |
+|---------|---------|--------|
+| **Document-Skills** | 0 (Plug & Play) | Excel, PDF, PPT sofort |
+| **CIS als Wrapper** | 2-3 Tage | Brainstorming, Design Thinking |
+| **BMAD-Core Principles** | 1 Tag | C.O.R.E. Framework dokumentieren |
+
+### 4.4 Was später kommt
+
+| Feature | Aufwand | Phase |
+|---------|---------|-------|
+| **CIS vollständig** | 1 Woche | Phase 3 |
+| **BMAD Builder** | 2 Wochen | Phase 3-4 |
+| **Business Domain Skills** | Via BMAD Builder | Phase 4 |
+
+---
+
+## 5. Offene Fragen für Finalisierung
+
+### 5.1 CIS Betreffend
+
+1. **Welche CIS-Workflows brauchst du am meisten?**
+   - Brainstorming?
+   - Innovation Strategy?
+   - Problem Solving?
+
+2. **Soll Voice für CIS-Agents aktiviert werden?**
+   - Wenn ja: welche Persona-Stimme?
+
+3. **Welche Business-Frameworks sollen ergänzt werden?**
+   - SWOT, Porter, etc.?
+
+### 5.2 Public Skills Betreffend
+
+4. **Document-Skills Priorität?**
+   - Excel/PDF/PPT sofort?
+   - Branded Templates nötig?
+
+5. **Andere Public Skills interessant?**
+   - Code Review?
+   - Testing?
+
+### 5.3 BMAD Builder Betreffend
+
+6. **Welche Business-Domains zuerst?**
+   - Marketing?
+   - Strategy?
+   - Operations?
+
+7. **BMAD Builder als Generator nutzen oder manuell Skills erstellen?**
+
+8. **IDE-Support wichtig?**
+   - Nur Claude Code?
+   - VSCode auch?
+
+---
+
+## 6. Nächste Schritte
+
+Nach Klärung der offenen Fragen:
+
+1. **Phasen-Plan finalisieren**
+2. **CIS-Skill erstellen** (falls gewünscht)
+3. **Document-Skills Wrapper** (falls gewünscht)
+4. **BMAD-Builder Skill** (falls gewünscht)
+5. **Mit Phase 1 Installation starten**
+
+---
+
+## Referenzen
+
+- **BMAD v6 Repository:** github.com/bmad-code-org/bmad-method
+- **Anthropic Skills:** github.com/anthropics/skills
+- **PAI Repository:** github.com/danielmiessler/Personal_AI_Infrastructure
+- **CIS Documentation:** BMAD v6 /cis/ Verzeichnis

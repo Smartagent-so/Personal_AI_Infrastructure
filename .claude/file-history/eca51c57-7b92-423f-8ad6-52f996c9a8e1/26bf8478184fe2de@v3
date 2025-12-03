@@ -1,0 +1,400 @@
+# BMAD Method v6 - Vollständige Analyse
+
+> Analyse des BMAD-Systems (Build More, Architect Dreams) für TPOS
+
+---
+
+## 1. Executive Summary
+
+**BMAD** ist ein strukturiertes Framework für AI-gestützte Softwareentwicklung mit Fokus auf klare Phasen, Quality Gates und Scale-Adaptive Intelligence. Es bietet 19 spezialisierte Agents und ein 4-Phasen-Modell für Projekte jeder Größe.
+
+**Kernaussage:** "A collaborative approach where humans and AI work together effectively."
+
+---
+
+## 2. Core Philosophy: C.O.R.E. Framework
+
+### Collaboration Optimized Reflection Engine
+
+| Prinzip | Beschreibung |
+|---------|--------------|
+| **Contextual Priming** | Klare Rollen und Ziele für jeden Agent definieren |
+| **Outcome Orientation** | Explizite Erfolgskriterien vor Arbeitsbeginn |
+| **Reflection Loops** | Continuous Improvement durch strukturiertes Feedback |
+| **Execution Scaffolds** | Strukturierte Workflows und Templates |
+
+### Philosophie-Grundlagen
+
+1. **Structure > Chaos** - Klare Phasen und Checkpoints
+2. **Explicit > Implicit** - Alle Entscheidungen dokumentiert
+3. **Quality Gates** - Keine Phase ohne Checklist-Abnahme
+4. **Scale-Adaptive** - Komplexität passt sich Task an
+5. **Human-in-the-Loop** - AI unterstützt, Mensch entscheidet
+
+---
+
+## 3. 4-Phasen-Methodik
+
+### Übersicht
+
+```
+┌──────────────┐    ┌──────────────┐    ┌──────────────┐    ┌──────────────┐
+│   ANALYSIS   │───▶│   PLANNING   │───▶│ SOLUTIONING  │───▶│IMPLEMENTATION│
+│              │    │              │    │              │    │              │
+│ Requirements │    │ Architecture │    │   Designs    │    │    Code      │
+│   Research   │    │   Roadmap    │    │  Prototypes  │    │    Tests     │
+│ Constraints  │    │  Estimates   │    │  Decisions   │    │  Deployment  │
+└──────────────┘    └──────────────┘    └──────────────┘    └──────────────┘
+       │                  │                   │                    │
+       ▼                  ▼                   ▼                    ▼
+   Checklist 1        Checklist 2        Checklist 3         Checklist 4
+```
+
+### Phase 1: Analysis
+
+**Ziel:** Problem verstehen, Anforderungen sammeln
+
+**Outputs:**
+- Requirements Document
+- Research Findings
+- Constraints & Limitations
+- Stakeholder Analysis
+
+**Checklist:**
+- [ ] Problem klar definiert?
+- [ ] Alle Stakeholder identifiziert?
+- [ ] Constraints dokumentiert?
+- [ ] Success Metrics definiert?
+
+### Phase 2: Planning
+
+**Ziel:** Architektur und Roadmap erstellen
+
+**Outputs:**
+- Architecture Document (architecture.md)
+- Technical Roadmap
+- Effort Estimates
+- Risk Assessment
+
+**Checklist:**
+- [ ] Architektur reviewed?
+- [ ] Dependencies identifiziert?
+- [ ] Milestones definiert?
+- [ ] Risiken bewertet?
+
+### Phase 3: Solutioning
+
+**Ziel:** Lösungen entwerfen und validieren
+
+**Outputs:**
+- Technical Designs
+- Prototypes
+- API Contracts
+- Decision Records
+
+**Checklist:**
+- [ ] Designs approved?
+- [ ] Prototypes getestet?
+- [ ] APIs definiert?
+- [ ] Decisions dokumentiert?
+
+### Phase 4: Implementation
+
+**Ziel:** Code schreiben, testen, deployen
+
+**Outputs:**
+- Production Code
+- Test Suites
+- Documentation
+- Deployment Artifacts
+
+**Checklist:**
+- [ ] Tests passing?
+- [ ] Code reviewed?
+- [ ] Docs aktuell?
+- [ ] Deployment erfolgreich?
+
+---
+
+## 4. Scale-Adaptive Intelligence
+
+### 3 Tracks für unterschiedliche Komplexität
+
+| Track | Wann nutzen | Agents | Phasen |
+|-------|-------------|--------|--------|
+| **Quick Flow** | Bug Fixes, Triviales | 1 Agent | Minimal |
+| **BMad Method** | Features, moderate Tasks | 3-5 Agents | Alle 4 |
+| **Enterprise** | Große Projekte, Teams | 10+ Agents | Extended |
+
+### Quick Flow
+
+```
+User Request → Direct Implementation → Done
+```
+
+- Keine formale Planung
+- Einzelner Agent
+- Für triviale Änderungen
+
+### BMad Method
+
+```
+Analysis → Planning → Solutioning → Implementation
+    ↓          ↓           ↓              ↓
+Checklist  Checklist   Checklist     Checklist
+```
+
+- Vollständige 4 Phasen
+- 3-5 spezialisierte Agents
+- Für Features und moderate Projekte
+
+### Enterprise
+
+```
+Discovery → Analysis → Planning → Solutioning → Implementation → Deployment
+     ↓          ↓          ↓           ↓              ↓              ↓
+  Review     Review     Review      Review        Review         Review
+```
+
+- Erweiterte Phasen
+- Alle 19 Agents verfügbar
+- Für große Team-Projekte
+
+---
+
+## 5. Agent-System
+
+### 19 Spezialisierte Agents
+
+#### Simple Agents (Fokussiert)
+
+| Agent | Rolle |
+|-------|-------|
+| @analyst | Requirements Engineering |
+| @pm | Project Management |
+| @po | Product Ownership |
+| @ux-designer | UX Research & Design |
+| @doc-writer | Documentation |
+
+#### Expert Agents (Tiefes Wissen)
+
+| Agent | Rolle |
+|-------|-------|
+| @architect | System Architecture |
+| @dev-expert | Senior Development |
+| @qa-expert | Quality Assurance |
+| @security-expert | Security Review |
+| @devops-expert | Infrastructure |
+
+#### Module Agents (Multi-Skill)
+
+| Agent | Rolle |
+|-------|-------|
+| @fullstack-dev | Frontend + Backend |
+| @frontend-dev | React, Vue, etc. |
+| @backend-dev | APIs, Databases |
+| @mobile-dev | iOS, Android |
+| @data-engineer | Data Pipelines |
+
+#### Meta Agents
+
+| Agent | Rolle |
+|-------|-------|
+| @bmad | Orchestrator |
+| @reviewer | Code Review |
+| @mentor | Teaching & Guidance |
+| @wizard | Complex Problem Solving |
+
+### Agent-Typen
+
+| Typ | Charakteristik | Beispiel |
+|-----|----------------|----------|
+| **Simple** | Ein Zweck, fokussiert | @analyst |
+| **Expert** | Tiefes Domänenwissen | @architect |
+| **Module** | Kombiniert mehrere Skills | @fullstack-dev |
+
+### Party Mode
+
+Multi-Agent-Diskussion für komplexe Entscheidungen:
+
+```
+@architect: "Ich schlage Microservices vor wegen..."
+@dev-expert: "Bedenken bei Komplexität..."
+@devops-expert: "Infrastructure-Kosten beachten..."
+@pm: "Timeline-Impact wäre..."
+→ Konsensus oder Eskalation an User
+```
+
+---
+
+## 6. Step-File Architecture
+
+### Strukturierte Projekt-Dokumentation
+
+```
+project/
+├── docs/
+│   ├── prd.md                    # Product Requirements
+│   ├── architecture.md           # System Design
+│   ├── technical-spec.md         # Implementation Details
+│   └── api-spec.md               # API Contracts
+│
+├── step-files/
+│   ├── 01-analysis.md            # Phase 1 Output
+│   ├── 02-planning.md            # Phase 2 Output
+│   ├── 03-solutioning.md         # Phase 3 Output
+│   └── 04-implementation.md      # Phase 4 Log
+│
+├── checklists/
+│   ├── analysis-checklist.md     # Quality Gate 1
+│   ├── planning-checklist.md     # Quality Gate 2
+│   ├── solutioning-checklist.md  # Quality Gate 3
+│   └── implementation-checklist.md
+│
+└── decisions/
+    ├── adr-001-database.md       # Architecture Decision Record
+    └── adr-002-framework.md
+```
+
+### Step-File Format
+
+```markdown
+# Phase: Analysis
+
+## Status: Complete
+
+## Completed Items
+- [x] Requirements gathered
+- [x] Stakeholders interviewed
+- [x] Constraints documented
+
+## Key Findings
+- Finding 1...
+- Finding 2...
+
+## Next Steps
+- Proceed to Planning phase
+- Address open questions
+
+## Open Questions
+- Question 1?
+- Question 2?
+```
+
+---
+
+## 7. Innovationen
+
+| Innovation | Beschreibung |
+|------------|--------------|
+| **C.O.R.E. Framework** | Strukturiertes Reflexions-Framework |
+| **Scale-Adaptive** | Automatische Komplexitäts-Anpassung |
+| **Party Mode** | Multi-Agent Diskussionen |
+| **Checklists** | Explizite Quality Gates |
+| **Step-Files** | Strukturierte Phase-Dokumentation |
+| **Sidecar Pattern** | Agent-Kontext per @ Referenz |
+| **BMB (Brain)** | Meta-Wissen über das System selbst |
+
+---
+
+## 8. Für TPOS: Was übernehmen?
+
+### Nützliche Elemente
+
+| Element | Nutzen für TPOS |
+|---------|-----------------|
+| **C.O.R.E. Framework** | Strukturierte Reflexion vor jedem Task |
+| **4-Phasen** | Klare Struktur für größere Projekte |
+| **Checklists** | Quality Gates zwischen Phasen |
+| **Scale-Adaptive** | Quick Flow für Alltag, BMad für Features |
+| **Step-Files** | Ergänzt PAI's UOCS mit manueller Struktur |
+
+### Als Skills implementieren
+
+```
+~/.claude/skills/BMAD-Core/
+├── SKILL.md              # C.O.R.E. Framework + USE WHEN
+├── workflows/
+│   ├── QuickFlow.md      # Triviale Tasks (1-Step)
+│   ├── BmadMethod.md     # Feature-Level (4-Phasen)
+│   └── FullProject.md    # Projekt-Level
+└── checklists/
+    ├── Analysis.md       # Phase 1 Gate
+    ├── Planning.md       # Phase 2 Gate
+    └── Implementation.md # Phase 4 Gate
+```
+
+### SKILL.md Beispiel
+
+```yaml
+---
+name: BMAD-Core
+description: Strukturierte Projektmethodik. USE WHEN user wants to plan a feature, create architecture, or needs structured phases for a larger task.
+---
+
+# BMAD-Core
+
+## Workflow Routing
+
+| Intent | Track | Workflow |
+|--------|-------|----------|
+| "quick fix", "small change" | Quick | `QuickFlow.md` |
+| "feature", "implement" | BMad | `BmadMethod.md` |
+| "project", "architecture" | Full | `FullProject.md` |
+
+## C.O.R.E. Framework
+
+Vor jedem Task:
+1. **Context**: Was ist das Ziel?
+2. **Outcome**: Wie sieht Erfolg aus?
+3. **Reflect**: Was könnte schiefgehen?
+4. **Execute**: Mit welcher Struktur?
+```
+
+### Nicht benötigt für TPOS
+
+| Element | Grund |
+|---------|-------|
+| **Alle 19 Agents** | PAI's 5 Agents reichen |
+| **Enterprise Track** | Zu komplex für Solo-Preneur |
+| **Web Bundles** | Lokale Arbeit bevorzugt |
+| **Sidecar Pattern** | PAI hat eigenes System |
+| **Full Step-File Structure** | UOCS übernimmt Dokumentation |
+
+---
+
+## 9. Risiken
+
+| Risiko | Beschreibung | Mitigation |
+|--------|--------------|------------|
+| **Over-Engineering** | 4 Phasen für triviale Tasks | Scale-Adaptive nutzen |
+| **Agent Overload** | 19 Agents = Verwirrung | Auf 5 PAI-Agents beschränken |
+| **Manual Effort** | Keine Auto-Dokumentation | Mit PAI's UOCS kombinieren |
+| **Checklist Fatigue** | Zu viele Gates | Nur für wichtige Milestones |
+
+---
+
+## 10. Fazit
+
+**BMAD ist stark in Methodik**, bietet aber keine Runtime-Features (Voice, Auto-Doku, Dashboard).
+
+**Für TPOS empfohlen:**
+- C.O.R.E. Framework als Meta-Skill
+- 4-Phasen für größere Features
+- Scale-Adaptive Auswahl
+- Checklists als Quality Gates
+
+**Mit PAI kombiniert:**
+- BMAD liefert die Struktur
+- PAI liefert die Automation
+
+---
+
+## 11. Referenzen
+
+- **BMAD Repository**: github.com/bmad-code-org/bmad-method
+- **Version**: v6 (aktuellste)
+- **Key Files**:
+  - `CORE.md` - C.O.R.E. Framework
+  - `agents/` - Agent-Definitionen
+  - `templates/` - Projekt-Templates
