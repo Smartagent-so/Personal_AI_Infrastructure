@@ -2,11 +2,12 @@
   "enabled": true,
   "voice": {
     "id": "***REMOVED***",
-    "name": "Ottie",
+    "name": "Ostfriesicher Nerd",
     "language": "de",
     "stability": 0.5,
     "similarity_boost": 0.75,
     "speed": 1.0
   },
-  "lastToggled": "2025-12-04T08:10:00Z"
+  "lastToggled": "2025-12-04T09:15:00Z",
+  "_note": "Immer voice_id verwenden, nicht voice_name - Namen können sich ändern"
 }

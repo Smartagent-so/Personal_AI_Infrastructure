@@ -1,18 +1,18 @@
 #!/usr/bin/env bun
 
-import { readFileSync, existsSync } from 'fs';
+/**
+ * Hook: SubagentStop - Agent Ende Voice
+ *
+ * Spielt Voice-Benachrichtigung ab wenn ein Agent fertig ist.
+ * Nutzt pai-voice CLI (CLI-First Architektur).
+ */
 
-// Voice mappings for different agent types
-const AGENT_VOICE_IDS: Record<string, string> = {
-  researcher: 'AXdMgz6evoL7OPd7eU12',
-  pentester: 'hmMWXCj9K7N5mCPcRkfC',
-  engineer: 'kmSVBPu7loj4ayNinwWM',
-  designer: 'ZF6FPAbjXT4488VcRRnw',
-  architect: 'muZKMsIDGYtIkjjiUS82',
-  writer: 'gfRt6Z3Z8aTbpLfexQ7N',
-  kai: 'jqcCZkN6Knx8BJ5TBdYR',
-  default: 'jqcCZkN6Knx8BJ5TBdYR'
-};
+import { readFileSync, existsSync } from 'fs';
+import { execSync } from 'child_process';
+import { homedir } from 'os';
+import { join } from 'path';
+
+const PAI_VOICE = join(homedir(), '.claude', 'bin', 'pai-voice', 'pai-voice.ts');
 
 async function delay(ms: number): Promise<void> {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -274,23 +274,29 @@ async function main() {
   const fullMessage = completionMessage; // Message is already prepared with agent name
   const agentName = finalAgentType.charAt(0).toUpperCase() + finalAgentType.slice(1);
   
-  // Send to notification server
+  // Voice via pai-voice CLI (CLI-First Architektur)
+  // Default: Otti (aus ~/.claude/.env)
+  // Custom Voice nur wenn Agent [VOICE:id] im Output hat (für PAI Persona-Agents)
+  let voiceFlag = ''; // Leer = nutzt Default aus .env (Otti)
+
+  // Check ob Agent eigene Voice hat (für PAI Persona-Agents)
+  const voiceMatch = taskOutput.match(/\[VOICE:(\w+)\]/i);
+  if (voiceMatch) {
+    voiceFlag = `--voice ${voiceMatch[1]}`;
+  }
+
+  // Escape double quotes in message for shell
+  const escapedMessage = fullMessage.replace(/"/g, '\\"');
+
   try {
-    await fetch('http://localhost:***REMOVED***/notify', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        title: `${agentName} Agent`,
-        message: fullMessage,
-        voice_enabled: true,
-        agent_type: finalAgentType,
-        voice_id: AGENT_VOICE_IDS[finalAgentType] || AGENT_VOICE_IDS.default
-      })
+    execSync(`"${PAI_VOICE}" say "${escapedMessage}" ${voiceFlag} --play`, {
+      timeout: 10000,
+      stdio: 'ignore',
+      shell: true
     });
-    
-    console.log(`✅ Sent: [${agentName}] ${fullMessage}`);
+    console.log(`✅ Voice: [${agentName}] ${fullMessage}`);
   } catch (e) {
-    console.error('Failed to send notification:', e);
+    console.error('Voice failed (non-blocking):', e);
   }
 }
 

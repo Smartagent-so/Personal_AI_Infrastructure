@@ -69,6 +69,15 @@
   "hooks": {
     "PreToolUse": [
       {
+        "matcher": "Task",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${PAI_DIR}/hooks/agent-start-voice.ts"
+          }
+        ]
+      },
+      {
         "matcher": "*",
         "hooks": [
           {
@@ -112,7 +121,15 @@
         "hooks": [
           {
             "type": "command",
+            "command": "${PAI_DIR}/hooks/voice-reminder.ts"
+          },
+          {
+            "type": "command",
             "command": "${PAI_DIR}/hooks/decision-ping.ts"
+          },
+          {
+            "type": "command",
+            "command": "${PAI_DIR}/hooks/load-reference-files.ts"
           },
           {
             "type": "command",

@@ -1,0 +1,32 @@
+# Debug and session files (generated per session)
+debug/
+projects/
+file-history/
+todos/
+shell-snapshots/
+
+# Session-specific logs
+*.jsonl
+history.jsonl
+agent-sessions.json
+
+# Statsig telemetry
+statsig/
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# macOS
+.DS_Store
+
+# Environment files with secrets
+.env
+
+# Keep structure but ignore contents
+!history/
+history/**/*.jsonl
+
+# Node modules if any
+node_modules/

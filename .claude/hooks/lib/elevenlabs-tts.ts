@@ -1,272 +1,125 @@
 /**
- * ElevenLabs TTS Library - Direct API Access for Hooks
+ * ElevenLabs TTS Library - pai-voice CLI Wrapper
  *
- * This module provides direct ElevenLabs API access for PAI hooks,
- * bypassing the voice-server for more stable operation.
+ * This module wraps the pai-voice CLI for consistent voice output.
+ * Uses CLI-First architecture per PAI CONSTITUTION.
  *
- * Features:
- * - Direct ElevenLabs API calls (non-streaming for stability)
- * - Automatic language detection (German/English)
- * - Voice selection: Ottie (DE) / Jarvis (EN)
- * - Audio playback via afplay (macOS)
+ * The pai-voice CLI reads voice_id from ~/.claude/.env as default,
+ * ensuring all voice output uses the configured voice (Otti).
  *
  * Usage in hooks:
- *   import { speak, speakGerman, speakEnglish } from './lib/elevenlabs-tts';
- *   await speak("Hallo, wie geht's?"); // Auto-detects German, uses Ottie
- *   await speakGerman("Guten Morgen!"); // Force German/Ottie
- *   await speakEnglish("Good morning!"); // Force English/Jarvis
+ *   import { speak, speakGerman } from './lib/elevenlabs-tts';
+ *   await speak("Hallo, wie geht's?");
+ *   await speakGerman("Guten Morgen!");
  */
 
-import { spawn } from 'child_process';
+import { execSync } from 'child_process';
 import { homedir } from 'os';
 import { join } from 'path';
 import { existsSync, readFileSync } from 'fs';
 import { PAI_DIR } from './pai-paths';
 
+// Path to pai-voice CLI
+const PAI_VOICE = join(homedir(), '.claude', 'bin', 'pai-voice', 'pai-voice.ts');
+
 // ============================================================================
 // Configuration
 // ============================================================================
 
-// Voice IDs
-const VOICES = {
-  ottie: "***REMOVED***",   // German - Ostfriesisch
-  jarvis: "pxQ5J1NTCCuhK7jrRa1d",  // English - PAI System Voice
-} as const;
-
-// Model - eleven_flash_v2_5 for ultra-low latency
-const DEFAULT_MODEL = "eleven_flash_v2_5";
-
-// Load API key from environment or .env file
-let ELEVENLABS_API_KEY: string | undefined;
-
-function loadApiKey(): string {
-  if (ELEVENLABS_API_KEY) return ELEVENLABS_API_KEY;
-
-  // Try environment variable first
+// Load API key availability check
+function isApiKeyConfigured(): boolean {
+  // Check environment variable
   if (process.env.ELEVENLABS_API_KEY) {
-    ELEVENLABS_API_KEY = process.env.ELEVENLABS_API_KEY;
-    return ELEVENLABS_API_KEY;
+    return true;
   }
 
-  // Load from ~/.claude/.env
+  // Check ~/.claude/.env
   const envPath = join(PAI_DIR, '.env');
   if (existsSync(envPath)) {
     const envContent = readFileSync(envPath, 'utf-8');
     for (const line of envContent.split('\n')) {
       if (line.startsWith('ELEVENLABS_API_KEY=')) {
-        ELEVENLABS_API_KEY = line.split('=')[1].trim();
-        return ELEVENLABS_API_KEY;
+        const key = line.split('=')[1]?.trim();
+        if (key && key.length > 0) {
+          return true;
+        }
       }
     }
   }
 
-  // Fallback to ~/.env
-  const homeEnvPath = join(homedir(), '.env');
-  if (existsSync(homeEnvPath)) {
-    const envContent = readFileSync(homeEnvPath, 'utf-8');
-    for (const line of envContent.split('\n')) {
-      if (line.startsWith('ELEVENLABS_API_KEY=')) {
-        ELEVENLABS_API_KEY = line.split('=')[1].trim();
-        return ELEVENLABS_API_KEY;
-      }
-    }
+  return false;
+}
+
+// ============================================================================
+// Core TTS Function via pai-voice CLI
+// ============================================================================
+
+/**
+ * Speak text using pai-voice CLI
+ * Uses default voice from ~/.claude/.env (ELEVENLABS_VOICE_ID)
+ */
+async function speakViaCLI(text: string): Promise<{ success: boolean }> {
+  if (!existsSync(PAI_VOICE)) {
+    console.error(`❌ pai-voice CLI not found at: ${PAI_VOICE}`);
+    return { success: false };
   }
 
-  throw new Error('ELEVENLABS_API_KEY not found in environment or .env files');
-}
+  try {
+    // Escape double quotes in text
+    const escapedText = text.replace(/"/g, '\\"');
 
-// ============================================================================
-// Language Detection
-// ============================================================================
+    console.error(`🎙️ Speaking via pai-voice: "${text.substring(0, 50)}${text.length > 50 ? '...' : ''}"`);
 
-/**
- * Detect language based on German-specific patterns
- * Returns 'de' for German, 'en' for English
- */
-export function detectLanguage(text: string): 'de' | 'en' {
-  const germanPatterns = [
-    // Pronouns
-    /\b(ich|du|er|sie|es|wir|ihr|mich|dich|sich|mir|dir|ihm|uns|euch)\b/i,
-    // Conjunctions
-    /\b(und|oder|aber|wenn|dass|weil|denn|ob|als|damit|obwohl)\b/i,
-    // Common verbs
-    /\b(bin|bist|ist|sind|war|waren|habe|hast|hat|haben|hatte|werde|wird|werden|kann|kannst|können|muss|müssen|soll|sollte|will|wollen|mag|möchte|darf)\b/i,
-    // Articles
-    /\b(der|die|das|den|dem|des|ein|eine|einer|einem|einen|kein|keine|dieser|diese|dieses|welche|welcher)\b/i,
-    // Adverbs
-    /\b(nicht|auch|noch|schon|nur|sehr|mehr|viel|jetzt|hier|dort|heute|immer|wieder|gerade|eigentlich)\b/i,
-    // Umlauts & ß (strong indicator)
-    /[äöüß]/i,
-    // Common German words & greetings
-    /\b(hallo|moin|tschüss|danke|bitte|ja|nein|gut|schlecht|fertig|bereit|erledigt|verstanden|alles|klar)\b/i,
-  ];
-
-  let germanScore = 0;
-  for (const pattern of germanPatterns) {
-    if (pattern.test(text)) {
-      germanScore++;
-    }
-  }
-
-  // If 2+ German patterns match, consider it German
-  return germanScore >= 2 ? 'de' : 'en';
-}
-
-/**
- * Select voice based on detected language
- */
-export function selectVoice(text: string): { voiceId: string; voiceName: string; language: 'de' | 'en' } {
-  const lang = detectLanguage(text);
-  return lang === 'de'
-    ? { voiceId: VOICES.ottie, voiceName: 'Ottie', language: 'de' }
-    : { voiceId: VOICES.jarvis, voiceName: 'Jarvis', language: 'en' };
-}
-
-// ============================================================================
-// TTS Generation
-// ============================================================================
-
-interface TTSOptions {
-  voiceId?: string;
-  model?: string;
-  stability?: number;
-  similarityBoost?: number;
-}
-
-/**
- * Generate speech using ElevenLabs API
- * Returns audio as ArrayBuffer
- */
-async function generateSpeech(text: string, options: TTSOptions = {}): Promise<ArrayBuffer> {
-  const apiKey = loadApiKey();
-  const voiceId = options.voiceId || VOICES.jarvis;
-  const model = options.model || DEFAULT_MODEL;
-
-  const url = `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`;
-
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Accept': 'audio/mpeg',
-      'Content-Type': 'application/json',
-      'xi-api-key': apiKey,
-    },
-    body: JSON.stringify({
-      text: text,
-      model_id: model,
-      voice_settings: {
-        stability: options.stability ?? 0.5,
-        similarity_boost: options.similarityBoost ?? 0.75,
-      },
-    }),
-  });
-
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(`ElevenLabs API error: ${response.status} - ${errorText}`);
-  }
-
-  return await response.arrayBuffer();
-}
-
-/**
- * Play audio buffer using afplay (macOS)
- */
-async function playAudio(audioBuffer: ArrayBuffer): Promise<void> {
-  const tempFile = `/tmp/pai-voice-${Date.now()}.mp3`;
-
-  // Write audio to temp file
-  await Bun.write(tempFile, audioBuffer);
-
-  return new Promise((resolve, reject) => {
-    const proc = spawn('/usr/bin/afplay', [tempFile]);
-
-    proc.on('error', (error) => {
-      // Cleanup temp file
-      spawn('/bin/rm', ['-f', tempFile]);
-      reject(error);
+    execSync(`"${PAI_VOICE}" say "${escapedText}" --play`, {
+      timeout: 15000, // 15 second timeout
+      stdio: 'ignore',
+      shell: true
     });
 
-    proc.on('exit', (code) => {
-      // Cleanup temp file
-      spawn('/bin/rm', ['-f', tempFile]);
-
-      if (code === 0) {
-        resolve();
-      } else {
-        reject(new Error(`afplay exited with code ${code}`));
-      }
-    });
-  });
+    return { success: true };
+  } catch (error) {
+    console.error(`❌ pai-voice CLI error: ${error}`);
+    return { success: false };
+  }
 }
 
 // ============================================================================
-// Public API
+// Public API (backward compatible)
 // ============================================================================
 
 /**
- * Speak text with automatic language detection
- * Uses Ottie for German, Jarvis for English
+ * Speak text (uses configured default voice - Otti)
  */
 export async function speak(text: string): Promise<{ success: boolean; voice: string; language: string }> {
-  try {
-    const { voiceId, voiceName, language } = selectVoice(text);
-    console.error(`🎙️ Speaking with ${voiceName} (${language.toUpperCase()}): "${text.substring(0, 50)}..."`);
-
-    const audio = await generateSpeech(text, { voiceId });
-    await playAudio(audio);
-
-    return { success: true, voice: voiceName, language };
-  } catch (error) {
-    console.error(`❌ TTS Error: ${error}`);
-    return { success: false, voice: 'none', language: 'unknown' };
-  }
+  const result = await speakViaCLI(text);
+  return {
+    success: result.success,
+    voice: 'Otti (via pai-voice)',
+    language: 'de'
+  };
 }
 
 /**
- * Speak text in German with Ottie voice
+ * Speak text in German with Otti voice
+ * (Same as speak() since pai-voice uses Otti by default)
  */
 export async function speakGerman(text: string): Promise<{ success: boolean }> {
-  try {
-    console.error(`🎙️ Speaking with Ottie (DE): "${text.substring(0, 50)}..."`);
-
-    const audio = await generateSpeech(text, { voiceId: VOICES.ottie });
-    await playAudio(audio);
-
-    return { success: true };
-  } catch (error) {
-    console.error(`❌ TTS Error: ${error}`);
-    return { success: false };
-  }
+  return speakViaCLI(text);
 }
 
 /**
- * Speak text in English with Jarvis voice
+ * Speak text in English
+ * Note: Still uses configured voice (Otti) - for different voice, modify ~/.claude/.env
  */
 export async function speakEnglish(text: string): Promise<{ success: boolean }> {
-  try {
-    console.error(`🎙️ Speaking with Jarvis (EN): "${text.substring(0, 50)}..."`);
-
-    const audio = await generateSpeech(text, { voiceId: VOICES.jarvis });
-    await playAudio(audio);
-
-    return { success: true };
-  } catch (error) {
-    console.error(`❌ TTS Error: ${error}`);
-    return { success: false };
-  }
+  return speakViaCLI(text);
 }
 
 /**
  * Check if TTS is available (API key configured)
  */
 export function isTTSAvailable(): boolean {
-  try {
-    loadApiKey();
-    return true;
-  } catch {
-    return false;
-  }
+  return isApiKeyConfigured() && existsSync(PAI_VOICE);
 }
 
 /**
@@ -274,8 +127,26 @@ export function isTTSAvailable(): boolean {
  */
 export function getVoiceConfig() {
   return {
-    voices: VOICES,
-    model: DEFAULT_MODEL,
-    apiKeyConfigured: isTTSAvailable(),
+    cli: PAI_VOICE,
+    cliExists: existsSync(PAI_VOICE),
+    apiKeyConfigured: isApiKeyConfigured(),
+  };
+}
+
+// ============================================================================
+// Legacy exports for backward compatibility
+// ============================================================================
+
+export function detectLanguage(text: string): 'de' | 'en' {
+  // Not needed anymore since pai-voice uses configured voice
+  return 'de';
+}
+
+export function selectVoice(text: string): { voiceId: string; voiceName: string; language: 'de' | 'en' } {
+  // Not needed anymore since pai-voice uses configured voice
+  return {
+    voiceId: '***REMOVED***',
+    voiceName: 'Otti',
+    language: 'de'
   };
 }
