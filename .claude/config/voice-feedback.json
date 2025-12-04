@@ -1,11 +1,12 @@
 {
   "enabled": true,
   "voice": {
-    "id": "pxQ5J1NTCCuhK7jrRa1d",
-    "name": "Jarvis",
+    "id": "***REMOVED***",
+    "name": "Ottie",
+    "language": "de",
     "stability": 0.5,
-    "similarity_boost": 0.8,
-    "speed": 0.95
+    "similarity_boost": 0.75,
+    "speed": 1.0
   },
-  "lastToggled": null
+  "lastToggled": "2025-12-04T08:10:00Z"
 }

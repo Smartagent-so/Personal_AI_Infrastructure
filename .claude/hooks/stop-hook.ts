@@ -1,8 +1,34 @@
 #!/usr/bin/env bun
 
-import { readFileSync } from 'fs';
+import { readFileSync, existsSync } from 'fs';
 import { join } from 'path';
 import { homedir } from 'os';
+import { speak, isTTSAvailable } from './lib/elevenlabs-tts';
+import { PAI_DIR } from './lib/pai-paths';
+
+// Voice feedback configuration interface
+interface VoiceFeedbackConfig {
+  enabled: boolean;
+  voice: {
+    id: string;
+    name: string;
+    language?: string;
+  };
+}
+
+// Load voice feedback configuration
+function loadVoiceFeedbackConfig(): VoiceFeedbackConfig | null {
+  const configPath = join(PAI_DIR, 'config/voice-feedback.json');
+  try {
+    if (existsSync(configPath)) {
+      const content = readFileSync(configPath, 'utf-8');
+      return JSON.parse(content) as VoiceFeedbackConfig;
+    }
+  } catch (error) {
+    console.error('Failed to load voice-feedback.json:', error);
+  }
+  return null;
+}
 
 /**
  * Generate 4-word tab title summarizing what was done
@@ -494,25 +520,27 @@ async function main() {
 
   // FIRST: Send voice notification if we have a message
   if (message) {
-    // Align voice payload with initialize-pai-session.ts (prefer voice_id)
-    const voiceId = process.env.DA_VOICE_ID || 'default-voice-id';
-    const priority = 'low';
-    // Send to voice server
-    await fetch('http://localhost:***REMOVED***/notify', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        title: 'Completion',
-        message,
-        voice_enabled: true,
-        priority,
-        voice_id: voiceId,
-        // keep legacy fields for compatibility with voice server configs that use names/rates
-        voice_name: voiceConfig.voice_name,
-        rate: voiceConfig.rate_wpm
-      })
-    }).catch(() => {});
-    console.error(`🔊 Voice notification sent: "${message}" with voice: ${voiceConfig.voice_name} at ${voiceConfig.rate_wpm} wpm (${voiceConfig.rate_multiplier}x)`);
+    // Check if voice feedback is enabled
+    const feedbackConfig = loadVoiceFeedbackConfig();
+
+    if (!feedbackConfig || !feedbackConfig.enabled) {
+      console.error('🔇 Voice feedback disabled - skipping voice notification');
+    } else if (!isTTSAvailable()) {
+      console.error('❌ ElevenLabs API key not configured - skipping voice notification');
+    } else {
+      // Send voice notification using direct ElevenLabs API
+      // Auto-detects language and selects Ottie (German) or Jarvis (English)
+      try {
+        const result = await speak(message);
+        if (result.success) {
+          console.error(`🔊 Voice notification sent: "${message}" with voice: ${result.voice} (${result.language.toUpperCase()})`);
+        } else {
+          console.error(`❌ Voice notification failed`);
+        }
+      } catch (error) {
+        console.error(`❌ Voice notification error: ${error}`);
+      }
+    }
   }
 
   // ALWAYS set tab title to override any previous titles (like "dynamic requirements")

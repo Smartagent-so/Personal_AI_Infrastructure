@@ -112,6 +112,7 @@ COMPLETED: [12 words max - drives voice output - REQUIRED]
 - Date Awareness: Always use today's actual date from system (not training cutoff)
 - Constitutional Principles: See ${PAI_DIR}/skills/CORE/CONSTITUTION.md
 - Command Line First, Deterministic Code First, Prompts Wrap Code
+- **Proper Fix > Quick Fix:** Always prefer sustainable, long-term solutions over quick workarounds. Quick-fixes lead to chaos and technical debt. Even if it takes more effort short-term, invest in the proper solution.
 
 ---
 

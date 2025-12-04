@@ -9,52 +9,84 @@
  * - Checks if this is a subagent session (skips for subagents)
  * - Tests that stop-hook is properly configured
  * - Sets initial terminal tab title
- * - Sends voice notification that system is ready (if voice server is running)
+ * - Sends voice greeting via ElevenLabs API (Ottie for German, Jarvis for English)
  * - Calls load-core-context.ts to inject core context into the session
  *
  * Setup:
  * 1. Set environment variables in settings.json:
  *    - DA: Your AI's name (e.g., "Kai", "Nova", "Assistant")
- *    - DA_VOICE_ID: Your ElevenLabs voice ID (if using voice system)
  *    - PAI_DIR: Path to your PAI directory (defaults to $HOME/.claude)
- * 2. Ensure load-core-context.ts exists in hooks/ directory
- * 3. Add both hooks to SessionStart in settings.json
+ * 2. Ensure ELEVENLABS_API_KEY is set in ~/.claude/.env
+ * 3. Ensure load-core-context.ts exists in hooks/ directory
+ * 4. Add both hooks to SessionStart in settings.json
  */
 
-import { existsSync, statSync, readFileSync, writeFileSync, unlinkSync } from 'fs';
+import { existsSync, statSync, readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import { tmpdir } from 'os';
 import { PAI_DIR } from './lib/pai-paths';
+import { speak, speakGerman, isTTSAvailable } from './lib/elevenlabs-tts';
+
+// Voice feedback configuration interface
+interface VoiceFeedbackConfig {
+  enabled: boolean;
+  voice: {
+    id: string;
+    name: string;
+    stability: number;
+    similarity_boost: number;
+    speed: number;
+  };
+  lastToggled: string | null;
+}
+
+// Load voice feedback configuration
+function loadVoiceFeedbackConfig(): VoiceFeedbackConfig | null {
+  const configPath = join(PAI_DIR, 'config/voice-feedback.json');
+  try {
+    if (existsSync(configPath)) {
+      const content = readFileSync(configPath, 'utf-8');
+      return JSON.parse(content) as VoiceFeedbackConfig;
+    }
+  } catch (error) {
+    console.error('Failed to load voice-feedback.json:', error);
+  }
+  return null;
+}
 
 // Debounce duration in milliseconds (prevents duplicate SessionStart events)
 const DEBOUNCE_MS = 2000;
 const LOCKFILE = join(tmpdir(), 'pai-session-start.lock');
 
-async function sendNotification(title: string, message: string, priority: string = 'normal') {
+/**
+ * Send voice greeting using direct ElevenLabs API
+ * Uses Ottie for German greetings, Jarvis for English
+ */
+async function sendVoiceGreeting(message: string, forceGerman: boolean = false) {
+  // Load voice feedback config to check if enabled
+  const voiceConfig = loadVoiceFeedbackConfig();
+
+  // If voice feedback is disabled, skip notification
+  if (!voiceConfig || !voiceConfig.enabled) {
+    console.error('🔇 Voice feedback disabled - skipping voice notification');
+    return;
+  }
+
+  // Check if TTS is available
+  if (!isTTSAvailable()) {
+    console.error('❌ ElevenLabs API key not configured - skipping voice notification');
+    return;
+  }
+
   try {
-    // Get voice ID from environment variable (customize in settings.json)
-    const voiceId = process.env.DA_VOICE_ID || 'default-voice-id';
-
-    const response = await fetch('http://localhost:***REMOVED***/notify', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        title,
-        message,
-        voice_enabled: true,
-        priority,
-        voice_id: voiceId
-      }),
-    });
-
-    if (!response.ok) {
-      console.error(`Notification failed: ${response.status}`);
+    if (forceGerman) {
+      await speakGerman(message);
+    } else {
+      await speak(message);
     }
+    console.error('✅ Voice greeting sent successfully');
   } catch (error) {
-    // Silently fail if voice server isn't running
-    // console.error('Failed to send notification:', error);
+    console.error(`❌ Voice greeting failed: ${error}`);
   }
 }
 
@@ -150,7 +182,18 @@ async function main() {
     const stopHookOk = await testStopHook();
 
     const daName = process.env.DA || 'AI Assistant';
-    const message = `${daName} here, ready to go.`;
+
+    // Check voice config for personalized greeting
+    const voiceConfig = loadVoiceFeedbackConfig();
+    const isOttie = voiceConfig?.voice?.name?.toLowerCase() === 'ottie';
+
+    // German greeting for Ottie, English for Jarvis
+    // Default to German (Ottie) for this user's preference
+    const useGerman = isOttie || voiceConfig?.voice?.name === undefined;
+
+    const message = useGerman
+      ? 'Moin! Neue Session gestartet. Ich bin bereit.'
+      : 'Good morning. New session started. All systems ready.';
 
     if (!stopHookOk) {
       console.error('\n⚠️ STOP-HOOK ISSUE DETECTED - Tab titles may not update automatically');
@@ -159,7 +202,8 @@ async function main() {
     // Note: PAI core context loading is handled by load-core-context.ts hook
     // which should run BEFORE this hook in settings.json SessionStart hooks
 
-    await sendNotification(`${daName} Systems Initialized`, message, 'low');
+    // Send voice greeting using direct ElevenLabs API (bypasses buggy voice server)
+    await sendVoiceGreeting(message, useGerman);
     process.exit(0);
   } catch (error) {
     console.error('SessionStart hook error:', error);
