@@ -1,0 +1,12 @@
+{
+  "enabled": true,
+  "voice": {
+    "id": "***REMOVED***",
+    "name": "Ottie",
+    "language": "de",
+    "stability": 0.5,
+    "similarity_boost": 0.75,
+    "speed": 1.0
+  },
+  "lastToggled": "2025-12-04T08:10:00Z"
+}

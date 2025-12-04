@@ -1,0 +1,34 @@
+# PAI Image Output
+
+Zentraler Ausgabeordner für alle PAI-generierten Bilder, Infografiken und Visualisierungen.
+
+## Ordnerstruktur
+
+```
+PAI-Image Output/
+├── README.md
+├── YYYY-MM-DD_Session-Name/
+│   ├── Infographic-Topic.png
+│   └── Diagram-Topic.png
+└── YYYY-MM-DD_Another-Session/
+    └── Visualization.png
+```
+
+## Konvention
+
+- **Unterordner-Format:** `YYYY-MM-DD_Beschreibender-Session-Name`
+- **Dateinamen:** Beschreibend, z.B. `PAI-System-Infographic.png`
+- Jede Image-Generation-Session bekommt einen eigenen Unterordner
+- Alle verwandten Bilder einer Session gehören zusammen
+
+## Generierungs-Tools
+
+- **nano-banana-pro** (Gemini) - Business-Visualisierungen, Infografiken
+- **Art Skill** - Tron-meets-Excalidraw Aesthetic
+- **Mermaid** - Technische Diagramme (als Code in .md Dateien)
+
+## Beispiele
+
+- `2025-12-03_PAI-Architecture/`
+- `2025-12-05_Business-Pitch-Visuals/`
+- `2025-12-10_Product-Mockups/`

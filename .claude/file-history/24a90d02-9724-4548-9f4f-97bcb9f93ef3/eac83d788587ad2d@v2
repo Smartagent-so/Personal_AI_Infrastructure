@@ -1,0 +1,157 @@
+# Voice Server Setup - Dokumentation
+
+**Erstellt:** 2025-12-03
+**Aktualisiert:** 2025-12-03
+**Status:** Produktiv mit Streaming & niedriger Latenz
+
+---
+
+## Architektur
+
+```
+PAI/Claude Code
+      │
+      ▼ POST /notify
+┌─────────────────┐
+│  Voice Server   │  localhost:***REMOVED***
+│  (server.ts)    │  Bun Runtime
+└────────┬────────┘
+         │
+         ▼ Streaming API
+┌─────────────────┐
+│   ElevenLabs    │
+│   TTS Stream    │  eleven_flash_v2_5 (ultra-low latency)
+└────────┬────────┘
+         │
+         ▼ MP3 Stream
+┌─────────────────┐
+│    afplay       │  macOS Audio (startet während Stream läuft)
+└─────────────────┘
+```
+
+## Konfiguration
+
+### Environment (~/.env)
+```bash
+ELEVENLABS_API_KEY=your_key_here
+ELEVENLABS_VOICE_ID=pxQ5J1NTCCuhK7jrRa1d  # Jarvis Default
+ELEVENLABS_MODEL=eleven_flash_v2_5         # Ultra-low latency (empfohlen)
+# Alternative Modelle:
+# ELEVENLABS_MODEL=eleven_turbo_v2_5       # Balance Qualität/Speed
+# ELEVENLABS_MODEL=***REMOVED***  # Höchste Qualität, mehr Latenz
+VOICE_STREAMING=true                       # Streaming aktivieren (default: true)
+```
+
+## Fallback-Optionen
+
+Falls Streaming Probleme macht:
+
+```bash
+# Option 1: Streaming deaktivieren in ~/.env
+VOICE_STREAMING=false
+
+# Option 2: Per Request (JSON Body)
+{"message": "Hello", "streaming": false}
+
+# Option 3: Auf ***REMOVED*** zurück
+ELEVENLABS_MODEL=***REMOVED***
+```
+
+### Voice IDs
+
+| Voice | ID | Sprache |
+|-------|-----|---------|
+| Jarvis | `pxQ5J1NTCCuhK7jrRa1d` | EN |
+| Ottie | `***REMOVED***` | DE |
+| Carson (CIS) | `i0VhsMuWeqedVY40e6UN` | EN |
+| Maya (CIS) | `T720RsqorTx4ZZWohrNN` | EN |
+| Dr. Quinn (CIS) | `991lF4hc0xxfec4Y6B0i` | EN |
+| Victor (CIS) | `DEn2UKxERg5VSUMgGDLH` | EN |
+| Sophia (CIS) | `cfc7wVYq4gw4OpcEEAom` | EN |
+
+## Server-Befehle
+
+```bash
+# Status prüfen
+~/.claude/voice-server/status.sh
+
+# Starten
+~/.claude/voice-server/start.sh
+
+# Stoppen
+~/.claude/voice-server/stop.sh
+
+# Neustarten
+~/.claude/voice-server/restart.sh
+
+# Health Check
+curl http://localhost:***REMOVED***/health
+```
+
+## API Endpoints
+
+### POST /notify
+```bash
+curl -X POST http://localhost:***REMOVED***/notify \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": "PAI",
+    "message": "Hello World",
+    "voice_id": "pxQ5J1NTCCuhK7jrRa1d"
+  }'
+```
+
+### POST /pai (Default Voice)
+```bash
+curl -X POST http://localhost:***REMOVED***/pai \
+  -H "Content-Type: application/json" \
+  -d '{"message": "Task completed"}'
+```
+
+### GET /health
+```bash
+curl http://localhost:***REMOVED***/health
+```
+
+## Dateien
+
+```
+~/.claude/voice-server/
+├── server.ts              # Hauptserver (Bun)
+├── voices.json            # Voice-Konfiguration
+├── start.sh               # Startskript
+├── stop.sh                # Stoppskript
+├── status.sh              # Status-Check
+├── restart.sh             # Neustart
+├── macos-service/         # LaunchAgent
+│   ├── com.paivoice.server.plist
+│   └── voice-server-ctl.sh
+└── logs/
+    └── voice-server.log
+```
+
+## Limits
+
+- Max. Message Length: 500 Zeichen
+- Rate Limit: 10 Requests/Minute
+- CORS: localhost only
+
+## Troubleshooting
+
+```bash
+# Logs prüfen
+tail -f ~/.claude/voice-server/logs/voice-server.log
+
+# Server manuell starten (Debug)
+cd ~/.claude/voice-server && bun run server.ts
+
+# Port prüfen
+lsof -i :***REMOVED***
+```
+
+---
+
+## Wichtig: NICHT LÖSCHEN!
+
+Diese Setup ist der stabile Fallback für Voice-Output.
+Bei Problemen mit neuen Integrationen: Hier zurückkehren.

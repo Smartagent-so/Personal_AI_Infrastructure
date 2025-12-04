@@ -1,0 +1,555 @@
+# PAI System Architecture Diagrams
+
+> Visuelle Dokumentation des Personal AI Infrastructure Systems
+
+---
+
+## 1. PAI Gesamtarchitektur
+
+Das PAI-System basiert auf Claude Code und erweitert es mit Skills, Agents, Hooks und Voice-Integration.
+
+```mermaid
+flowchart TB
+    subgraph User["👤 User"]
+        Input[Natural Language Input]
+    end
+
+    subgraph ClaudeCode["🤖 Claude Code (Foundation)"]
+        CC[Claude Code Engine]
+        Tools[Tool System]
+        MCP[MCP Protocol]
+    end
+
+    subgraph PAI["⚙️ PAI Runtime Layer"]
+        subgraph Skills["📚 Skills System"]
+            CORE[CORE Skill]
+            DomainSkills[Domain Skills]
+            Createskill[Createskill Meta]
+        end
+
+        subgraph Agents["🤖 Agents"]
+            Architect[Architect]
+            Engineer[Engineer]
+            Researcher[Researcher]
+            Designer[Designer]
+        end
+
+        subgraph Hooks["🪝 Hook System"]
+            StartHook[start-hook.ts]
+            StopHook[stop-hook.ts]
+            ToolHook[tool-hook.ts]
+        end
+
+        subgraph Voice["🔊 Voice System"]
+            VoiceServer[Voice Server]
+            ElevenLabs[ElevenLabs TTS]
+        end
+
+        subgraph History["📁 History System"]
+            Sessions[sessions/]
+            Learnings[learnings/]
+            Research[research/]
+        end
+    end
+
+    subgraph Output["📤 Output"]
+        Response[Structured Response]
+        VoiceOut[Voice Feedback]
+        Files[File Changes]
+    end
+
+    Input --> CC
+    CC --> Tools
+    CC --> MCP
+    CC --> Skills
+    Skills --> Agents
+    Hooks --> Voice
+    StopHook --> VoiceServer
+    VoiceServer --> ElevenLabs
+    CC --> Response
+    ElevenLabs --> VoiceOut
+    Tools --> Files
+    StopHook --> History
+
+    style CORE fill:#4A148C,color:#fff
+    style VoiceServer fill:#00796B,color:#fff
+    style CC fill:#FF6B35,color:#fff
+```
+
+---
+
+## 2. Progressive Disclosure - 3-Tier Context Loading
+
+Das wichtigste Architekturmuster für Token-Effizienz und Performance.
+
+```mermaid
+flowchart TB
+    subgraph Tier1["🔵 Tier 1: System Prompt (Always Active)"]
+        T1Desc["Skill description: YAML frontmatter<br/>~200-500 words<br/>Triggers & routing hints"]
+    end
+
+    subgraph Tier2["🟢 Tier 2: SKILL.md Body (On-Demand)"]
+        T2Body["Main reference content<br/>~500-2000 lines<br/>Complete workflows<br/>Routing tables"]
+    end
+
+    subgraph Tier3["🟡 Tier 3: Reference Files (Just-In-Time)"]
+        T3Ref1[CONSTITUTION.md]
+        T3Ref2[security-protocols.md]
+        T3Ref3[delegation-patterns.md]
+        T3Ref4[workflow-specific.md]
+    end
+
+    SessionStart([Session Start]) --> Tier1
+    Tier1 -->|"Skill activated"| Tier2
+    Tier2 -->|"Deep detail needed"| Tier3
+
+    style Tier1 fill:#1565C0,color:#fff
+    style Tier2 fill:#2E7D32,color:#fff
+    style Tier3 fill:#F9A825,color:#000
+```
+
+### Token-Effizienz durch Progressive Disclosure:
+
+```mermaid
+pie title Context Loading Distribution
+    "Tier 1 (Always)" : 5
+    "Tier 2 (Most Tasks)" : 70
+    "Tier 3 (Specialized)" : 25
+```
+
+---
+
+## 3. Request Routing Flow
+
+Wie eine User-Anfrage durch das System geroutet wird.
+
+```mermaid
+sequenceDiagram
+    participant U as 👤 User
+    participant CC as 🤖 Claude Code
+    participant SP as 📋 System Prompt
+    participant SK as 📚 Skill
+    participant WF as ⚡ Workflow
+    participant AG as 🤖 Agent
+    participant VO as 🔊 Voice
+
+    U->>CC: Natural Language Request
+    CC->>SP: Match against skill descriptions
+    SP->>SP: Find matching triggers
+    SP->>SK: Activate matching skill
+    SK->>SK: Load SKILL.md (Tier 2)
+    SK->>WF: Route to specific workflow
+
+    alt Delegation Required
+        WF->>AG: Spawn specialized agent
+        AG->>AG: Execute autonomously
+        AG->>WF: Return results
+    end
+
+    WF->>CC: Execute steps with tools
+    CC->>U: Structured Response + COMPLETED line
+    CC->>VO: Extract COMPLETED → Voice feedback
+    VO->>U: 🔊 Spoken confirmation
+```
+
+---
+
+## 4. Skills-as-Containers Struktur
+
+Skills sind aktive Orchestratoren, nicht passive Dokumentation.
+
+```mermaid
+flowchart TB
+    subgraph Skill["📦 Skill Container"]
+        subgraph Meta["YAML Frontmatter"]
+            Name[name: skill-name]
+            Desc["description: USE WHEN..."]
+        end
+
+        subgraph Body["SKILL.md Body"]
+            Routing[Routing Tables]
+            Context[Domain Context]
+            WFLinks[Workflow Links]
+        end
+
+        subgraph Workflows["workflows/"]
+            WF1[primary-flow.md]
+            WF2[advanced-flow.md]
+            WF3[specialized.md]
+        end
+
+        subgraph References["Reference Files"]
+            Ref1[deep-topic-a.md]
+            Ref2[deep-topic-b.md]
+        end
+
+        subgraph Assets["assets/"]
+            Templates[templates/]
+            Examples[examples/]
+        end
+
+        subgraph CLITools["tools/"]
+            CLI[cli.ts]
+            Lib[lib/]
+        end
+    end
+
+    Meta --> Body
+    Body --> Workflows
+    Body --> References
+    Workflows --> Assets
+    Workflows --> CLITools
+
+    style Skill fill:#1A202C,color:#fff
+    style Meta fill:#4A148C,color:#fff
+    style Body fill:#00796B,color:#fff
+```
+
+### Skill Archetype Comparison:
+
+```mermaid
+flowchart LR
+    subgraph Minimal["Minimal Skill"]
+        M1[SKILL.md only]
+    end
+
+    subgraph Standard["Standard Skill"]
+        S1[SKILL.md]
+        S2[workflows/]
+        S3[reference.md]
+    end
+
+    subgraph Complex["Complex Skill"]
+        C1[SKILL.md]
+        C2[workflows/]
+        C3[reference/]
+        C4[assets/]
+        C5[tools/]
+        C6[tests/]
+    end
+
+    style Minimal fill:#E8F5E9
+    style Standard fill:#FFF3E0
+    style Complex fill:#E3F2FD
+```
+
+---
+
+## 5. Agent Delegation Patterns
+
+Verschiedene Muster für Multi-Agent Orchestration.
+
+```mermaid
+flowchart TB
+    subgraph Sequential["Sequential Delegation"]
+        S_PAI[PAI] --> S_Eng[Engineer]
+        S_Eng --> S_Done[✅ Complete]
+    end
+
+    subgraph Parallel["Parallel Delegation"]
+        P_PAI[PAI] --> P_I1[Intern 1]
+        P_PAI --> P_I2[Intern 2]
+        P_PAI --> P_I3[Intern 3]
+        P_I1 --> P_Sync[Synthesize]
+        P_I2 --> P_Sync
+        P_I3 --> P_Sync
+        P_Sync --> P_Done[✅ Complete]
+    end
+
+    subgraph Nested["Nested Delegation"]
+        N_PAI[PAI] --> N_Arch[Architect]
+        N_Arch --> N_Eng[Engineer]
+        N_Eng --> N_PAI2[PAI verifies]
+        N_PAI2 --> N_Done[✅ Complete]
+    end
+
+    subgraph Spotcheck["Spotcheck Pattern"]
+        SC_PAI[PAI] --> SC_I1[Intern 1]
+        SC_PAI --> SC_I2[Intern 2]
+        SC_PAI --> SC_In[Intern N]
+        SC_I1 --> SC_Spot[Spotcheck Intern]
+        SC_I2 --> SC_Spot
+        SC_In --> SC_Spot
+        SC_Spot --> SC_Done[✅ Verified]
+    end
+
+    style Sequential fill:#E8F5E9
+    style Parallel fill:#FFF3E0
+    style Nested fill:#E3F2FD
+    style Spotcheck fill:#FCE4EC
+```
+
+---
+
+## 6. Hook System Event Flow
+
+Event-driven Automation im PAI-System.
+
+```mermaid
+flowchart LR
+    subgraph Events["Trigger Events"]
+        E1[Session Start]
+        E2[User Prompt]
+        E3[Tool Call]
+        E4[Response Complete]
+    end
+
+    subgraph Hooks["Hook Handlers"]
+        H1[initialize-session.ts]
+        H2[prompt-submit-hook.ts]
+        H3[tool-hook.ts]
+        H4[stop-hook.ts]
+    end
+
+    subgraph Actions["Resulting Actions"]
+        A1[Load CORE Context]
+        A2[Inject Context]
+        A3[Log Tool Usage]
+        A4[Voice Feedback]
+        A5[Save to History]
+    end
+
+    E1 --> H1 --> A1
+    E2 --> H2 --> A2
+    E3 --> H3 --> A3
+    E4 --> H4 --> A4
+    H4 --> A5
+
+    style Events fill:#FFCCBC
+    style Hooks fill:#B2DFDB
+    style Actions fill:#D1C4E9
+```
+
+---
+
+## 7. Voice Integration Flow
+
+Wie die COMPLETED-Line zu Sprach-Feedback wird.
+
+```mermaid
+sequenceDiagram
+    participant PAI as PAI/Agent
+    participant Hook as stop-hook.ts
+    participant VS as Voice Server
+    participant 11L as ElevenLabs API
+    participant Mac as macOS
+
+    PAI->>PAI: Complete task
+    PAI->>PAI: Write "🎯 COMPLETED: ..."
+    Hook->>Hook: Parse transcript
+    Hook->>Hook: Extract COMPLETED line
+    Hook->>Hook: Determine voice_id by entity
+    Hook->>VS: POST /notify {message, voice_id}
+    VS->>VS: Sanitize message
+    VS->>11L: Request TTS audio
+    11L->>VS: Return MP3 audio
+    VS->>Mac: Play via afplay
+    VS->>Mac: Show notification
+    Mac->>Mac: 🔊 User hears feedback
+```
+
+---
+
+## 8. CLI-First Architecture Pipeline
+
+Das fundamentale Entwicklungsmuster für alle PAI-Tools.
+
+```mermaid
+flowchart LR
+    subgraph Phase1["📋 Phase 1: Requirements"]
+        R1[User Goal]
+        R2[Understand Requirements]
+    end
+
+    subgraph Phase2["💻 Phase 2: Deterministic Code"]
+        C1[Write TypeScript]
+        C2[Add Validation]
+        C3[Error Handling]
+    end
+
+    subgraph Phase3["🔧 Phase 3: CLI Wrapper"]
+        CLI1[Create CLI Interface]
+        CLI2[Add --help]
+        CLI3[JSON Output]
+    end
+
+    subgraph Phase4["🤖 Phase 4: AI Orchestration"]
+        AI1[Prompt Layer]
+        AI2[Natural Language → CLI]
+    end
+
+    R1 --> R2 --> C1 --> C2 --> C3 --> CLI1 --> CLI2 --> CLI3 --> AI1 --> AI2
+
+    style Phase1 fill:#FFECB3
+    style Phase2 fill:#C8E6C9
+    style Phase3 fill:#BBDEFB
+    style Phase4 fill:#E1BEE7
+```
+
+### Warum CLI-First?
+
+```mermaid
+flowchart TB
+    subgraph Old["❌ Old Way: Prompt-Driven"]
+        O1[User Request] --> O2[AI generates ad-hoc]
+        O2 --> O3[Inconsistent Results]
+    end
+
+    subgraph New["✅ New Way: CLI-First"]
+        N1[User Request] --> N2[AI uses CLI tool]
+        N2 --> N3[Deterministic Results]
+    end
+
+    style Old fill:#FFCDD2
+    style New fill:#C8E6C9
+```
+
+---
+
+## 9. PAI Directory Structure
+
+Visuelle Darstellung der Verzeichnisstruktur.
+
+```mermaid
+flowchart TB
+    subgraph PAI_DIR["~/.claude/ (PAI_DIR)"]
+        subgraph Core["Core Config"]
+            ENV[.env]
+            Settings[settings.json]
+            MCPJson[.mcp.json]
+        end
+
+        subgraph SkillsDir["skills/"]
+            CORE_SK[CORE/]
+            Art_SK[Art/]
+            Research_SK[research/]
+            Other_SK[30+ more...]
+        end
+
+        subgraph AgentsDir["agents/"]
+            Arch_AG[architect.md]
+            Eng_AG[engineer.md]
+            Res_AG[researcher.md]
+        end
+
+        subgraph HooksDir["hooks/"]
+            Init_HK[initialize-session.ts]
+            Stop_HK[stop-hook.ts]
+            Self_HK[self-test.ts]
+        end
+
+        subgraph HistoryDir["history/"]
+            Sessions_H[sessions/]
+            Learnings_H[learnings/]
+            Research_H[research/]
+        end
+
+        subgraph VoiceDir["voice-server/"]
+            Server_V[server.ts]
+            Manage_V[manage.sh]
+        end
+
+        subgraph MCPDir["MCPs/"]
+            Swap[swap-mcp]
+            Profiles[profiles/]
+        end
+    end
+
+    style PAI_DIR fill:#1A202C,color:#fff
+    style Core fill:#4A148C,color:#fff
+    style SkillsDir fill:#00796B,color:#fff
+    style AgentsDir fill:#FF6B35,color:#fff
+    style HooksDir fill:#1565C0,color:#fff
+    style HistoryDir fill:#2E7D32,color:#fff
+    style VoiceDir fill:#F9A825,color:#000
+```
+
+---
+
+## 10. The Four Primitives
+
+Die vier Bausteine der PAI-Architektur.
+
+```mermaid
+flowchart TB
+    subgraph Primitives["🧱 The Four Primitives"]
+        subgraph Skills["📚 Skills"]
+            SK_Desc["Meta-Container für Domain Expertise<br/>Routing + Workflows + Assets"]
+        end
+
+        subgraph Commands["⚡ Commands"]
+            CMD_Desc["Discrete Task Workflows<br/>Innerhalb von Skills<br/>Callable oder Auto-selected"]
+        end
+
+        subgraph Agents["🤖 Agents"]
+            AG_Desc["Autonome Task Executors<br/>Voller Tool-Zugriff<br/>Spezialisierte Expertise"]
+        end
+
+        subgraph MCPs["🔌 MCPs"]
+            MCP_Desc["External Tool Integrations<br/>Model Context Protocol<br/>Profile-basiert konfiguriert"]
+        end
+    end
+
+    Skills --> Commands
+    Skills --> Agents
+    Agents --> MCPs
+    Commands --> MCPs
+
+    style Skills fill:#4A148C,color:#fff
+    style Commands fill:#00796B,color:#fff
+    style Agents fill:#FF6B35,color:#fff
+    style MCPs fill:#1565C0,color:#fff
+```
+
+---
+
+## Zusammenfassung: PAI System auf einen Blick
+
+```mermaid
+mindmap
+  root((PAI System))
+    Foundation
+      Claude Code
+      Tool System
+      MCP Protocol
+    Skills
+      CORE Identity
+      Domain Skills
+      Createskill Meta
+      Progressive Disclosure
+    Agents
+      Architect
+      Engineer
+      Researcher
+      Designer
+      Parallel Execution
+    Hooks
+      Session Start
+      Stop + Voice
+      Tool Tracking
+    Voice
+      ElevenLabs TTS
+      COMPLETED Line
+      Agent Voices
+    History
+      Sessions
+      Learnings
+      Research
+    CLI-First
+      Deterministic
+      Testable
+      Scriptable
+```
+
+---
+
+## Nutzung dieser Diagramme
+
+Diese Mermaid-Diagramme können direkt in:
+- **GitHub** - Wird automatisch gerendert
+- **Obsidian** - Mit Mermaid-Plugin
+- **VS Code** - Mit Markdown Preview Enhanced
+- **Notion** - Als Code-Block
+- **GitBook/Docusaurus** - Native Unterstützung
+
+Für AI-generierte Bilder im PAI Visual Aesthetic (Tron-meets-Excalidraw) kann der Art Skill mit dem TechnicalDiagrams Workflow verwendet werden.

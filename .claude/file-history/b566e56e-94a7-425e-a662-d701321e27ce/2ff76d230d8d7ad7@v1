@@ -1,0 +1,168 @@
+# TPOS - Personal AI Operating System
+
+> Projekt-Kontext für Claude Code Sessions
+
+---
+
+## Projekt-Übersicht
+
+**TPOS** (The Personal Operating System) ist ein persönliches AI-gestütztes Operating System basierend auf:
+- **Claude Code** als Kern-Engine (Foundation)
+- **PAI** (Personal AI Infrastructure) als Runtime (UOCS, Voice, Hooks, Dashboard)
+- **BMAD** Method v6 als Methodik (C.O.R.E., 4-Phasen, Checklists)
+- **Eigene Skills** für Business-Bereiche
+
+### Hybrid-Strategie
+
+| Layer | Quelle | Funktion |
+|-------|--------|----------|
+| **Methodik** | BMAD | C.O.R.E., 4-Phasen, Quality Gates |
+| **Runtime** | PAI | UOCS, Voice, Hooks, Dashboard |
+| **Foundation** | Claude Code | Skills, Commands, MCP |
+
+---
+
+## Aktuelle Phase
+
+**Phase 1: Core Installation** (Woche 1)
+
+Status: Dokumentation erstellt, Installation steht bevor.
+
+---
+
+## Dokumentation
+
+| Dokument | Pfad | Inhalt |
+|----------|------|--------|
+| **Finale Konfiguration** | `docs/TPOS-Final-Configuration.md` | Entscheidungen, Dual-Generator |
+| **Implementierungsplan** | `~/.claude/plans/effervescent-napping-tide.md` | 5-Phasen-Plan (Hybrid) |
+| **PAI Analyse** | `docs/PAI-Analysis.md` | PAI System, UOCS, Hooks, Agents |
+| **BMAD Analyse** | `docs/BMAD-Analysis.md` | C.O.R.E., 4-Phasen, Scale-Adaptive |
+| **PAI vs BMAD** | `docs/PAI-vs-BMAD-Comparison.md` | Vergleich & Hybrid-Empfehlung |
+| **CIS/Skills/Builder Research** | `docs/Research-CIS-PublicSkills-BMADBuilder.md` | CIS, Public Skills, BMAD Builder |
+| **Best Practices** | `docs/Claude-Code-Best-Practices.md` | Claude Code Referenz |
+| **PAI vs CC** | `docs/PAI-vs-ClaudeCode-Comparison.md` | PAI Erweiterungen |
+
+---
+
+## Geplante Phasen
+
+| Phase | Inhalt | Quelle | Status |
+|-------|--------|--------|--------|
+| 1 | Core Installation (PAI) | PAI | Nächster Schritt |
+| 2 | KI-Training | PAI | Pending |
+| 3 | Branding + BMAD-Core Skill | PAI + BMAD | Pending |
+| 4 | Business Skills | Custom | Pending |
+| 5 | Obsidian System | Custom | Pending |
+
+---
+
+## Skill-Erstellung: Dual-Generator Strategie
+
+**Kernentscheidung:** Keine manuellen Skills - automatisierte Generierung!
+
+| Generator | Verwendung | Beispiele |
+|-----------|------------|-----------|
+| **Createskill** | Einzelne Skills, Voice-Integration | CIS Workflows, Finance |
+| **BMAD Builder** | Domain-Ökosysteme, Agent-Teams | Strategy & Consulting |
+
+### Aus PAI übernehmen:
+- CORE (Foundation)
+- **Createskill** (Meta-Skill für Einzelskills)
+- Story-Explanation (Narrative)
+- Research (erweitern)
+
+### Aus BMAD übernehmen (Phase 3):
+- **BMAD-Builder** (Meta-Skill für Domains)
+- C.O.R.E. Framework als Reflexions-Tool
+- Checklists (Quality Gates)
+
+### Document-Skills (Plug & Play):
+- `document-skills:xlsx` - Excel
+- `document-skills:docx` - Word
+- `document-skills:pptx` - PowerPoint
+- `document-skills:pdf` - PDF
+
+### CIS Integration (Phase 4b - via Createskill):
+- CIS-Brainstorming (Carson Agent + Voice)
+- CIS-DesignThinking (Maya Agent + Voice)
+- CIS-Innovation (Victor Agent + Voice)
+- CIS-ProblemSolving (Quinn Agent + Voice)
+- CIS-Storytelling (Sophia Agent + Voice)
+
+### Domains (Phase 4a - via BMAD Builder):
+- **Strategy & Consulting** (Priorität 1)
+- Marketing & Content
+- Finance & Tracking
+
+### Obsidian System (Phase 5 - via Createskill):
+- PKM (Personal Knowledge Management)
+- PRM (Personal Relationship Management)
+- TaskManager (Bases-Format)
+
+---
+
+## Obsidian-Strategie
+
+**Ansatz:** Direktes Schreiben statt MCP
+
+```
+Claude Code → Schreibt direkt → Obsidian Vault
+                                  ├── PKM/
+                                  ├── PRM/
+                                  ├── Tasks/
+                                  └── Projects/
+```
+
+**YAML-Frontmatter für Bases:**
+- Tasks mit status, priority, due
+- Kontakte mit relationship, last_contact
+- Notes mit links, tags
+
+---
+
+## Quick Commands
+
+```bash
+# PAI Self-Test
+bun ~/.claude/hooks/self-test.ts
+
+# Voice Server starten
+cd ~/.claude/voice-server && bun run server.ts
+
+# Dashboard starten
+cd ~/.claude/Observability && ./manage.sh start
+```
+
+---
+
+## Nächste Schritte
+
+1. [ ] PAI Repository forken
+2. [ ] Backup ~/.claude erstellen
+3. [ ] PAI installieren (Symlink)
+4. [ ] Settings konfigurieren
+5. [ ] Self-Test ausführen
+
+---
+
+## Referenzen
+
+- **PAI Repository**: github.com/danielmiessler/Personal_AI_Infrastructure
+- **BMAD Repository**: github.com/bmad-code-org/bmad-method
+- **Claude Code Docs**: docs.anthropic.com/claude-code
+- **Plan-Datei**: `~/.claude/plans/effervescent-napping-tide.md`
+
+---
+
+## Quick Reference: Hybrid-Ansatz
+
+```
+PAI (Runtime)         BMAD (Methodik)
+┌─────────────┐      ┌─────────────┐
+│ UOCS        │      │ C.O.R.E.    │
+│ Voice       │  +   │ 4-Phasen    │  = TPOS
+│ Hooks       │      │ Checklists  │
+│ Dashboard   │      │ Scale-Adapt │
+└─────────────┘      └─────────────┘
+```

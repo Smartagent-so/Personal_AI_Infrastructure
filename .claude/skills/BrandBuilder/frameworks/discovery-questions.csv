@@ -1,0 +1,86 @@
+category,question_number,question_de,question_en,agent
+foundation,1,Was macht dein Unternehmen/Projekt?,What does your company/project do?,quinn
+foundation,2,Wie bist du auf diese Idee gekommen?,How did you come up with this idea?,quinn
+foundation,3,Welches Problem löst du für deine Kunden?,What problem do you solve for your customers?,quinn
+foundation,4,Was ist deine Gründungsgeschichte?,What is your founding story?,sophia
+foundation,5,Was treibt dich jeden Tag an aufzustehen?,What drives you to get up every day?,quinn
+foundation,6,Was würde passieren wenn dein Business morgen verschwindet?,What would happen if your business disappeared tomorrow?,quinn
+foundation,7,Was ist dein größter Stolz in Bezug auf dein Business?,What are you most proud of regarding your business?,sophia
+foundation,8,Was macht dich einzigartig im Vergleich zu anderen?,What makes you unique compared to others?,victor
+foundation,9,Welche Werte sind dir bei der Arbeit am wichtigsten?,What values are most important to you at work?,quinn
+foundation,10,Wenn du drei Wörter hättest um dein Business zu beschreiben welche wären es?,If you had three words to describe your business what would they be?,carson
+foundation,11,Was ist das Warum hinter deinem Warum?,What is the why behind your why?,quinn
+foundation,12,Welche Überzeugungen liegen deinem Business zugrunde?,What beliefs underlie your business?,quinn
+target_audience,13,Wer ist dein idealer Kunde?,Who is your ideal customer?,maya
+target_audience,14,Beschreibe deinen typischen Kunden als Person,Describe your typical customer as a person,maya
+target_audience,15,Wie alt ist dein Zielkunde?,How old is your target customer?,maya
+target_audience,16,Welchen Beruf hat dein Zielkunde?,What profession does your target customer have?,maya
+target_audience,17,Wie hoch ist das ungefähre Einkommen?,What is the approximate income?,maya
+target_audience,18,Welche Hobbies und Interessen hat dein Zielkunde?,What hobbies and interests does your target customer have?,maya
+target_audience,19,Welche Social-Media-Plattformen nutzt dein Zielkunde?,Which social media platforms does your target customer use?,maya
+target_audience,20,Welche Medien konsumiert dein Zielkunde?,What media does your target customer consume?,maya
+target_audience,21,Welche Marken bewundert dein Zielkunde?,Which brands does your target customer admire?,maya
+target_audience,22,Was ist der größte Schmerzpunkt deines Zielkunden?,What is your target customer's biggest pain point?,maya
+target_audience,23,Was frustriert deinen Zielkunden am meisten?,What frustrates your target customer the most?,maya
+target_audience,24,Was wünscht sich dein Zielkunde am meisten?,What does your target customer wish for most?,maya
+target_audience,25,Was liegt deinem Zielkunden nachts wach?,What keeps your target customer up at night?,maya
+target_audience,26,Welchen Job erledigt dein Produkt für den Kunden?,What job does your product do for the customer?,maya
+target_audience,27,Wie findet dein Zielkunde typischerweise Lösungen für Probleme?,How does your target customer typically find solutions to problems?,maya
+target_audience,28,Wem vertraut dein Zielkunde bei Kaufentscheidungen?,Who does your target customer trust when making purchasing decisions?,maya
+brand_personality,29,Wenn deine Marke eine Person wäre wie wäre sie?,If your brand were a person what would they be like?,sophia
+brand_personality,30,Welches Geschlecht hätte deine Marke?,What gender would your brand have?,carson
+brand_personality,31,Wie alt wäre deine Marke als Person?,How old would your brand be as a person?,carson
+brand_personality,32,Welchen Beruf hätte deine Marke?,What profession would your brand have?,carson
+brand_personality,33,Wie würde deine Marke sprechen?,How would your brand speak?,sophia
+brand_personality,34,Welchen Humor hätte deine Marke?,What humor would your brand have?,carson
+brand_personality,35,Was wären die Hobbies deiner Marke?,What would your brand's hobbies be?,carson
+brand_personality,36,Mit welchem Prominenten würdest du deine Marke vergleichen?,Which celebrity would you compare your brand to?,carson
+brand_personality,37,Welche 5-7 Adjektive beschreiben deine Marke am besten?,What 5-7 adjectives best describe your brand?,sophia
+brand_personality,38,Welche Adjektive soll deine Marke NICHT sein?,What adjectives should your brand NOT be?,carson
+brand_personality,39,Ist deine Marke eher formal oder casual?,Is your brand more formal or casual?,sophia
+brand_personality,40,Ist deine Marke eher respektvoll oder frech?,Is your brand more respectful or irreverent?,sophia
+brand_personality,41,Ist deine Marke eher begeistert oder sachlich?,Is your brand more enthusiastic or matter-of-fact?,sophia
+brand_personality,42,Ist deine Marke eher humorvoll oder ernst?,Is your brand more humorous or serious?,sophia
+positioning,43,Wer sind deine Top 5 Konkurrenten?,Who are your top 5 competitors?,victor
+positioning,44,Was machen deine Konkurrenten gut?,What do your competitors do well?,victor
+positioning,45,Was machen deine Konkurrenten schlecht?,What do your competitors do poorly?,victor
+positioning,46,Warum sollten Kunden dich statt der Konkurrenz wählen?,Why should customers choose you over the competition?,victor
+positioning,47,Was ist dein Alleinstellungsmerkmal (USP)?,What is your unique selling proposition (USP)?,victor
+positioning,48,In welcher Kategorie positionierst du dich?,In which category do you position yourself?,victor
+positioning,49,Welchen Preis verlangst du im Vergleich zur Konkurrenz?,What price do you charge compared to the competition?,victor
+positioning,50,Was ist dein größter Wettbewerbsvorteil?,What is your biggest competitive advantage?,victor
+positioning,51,Was können Kunden nur bei dir bekommen?,What can customers only get from you?,victor
+positioning,52,Wie unterscheidet sich dein Ansatz von anderen?,How does your approach differ from others?,victor
+positioning,53,Welche Lücke im Markt füllst du?,What gap in the market do you fill?,victor
+positioning,54,Was sind deine Stärken?,What are your strengths?,victor
+positioning,55,Was sind deine Schwächen?,What are your weaknesses?,victor
+positioning,56,Welche Chancen siehst du im Markt?,What opportunities do you see in the market?,victor
+positioning,57,Welche Bedrohungen siehst du?,What threats do you see?,victor
+visual_preferences,58,Welche Marken-Designs gefallen dir?,Which brand designs do you like?,carson
+visual_preferences,59,Welche Farben assoziierst du mit deiner Marke?,What colors do you associate with your brand?,carson
+visual_preferences,60,Welche Farben soll deine Marke NICHT haben?,What colors should your brand NOT have?,carson
+visual_preferences,61,Bevorzugst du einen modernen oder klassischen Stil?,Do you prefer a modern or classic style?,carson
+visual_preferences,62,Bevorzugst du minimalistisch oder detailliert?,Do you prefer minimalist or detailed?,carson
+visual_preferences,63,Soll dein Logo Text Symbol oder beides enthalten?,Should your logo contain text symbol or both?,carson
+visual_preferences,64,Welche Schriftart-Stile gefallen dir?,What font styles do you like?,carson
+visual_preferences,65,Bevorzugst du Fotos oder Illustrationen?,Do you prefer photos or illustrations?,carson
+visual_preferences,66,Gibt es visuelle Elemente die du vermeiden möchtest?,Are there visual elements you want to avoid?,carson
+visual_preferences,67,Welche Websites gefallen dir vom Design her?,Which websites do you like design-wise?,carson
+goals,68,Was sind deine Geschäftsziele für die nächsten 12 Monate?,What are your business goals for the next 12 months?,victor
+goals,69,Was sind deine langfristigen Ziele (3-5 Jahre)?,What are your long-term goals (3-5 years)?,victor
+goals,70,Welche Umsatzziele hast du?,What revenue goals do you have?,victor
+goals,71,Wie viele Kunden/Nutzer möchtest du erreichen?,How many customers/users do you want to reach?,victor
+goals,72,Was ist der eine messbare Erfolg den du in 12 Monaten sehen willst?,What is the one measurable success you want to see in 12 months?,victor
+goals,73,Welches Image möchtest du am Markt haben?,What image do you want to have in the market?,sophia
+goals,74,Welche Emotionen sollen Menschen mit deiner Marke verbinden?,What emotions should people associate with your brand?,sophia
+goals,75,Was sollen Menschen über dich sagen wenn du nicht im Raum bist?,What should people say about you when you're not in the room?,sophia
+practical,76,Hast du bereits einen Firmennamen?,Do you already have a company name?,carson
+practical,77,Hast du bereits ein Logo?,Do you already have a logo?,carson
+practical,78,Hast du bereits eine Website?,Do you already have a website?,carson
+practical,79,Hast du bereits Social-Media-Präsenz?,Do you already have social media presence?,carson
+practical,80,Welche Marketing-Materialien brauchst du?,What marketing materials do you need?,carson
+practical,81,Was ist dein Budget für Branding?,What is your branding budget?,victor
+practical,82,Wie schnell brauchst du das Branding?,How quickly do you need the branding?,victor
+practical,83,Wer sind die Entscheidungsträger?,Who are the decision makers?,victor
+practical,84,Gibt es bestehende Brand-Guidelines?,Are there existing brand guidelines?,carson
+practical,85,Welche Plattformen sind am wichtigsten für dich?,Which platforms are most important to you?,maya

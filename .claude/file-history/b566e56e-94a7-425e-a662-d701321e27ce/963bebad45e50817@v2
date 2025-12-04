@@ -1,0 +1,27 @@
+{
+  "voices": {
+    "jarvis": {
+      "id": "pxQ5J1NTCCuhK7jrRa1d",
+      "name": "Jarvis",
+      "language": "en",
+      "role": "PAI System Voice",
+      "notes": "Default PAI assistant voice"
+    },
+    "ostfriese": {
+      "id": "***REMOVED***",
+      "name": "Ostfriese",
+      "language": "de",
+      "accent": "Ostfriesisch",
+      "traits": ["clever", "smart", "norddeutsch"],
+      "role": "TBD",
+      "notes": "Custom cloned voice - hochwertig, deutsch, ostfriesischer Charakter"
+    }
+  },
+  "cis_agents": {
+    "carson": { "id": "i0VhsMuWeqedVY40e6UN", "name": "Dan" },
+    "maya": { "id": "T720RsqorTx4ZZWohrNN", "name": "Katie" },
+    "quinn": { "id": "991lF4hc0xxfec4Y6B0i", "name": "Henry" },
+    "victor": { "id": "DEn2UKxERg5VSUMgGDLH", "name": "Luke" },
+    "sophia": { "id": "cfc7wVYq4gw4OpcEEAom", "name": "Nayva" }
+  }
+}

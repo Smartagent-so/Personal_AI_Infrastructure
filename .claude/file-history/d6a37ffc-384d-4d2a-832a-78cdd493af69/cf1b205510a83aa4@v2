@@ -1,0 +1,297 @@
+# Plan: PAI Self-Improvement Loop implementieren
+
+## Problem-Zusammenfassung
+
+**Symptom:** Bei jeder neuen Session geht Wissen verloren - Entscheidungen, Konfigurationen, Learnings.
+
+**Tiefere Diagnose:** PAI hat exzellentes **Capture/Logging** (33% des Systems), aber **keinen Feedback-Loop** für Self-Improvement.
+
+```
+Was PAI HAT:                    Was PAI BRAUCHT:
+┌─────────────────┐             ┌─────────────────┐
+│ ✅ Capture      │             │ ❌ Review       │
+│ ✅ Storage      │      →      │ ❌ Analysis     │
+│ ⚠️ Retrieval   │             │ ❌ Suggestions  │
+│                 │             │ ❌ Planning     │
+│                 │             │ ❌ Implementation│
+└─────────────────┘             └─────────────────┘
+```
+
+**Root Causes:**
+
+| Problem | Status | Impact |
+|---------|--------|--------|
+| **Kein Review-Mechanismus** | ❌ Nicht vorhanden | Protokolle werden nie analysiert |
+| **Kein Learning-Extraction** | ❌ Manuell only | Keine automatische Ableitung von Erkenntnissen |
+| **Kein Improvement-Loop** | ❌ Nicht vorhanden | System verbessert sich nicht selbst |
+| **Context nicht geladen** | ❌ One-Way Flow | Vergangene Decisions/Learnings nicht im Bewusstsein |
+| **Voice-Config fragmentiert** | ⚠️ Teilweise | Config existiert aber nicht im Context |
+
+---
+
+## Der gewünschte Self-Improvement Loop
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                     PAI SELF-IMPROVEMENT LOOP                          │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                         │
+│   1. CAPTURE (✅ existiert)                                             │
+│      └── Fortlaufende Protokollierung während Session                   │
+│          • capture-all-events.ts → raw-outputs/*.jsonl                  │
+│          • stop-hook.ts → nach jeder Response                           │
+│          • capture-session-summary.ts → bei SessionEnd                  │
+│                          ↓                                              │
+│   2. STORAGE (✅ existiert)                                             │
+│      └── History System                                                 │
+│          • history/sessions/                                            │
+│          • history/learnings/                                           │
+│          • history/decisions/ (LEER!)                                   │
+│          • history/raw-outputs/                                         │
+│                          ↓                                              │
+│   3. RETRIEVAL (⚠️ teilweise)                                          │
+│      └── Context beim SessionStart laden                                │
+│          • load-core-context.ts lädt NUR SKILL.md                       │
+│          • ❌ Decisions werden NICHT geladen                            │
+│          • ❌ Learnings werden NICHT geladen                            │
+│                          ↓                                              │
+│   4. REVIEW (❌ fehlt komplett)                                         │
+│      └── Analyse der Protokolle                                         │
+│          • Kein Review-Workflow                                         │
+│          • Kein Trigger für Retrospektiven                              │
+│                          ↓                                              │
+│   5. ANALYSIS (❌ fehlt komplett)                                       │
+│      └── Learnings & Tasks ableiten                                     │
+│          • Kein Auto-Learning-Extraction                                │
+│          • Kein Pattern-Recognition                                     │
+│                          ↓                                              │
+│   6. SUGGESTIONS (❌ fehlt komplett)                                    │
+│      └── Verbesserungsvorschläge generieren                             │
+│          • Keine Suggestion-Engine                                      │
+│          • Keine Improvement-Queue                                      │
+│                          ↓                                              │
+│   7. PLANNING (❌ fehlt komplett)                                       │
+│      └── Verbesserungsplan erstellen                                    │
+│          • Keine automatische Planung                                   │
+│                          ↓                                              │
+│   8. IMPLEMENTATION (❌ fehlt komplett)                                 │
+│      └── Verbesserungen umsetzen                                        │
+│          • Keine Meta-Update-Automation                                 │
+│          • Kein Rollback-System                                         │
+│                          ↓                                              │
+│   ┌─────────────────────────────────────────────────────────────────┐   │
+│   │                    LOOP ZURÜCK ZU 1.                            │   │
+│   └─────────────────────────────────────────────────────────────────┘   │
+│                                                                         │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Lösung: 5-Phasen-Implementation
+
+### Phase 1: Quick Wins - Context & Capture fixen (SOFORT)
+
+**Ziel:** Die 33% die existieren zum Laufen bringen + Context laden.
+
+#### 1.1 Dynamic Context Loader erweitern
+**Datei:** `/Users/pretor/.claude/hooks/load-core-context.ts`
+
+Beim SessionStart nicht nur SKILL.md, sondern auch:
+- Letzte 5 Learnings aus `history/learnings/`
+- Letzte 3 Decisions aus `history/decisions/`
+- Voice-Config aus `config/voice-feedback.json`
+- Aktuelle Improvement-Queue (wenn vorhanden)
+
+#### 1.2 Decision-Capture während Session (nicht erst am Ende!)
+**Neue Datei:** `/Users/pretor/.claude/hooks/capture-decision.ts`
+
+Trigger bei Patterns wie:
+- "wir entscheiden uns für..."
+- "die Lösung ist..."
+- "statt X nutzen wir Y"
+
+Voice-Feedback: "Entscheidung dokumentiert: [title]"
+
+#### 1.3 Voice-Config ins CORE Bewusstsein
+**Datei:** `/Users/pretor/.claude/skills/CORE/SKILL.md`
+
+Neue Section:
+```markdown
+## Voice Feedback (AKTIV)
+- Ankündigung bei Task-Start
+- Progress-Updates bei langen Tasks
+- Completion-Summary vorlesen
+- Sprache: Deutsch (Ottie) / English (Jarvis)
+- Tools: mcp__elevenlabs__text_to_speech + play_audio
+```
+
+---
+
+### Phase 2: Review-Mechanismus (FOUNDATION)
+
+**Ziel:** Strukturierter Prozess um Protokolle zu analysieren.
+
+#### 2.1 Review-Session Skill
+**Neue Datei:** `/Users/pretor/.claude/skills/Review/SKILL.md`
+
+Workflow:
+1. Trigger: Manuell (`/review`) oder nach X Sessions automatisch
+2. Lädt letzte N Session-Summaries
+3. Analysiert Patterns, wiederkehrende Probleme, erfolgreiche Lösungen
+4. Generiert strukturierten Review-Report
+
+#### 2.2 Review-Queue
+**Neue Datei:** `/Users/pretor/.claude/history/review-queue.json`
+
+```json
+{
+  "pendingReviews": [
+    { "sessionId": "...", "date": "...", "status": "pending" }
+  ],
+  "lastReview": "2025-12-04T10:00:00Z",
+  "reviewFrequency": "every_3_sessions"
+}
+```
+
+---
+
+### Phase 3: Learning-Extraction & Analysis
+
+**Ziel:** Automatisch aus Protokollen lernen.
+
+#### 3.1 Auto-Learning-Extractor
+**Erweitern:** `/Users/pretor/.claude/hooks/stop-hook.ts`
+
+Nach jeder substantiellen Response:
+- Prüfe auf Bug-Fixes → Learning (category: bug)
+- Prüfe auf neue Patterns → Learning (category: pattern)
+- Prüfe auf Tool-Nutzung → Learning (category: tool)
+- Prüfe auf Decisions → Decision-Capture triggern
+
+#### 3.2 Pattern-Recognition
+Neue Funktion in stop-hook.ts:
+- Erkenne wiederkehrende Probleme
+- Erkenne erfolgreiche Lösungsstrategien
+- Flagge potentielle System-Verbesserungen
+
+---
+
+### Phase 4: Improvement-System
+
+**Ziel:** Verbesserungsvorschläge sammeln und priorisieren.
+
+#### 4.1 Improvement-Queue
+**Neue Datei:** `/Users/pretor/.claude/history/improvements/queue.json`
+
+```json
+{
+  "improvements": [
+    {
+      "id": "imp-001",
+      "title": "Voice-Server durch MCP Tools ersetzen",
+      "source": "session-2025-12-04",
+      "type": "config_change",
+      "priority": "high",
+      "status": "proposed",
+      "affectedFiles": ["config/voice-feedback.json", "SKILL.md"]
+    }
+  ]
+}
+```
+
+#### 4.2 Improvement-Review Workflow
+Bei Review-Sessions:
+1. Zeige pending Improvements
+2. User entscheidet: approve / reject / defer
+3. Approved → Improvement-Plan erstellen
+
+---
+
+### Phase 5: Implementation-Automation
+
+**Ziel:** Genehmigte Verbesserungen sicher umsetzen.
+
+#### 5.1 Meta-Update Executor
+**Neue Datei:** `/Users/pretor/.claude/hooks/execute-improvement.ts`
+
+- Backup vor Änderung
+- Änderung durchführen
+- Verification Test
+- Rollback bei Fehler
+
+#### 5.2 Feedback-Loop Closure
+Nach Implementation:
+- Tracke ob Improvement geholfen hat
+- Bei Problemen: Auto-Rollback oder Flag für Review
+
+---
+
+## Implementierungs-Reihenfolge
+
+```
+WOCHE 1: Phase 1 (Quick Wins)
+├── 1.1 load-core-context.ts erweitern
+├── 1.2 capture-decision.ts erstellen
+└── 1.3 SKILL.md Voice-Section
+
+WOCHE 2: Phase 2 (Review-Foundation)
+├── 2.1 Review Skill erstellen
+└── 2.2 Review-Queue implementieren
+
+WOCHE 3: Phase 3 (Learning-Extraction)
+├── 3.1 stop-hook.ts Auto-Learning
+└── 3.2 Pattern-Recognition
+
+WOCHE 4: Phase 4 + 5 (Improvement-System)
+├── 4.1 Improvement-Queue
+├── 4.2 Review-Workflow
+├── 5.1 Meta-Update Executor
+└── 5.2 Feedback-Loop
+```
+
+---
+
+## Kritische Dateien
+
+| Datei | Aktion | Phase |
+|-------|--------|-------|
+| `hooks/load-core-context.ts` | ERWEITERN | 1 |
+| `hooks/capture-decision.ts` | NEU | 1 |
+| `skills/CORE/SKILL.md` | ERWEITERN | 1 |
+| `skills/Review/SKILL.md` | NEU | 2 |
+| `history/review-queue.json` | NEU | 2 |
+| `hooks/stop-hook.ts` | ERWEITERN | 3 |
+| `history/improvements/queue.json` | NEU | 4 |
+| `hooks/execute-improvement.ts` | NEU | 5 |
+
+---
+
+## Erfolgs-Kriterien
+
+Nach Phase 1:
+- ✅ Decisions werden sofort dokumentiert (mit Voice-Feedback)
+- ✅ SessionStart lädt Decisions + Learnings + Voice-Config
+- ✅ Voice-Feedback ist "im Bewusstsein"
+
+Nach Phase 2-3:
+- ✅ Review-Sessions können getriggert werden
+- ✅ Learnings werden automatisch extrahiert
+- ✅ Patterns werden erkannt
+
+Nach Phase 4-5:
+- ✅ Improvements werden gesammelt und priorisiert
+- ✅ User kann Improvements approve/reject
+- ✅ Genehmigte Improvements werden sicher implementiert
+- ✅ System verbessert sich nachhaltig über Zeit
+
+---
+
+## Sofort-Aktion (Phase 1 heute)
+
+**Fokus für diese Session:**
+1. `load-core-context.ts` erweitern (Decisions, Learnings, Voice-Config laden)
+2. `capture-decision.ts` erstellen (mit Voice-Feedback)
+3. `SKILL.md` Voice-Section hinzufügen
+
+**Damit ist das Kernproblem gelöst:** Wissen bleibt erhalten zwischen Sessions.

@@ -1,0 +1,28 @@
+# PAI Research Output
+
+Zentraler Ausgabeordner für alle PAI-generierten Research Papers und Reports.
+
+## Ordnerstruktur
+
+```
+PAI-Research Output/
+├── README.md
+├── YYYY-MM-DD_Session-Name/
+│   ├── Research-Topic-1.md
+│   └── Research-Topic-2.md
+└── YYYY-MM-DD_Another-Session/
+    └── Report.md
+```
+
+## Konvention
+
+- **Unterordner-Format:** `YYYY-MM-DD_Beschreibender-Session-Name`
+- **Dateinamen:** `Research-Topic-Jahr.md` oder `Report-Topic.md`
+- Jede Research-Session bekommt einen eigenen Unterordner
+- Alle verwandten Dateien einer Session gehören zusammen
+
+## Beispiele
+
+- `2025-12-03_Digital-Dentistry-Research/`
+- `2025-12-05_AI-Healthcare-Analysis/`
+- `2025-12-10_Market-Research-SaaS/`

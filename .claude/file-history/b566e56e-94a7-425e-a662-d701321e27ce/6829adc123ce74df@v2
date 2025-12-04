@@ -1,0 +1,77 @@
+# Session Status - TPOS Projekt
+
+**Checkpoint**: 2025-12-03 16:45
+**Phase**: 2 KI-Training (90% abgeschlossen)
+
+---
+
+## Aktueller Kontext
+
+TPOS Phase 2 Training fast abgeschlossen. Aufräumarbeiten erledigt.
+
+---
+
+## Diese Session erledigt
+
+- [x] docs → PAI-TPOS-docs umbenannt
+- [x] PAI-Research Output Ordner erstellt (Desktop)
+- [x] PAI-Image Output Ordner erstellt (Desktop)
+- [x] Research-Digital-Dentistry-2025.md verschoben
+- [x] PAI-System-Infographic.png verschoben
+- [x] Output-Konvention dokumentiert (README.md in beiden Ordnern)
+- [x] CLAUDE.md aktualisiert
+
+---
+
+## Nächste Schritte (Phase 2 Abschluss)
+
+- [ ] UOCS testen (Aufgabe → history/ prüfen)
+- [ ] Createskill lernen (Test-Skill erstellen)
+
+## Danach (Phase 3+)
+
+- [ ] BMAD-Core Skill erstellen
+- [ ] Business Skills (CIS, Strategy)
+- [ ] Obsidian System
+
+---
+
+## Wichtige Ordner
+
+| Ordner | Pfad | Inhalt |
+|--------|------|--------|
+| **Projekt-Docs** | `PAI-TPOS-docs/` | Analysen, Vergleiche, Architektur |
+| **Research Output** | `~/Desktop/PAI-Research Output/` | Research Papers |
+| **Image Output** | `~/Desktop/PAI-Image Output/` | Generierte Bilder |
+
+---
+
+## Output-Konvention
+
+Alle generierten Outputs gehen in Session-Unterordner:
+```
+PAI-Research Output/
+└── YYYY-MM-DD_Session-Name/
+    └── Research-File.md
+
+PAI-Image Output/
+└── YYYY-MM-DD_Session-Name/
+    └── Image-File.png
+```
+
+---
+
+## Voice-Feedback Status
+
+**Aktiv:** Ja
+**Command:** `/jarvisOn` (toggle)
+**Voice:** Jarvis (pxQ5J1NTCCuhK7jrRa1d)
+
+---
+
+## Recovery-Hinweis
+
+Bei neuer Session:
+1. Öffne dieses Projekt: `/Users/pretor/Documents/PAI - TPOS`
+2. Lies diese Datei oder nutze `/recover-from-checkpoint`
+3. Fahre mit Phase 2 Abschluss fort (UOCS + Createskill)

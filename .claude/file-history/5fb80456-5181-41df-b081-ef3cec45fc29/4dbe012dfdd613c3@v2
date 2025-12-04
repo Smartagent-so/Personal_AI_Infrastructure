@@ -1,0 +1,34 @@
+# Session Status - Crash Recovery
+
+**Checkpoint**: 2025-12-04 08:12 PST
+**Commit**: cfad2f5
+
+## Aktueller Kontext
+Voice-System Proper Fix abgeschlossen. Die PAI-Hooks nutzen jetzt direkte ElevenLabs API statt den kaputten Voice-Server (Port ***REMOVED***). Ottie (deutsche Stimme) ist als Standard konfiguriert und wird ab der nächsten Session automatisch begrüßen.
+
+## Diese Session erledigt
+- [x] Problem analysiert: Voice-Server ***REMOVED*** hat Streaming-Bug
+- [x] Neue Library erstellt: `~/.claude/hooks/lib/elevenlabs-tts.ts`
+- [x] `initialize-session.ts` umgebaut für deutsche Begrüßung mit Ottie
+- [x] `stop-hook.ts` umgebaut für COMPLETED-Vorlesen via direkte API
+- [x] `config/voice-feedback.json` auf Ottie umgestellt
+- [x] Leitlinie "Proper Fix > Quick Fix" in SKILL.md dokumentiert
+- [x] Voice-Test mit Ottie erfolgreich durchgeführt
+
+## Nächste Schritte
+- [ ] Neue Session starten um automatische Ottie-Begrüßung zu testen
+- [ ] COMPLETED-Vorlesen in Aktion testen
+- [ ] Optional: Voice-Server ***REMOVED*** Bug fixen oder dekommissionieren
+
+## Offene Fragen
+- Soll der Voice-Server (***REMOVED***) komplett entfernt werden oder als Fallback behalten?
+
+## Wichtige Dateien
+- `~/.claude/hooks/lib/elevenlabs-tts.ts` - Neue ElevenLabs TTS Library
+- `~/.claude/hooks/initialize-session.ts` - Session-Start Hook (jetzt mit Ottie)
+- `~/.claude/hooks/stop-hook.ts` - COMPLETED Hook (jetzt mit direkter API)
+- `~/.claude/config/voice-feedback.json` - Voice-Konfiguration (Ottie als Standard)
+- `~/.claude/skills/CORE/SKILL.md` - Neue Leitlinie dokumentiert
+
+## Leitlinie (neu dokumentiert)
+**Proper Fix > Quick Fix:** Immer nachhaltige, langfristige Lösungen bevorzugen. Quick-Fixes führen zu Chaos und technischen Schulden.

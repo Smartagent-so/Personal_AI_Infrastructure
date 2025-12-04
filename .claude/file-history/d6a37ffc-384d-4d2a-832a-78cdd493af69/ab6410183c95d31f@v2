@@ -1,0 +1,311 @@
+#!/usr/bin/env bun
+
+/**
+ * load-core-context.ts
+ *
+ * Automatically loads your CORE skill context at session start by reading and injecting
+ * the CORE SKILL.md file contents directly into Claude's context as a system-reminder.
+ *
+ * Purpose:
+ * - Read CORE SKILL.md file content
+ * - Output content as system-reminder for Claude to process
+ * - Ensure complete context (contacts, preferences, security, identity) available at session start
+ * - Bypass skill activation logic by directly injecting context
+ *
+ * Setup:
+ * 1. Customize your ${PAI_DIR}/skills/CORE/SKILL.md with your personal context
+ * 2. Add this hook to settings.json SessionStart hooks
+ * 3. Ensure PAI_DIR environment variable is set (defaults to $HOME/.claude)
+ *
+ * How it works:
+ * - Runs at the start of every Claude Code session
+ * - Skips execution for subagent sessions (they don't need CORE context)
+ * - Reads your CORE SKILL.md file
+ * - Injects content as <system-reminder> which Claude processes automatically
+ * - Gives your AI immediate access to your complete personal context
+ */
+
+import { readFileSync, existsSync, readdirSync } from 'fs';
+import { join } from 'path';
+import { PAI_DIR, SKILLS_DIR } from './lib/pai-paths';
+
+// ============================================================================
+// DYNAMIC CONTEXT LOADING - Learnings, Decisions, Voice Config
+// ============================================================================
+
+interface Learning {
+  title: string;
+  category: string;
+  description: string;
+  date: string;
+}
+
+interface Decision {
+  title: string;
+  context: string;
+  date: string;
+}
+
+interface VoiceConfig {
+  enabled: boolean;
+  voice: {
+    name: string;
+    language: string;
+  };
+}
+
+/**
+ * Load recent learnings from history/learnings/
+ */
+function loadRecentLearnings(limit: number = 5): Learning[] {
+  const learnings: Learning[] = [];
+  const learningsDir = join(PAI_DIR, 'history/learnings');
+
+  try {
+    // Get all year-month directories
+    if (!existsSync(learningsDir)) return learnings;
+
+    const monthDirs = readdirSync(learningsDir)
+      .filter(d => d.match(/^\d{4}-\d{2}$/))
+      .sort()
+      .reverse();
+
+    for (const monthDir of monthDirs) {
+      const monthPath = join(learningsDir, monthDir);
+      const files = readdirSync(monthPath)
+        .filter(f => f.endsWith('.md'))
+        .sort()
+        .reverse();
+
+      for (const file of files) {
+        if (learnings.length >= limit) break;
+
+        try {
+          const content = readFileSync(join(monthPath, file), 'utf-8');
+          // Parse learnings from markdown
+          const learningMatches = content.matchAll(/### \d+\. (.+?)\n\n\*\*Category:\*\* (\w+)[\s\S]*?\n\n(.+?)(?=\n\n---|\n\n>|$)/g);
+
+          for (const match of learningMatches) {
+            if (learnings.length >= limit) break;
+            learnings.push({
+              title: match[1].trim(),
+              category: match[2].trim(),
+              description: match[3].trim(),
+              date: file.substring(0, 10) // YYYY-MM-DD from filename
+            });
+          }
+        } catch (e) {
+          // Skip files that can't be parsed
+        }
+      }
+
+      if (learnings.length >= limit) break;
+    }
+  } catch (e) {
+    console.error('⚠️ Could not load learnings:', e);
+  }
+
+  return learnings;
+}
+
+/**
+ * Load recent decisions from history/decisions/
+ */
+function loadRecentDecisions(limit: number = 3): Decision[] {
+  const decisions: Decision[] = [];
+  const decisionsDir = join(PAI_DIR, 'history/decisions');
+
+  try {
+    if (!existsSync(decisionsDir)) return decisions;
+
+    const monthDirs = readdirSync(decisionsDir)
+      .filter(d => d.match(/^\d{4}-\d{2}$/))
+      .sort()
+      .reverse();
+
+    for (const monthDir of monthDirs) {
+      const monthPath = join(decisionsDir, monthDir);
+      const files = readdirSync(monthPath)
+        .filter(f => f.endsWith('.md'))
+        .sort()
+        .reverse();
+
+      for (const file of files) {
+        if (decisions.length >= limit) break;
+
+        try {
+          const content = readFileSync(join(monthPath, file), 'utf-8');
+          // Parse title from frontmatter or first heading
+          const titleMatch = content.match(/title:\s*["']?(.+?)["']?\n/) ||
+                            content.match(/# Decision: (.+?)\n/);
+          const contextMatch = content.match(/## Context\n\n(.+?)(?=\n\n##|$)/s);
+
+          if (titleMatch) {
+            decisions.push({
+              title: titleMatch[1].trim(),
+              context: contextMatch ? contextMatch[1].trim().substring(0, 100) : '',
+              date: file.substring(0, 10)
+            });
+          }
+        } catch (e) {
+          // Skip files that can't be parsed
+        }
+      }
+
+      if (decisions.length >= limit) break;
+    }
+  } catch (e) {
+    console.error('⚠️ Could not load decisions:', e);
+  }
+
+  return decisions;
+}
+
+/**
+ * Load voice feedback configuration
+ */
+function loadVoiceConfig(): VoiceConfig | null {
+  const configPath = join(PAI_DIR, 'config/voice-feedback.json');
+
+  try {
+    if (!existsSync(configPath)) return null;
+    const content = readFileSync(configPath, 'utf-8');
+    return JSON.parse(content);
+  } catch (e) {
+    console.error('⚠️ Could not load voice config:', e);
+    return null;
+  }
+}
+
+/**
+ * Format dynamic context sections
+ */
+function formatDynamicContext(): string {
+  const sections: string[] = [];
+
+  // Voice Config Section
+  const voiceConfig = loadVoiceConfig();
+  if (voiceConfig) {
+    sections.push(`## 🎙️ VOICE FEEDBACK CONFIGURATION
+
+**Status:** ${voiceConfig.enabled ? 'AKTIVIERT' : 'DEAKTIVIERT'}
+**Stimme:** ${voiceConfig.voice?.name || 'Default'} (${voiceConfig.voice?.language || 'en'})
+
+Wenn Voice aktiviert ist:
+- Ankündigung bei Task-Start
+- Progress-Updates bei langen Tasks
+- Completion-Summary vorlesen
+- Tools: \`mcp__elevenlabs__text_to_speech\` + \`mcp__elevenlabs__play_audio\``);
+  }
+
+  // Decisions Section
+  const decisions = loadRecentDecisions(3);
+  if (decisions.length > 0) {
+    const decisionsList = decisions
+      .map((d, i) => `${i + 1}. [${d.date}] **${d.title}**${d.context ? ` - ${d.context}` : ''}`)
+      .join('\n');
+
+    sections.push(`## 📋 RECENT DECISIONS (letzte ${decisions.length})
+
+${decisionsList}`);
+  }
+
+  // Learnings Section
+  const learnings = loadRecentLearnings(5);
+  if (learnings.length > 0) {
+    const learningsList = learnings
+      .map((l, i) => `${i + 1}. [${l.category}] **${l.title}** - ${l.description}`)
+      .join('\n');
+
+    sections.push(`## 📚 RECENT LEARNINGS (letzte ${learnings.length})
+
+${learningsList}`);
+  }
+
+  if (sections.length === 0) {
+    return '';
+  }
+
+  return '\n\n---\n\n# DYNAMIC SESSION CONTEXT\n\n' + sections.join('\n\n---\n\n');
+}
+
+async function main() {
+  try {
+    // Check if this is a subagent session - if so, exit silently
+    const claudeProjectDir = process.env.CLAUDE_PROJECT_DIR || '';
+    const isSubagent = claudeProjectDir.includes('/.claude/agents/') ||
+                      process.env.CLAUDE_AGENT_TYPE !== undefined;
+
+    if (isSubagent) {
+      // Subagent sessions don't need CORE context loading
+      console.error('🤖 Subagent session - skipping CORE context loading');
+      process.exit(0);
+    }
+
+    // Get CORE skill path using PAI paths library
+    const coreSkillPath = join(SKILLS_DIR, 'CORE/SKILL.md');
+
+    // Verify CORE skill file exists
+    if (!existsSync(coreSkillPath)) {
+      console.error(`❌ CORE skill not found at: ${coreSkillPath}`);
+      console.error(`💡 Ensure CORE/SKILL.md exists or check PAI_DIR environment variable`);
+      process.exit(1);
+    }
+
+    console.error('📚 Reading CORE context from skill file...');
+
+    // Read the CORE SKILL.md file content
+    let coreContent = readFileSync(coreSkillPath, 'utf-8');
+
+    // Perform Dynamic Variable Substitution
+    // This allows SKILL.md to be generic while the session is personalized
+    const daName = process.env.DA || 'PAI';
+    const daColor = process.env.DA_COLOR || 'blue';
+    const engineerName = process.env.ENGINEER_NAME || 'User';
+
+    // Replace placeholders {{DA}}, {{DA_COLOR}}, {{ENGINEER_NAME}}
+    coreContent = coreContent
+      .replace(/\{\{DA\}\}/g, daName)
+      .replace(/\{\{DA_COLOR\}\}/g, daColor)
+      .replace(/\{\{ENGINEER_NAME\}\}/g, engineerName);
+
+    console.error(`✅ Read ${coreContent.length} characters from CORE SKILL.md (Personalized for ${engineerName} & ${daName})`);
+
+    // Load dynamic context (Learnings, Decisions, Voice Config)
+    console.error('📊 Loading dynamic context (Learnings, Decisions, Voice)...');
+    const dynamicContext = formatDynamicContext();
+
+    if (dynamicContext) {
+      console.error('✅ Dynamic context loaded successfully');
+    } else {
+      console.error('ℹ️ No dynamic context available yet');
+    }
+
+    // Output the CORE content as a system-reminder
+    // This will be injected into Claude's context at session start
+    const message = `<system-reminder>
+PAI CORE CONTEXT (Auto-loaded at Session Start)
+
+📅 CURRENT DATE/TIME: ${new Date().toLocaleString('en-US', { timeZone: process.env.TIME_ZONE || 'America/Los_Angeles', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false, timeZoneName: 'short' })}
+
+The following context has been loaded from ${coreSkillPath}:
+
+---
+${coreContent}
+---
+${dynamicContext}
+This context is now active for this session. Follow all instructions, preferences, and guidelines contained above.
+</system-reminder>`;
+
+    // Write to stdout (will be captured by Claude Code)
+    console.log(message);
+
+    console.error('✅ CORE context injected into session');
+    process.exit(0);
+  } catch (error) {
+    console.error('❌ Error in load-core-context hook:', error);
+    process.exit(1);
+  }
+}
+
+main();
